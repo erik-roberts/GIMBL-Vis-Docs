@@ -1,0 +1,8 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  gv -> MakeDefaultConfig;
+  gv -> gv;
+
+  MakeDefaultConfig [URL="MakeDefaultConfig.html"];
+  gv [URL="gv.html"];
+}

@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of getPlotMetadataFromData</title>
+  <meta name="keywords" content="getPlotMetadataFromData">
+  <meta name="description" content="getPlotMetadataFromData - get plotting and legend metadata from data and">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- # plugins --><!-- menu.html @gvPlotWindowPlugin -->
+<h1>getPlotMetadataFromData
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>getPlotMetadataFromData - get plotting and legend metadata from data and</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function getPlotMetadataFromData(pluginObj, hypercubeObj) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> getPlotMetadataFromData - get plotting and legend metadata from data and
+                           metadata fields</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../src/functions/gvGetAxisType.html" class="code" title="function dataAxesType = gvGetAxisType(mddObj)">gvGetAxisType</a>	gvGetAxisType - get axis type from axismeta of mdd object</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="gvPlotWindowPlugin.html" class="code" title="">gvPlotWindowPlugin</a>	% gvPlotWindowPlugin - Plot Window Plugin Class for GIMBL-Vis</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function processCategoricalData(hypercubeObj, dataSlice, structInd)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function getPlotMetadataFromData(pluginObj, hypercubeObj)</a>
+0002 <span class="comment">% getPlotMetadataFromData - get plotting and legend metadata from data and</span>
+0003 <span class="comment">%                           metadata fields</span>
+0004 
+0005 <span class="comment">% TODO: permit function applied to non-numeric data to get labels (eg</span>
+0006 <span class="comment">% isnonempty)</span>
+0007 
+0008 axesType = <a href="../../../src/functions/gvGetAxisType.html" class="code" title="function dataAxesType = gvGetAxisType(mddObj)">gvGetAxisType</a>(hypercubeObj);
+0009 
+0010 <span class="keyword">if</span> ~isempty(axesType)
+0011   <span class="comment">% check for axisType = 'dataType'</span>
+0012   dataTypeAxInd = find(strcmp(axesType, <span class="string">'dataType'</span>), 1);
+0013 <span class="keyword">end</span>
+0014 
+0015 <span class="keyword">if</span> ~isempty(axesType) &amp;&amp; ~isempty(dataTypeAxInd) <span class="comment">% then exists dataType axis</span>
+0016   
+0017   <span class="keyword">if</span> any(strcmp(hypercubeObj.axis(dataTypeAxInd).axismeta.dataType, <span class="string">'categorical'</span>))
+0018     hypercubeObj.meta.onlyNumericDataBool = false;
+0019     numLogical = cellfun(@isnumeric, hypercubeObj.data);
+0020   <span class="keyword">else</span>
+0021     hypercubeObj.meta.onlyNumericDataBool = true;
+0022     
+0023     <span class="keyword">if</span> iscellscalar(hypercubeObj.data)
+0024       hypercubeObj.data = cell2mat(hypercubeObj.data);
+0025     <span class="keyword">end</span>
+0026   <span class="keyword">end</span>
+0027   
+0028   nDims = ndims(hypercubeObj.data);
+0029   
+0030   <span class="comment">% loop through the dataType axis' values</span>
+0031   <span class="keyword">for</span> axValInd = 1:length(hypercubeObj.axis(dataTypeAxInd).values)
+0032     thisSliceDataType = hypercubeObj.axis(dataTypeAxInd).axismeta.dataType{axValInd};
+0033     
+0034     <span class="keyword">if</span> strcmp(thisSliceDataType, <span class="string">'categorical'</span>)
+0035       <span class="comment">% get data slice</span>
+0036       thisSliceInds = cell(1, nDims);
+0037       thisSliceInds{dataTypeAxInd} = axValInd;
+0038       [thisSliceInds{setxor(dataTypeAxInd, 1:nDims)}] = deal(<span class="string">':'</span>);
+0039       thisSlice = hypercubeObj.data(thisSliceInds{:});
+0040       
+0041       <a href="#_sub1" class="code" title="subfunction processCategoricalData(hypercubeObj, dataSlice, structInd)">processCategoricalData</a>(hypercubeObj, thisSlice, axValInd);
+0042       
+0043     <span class="keyword">end</span>
+0044   <span class="keyword">end</span>
+0045   
+0046 <span class="keyword">else</span>
+0047   
+0048   <span class="keyword">if</span> isnumeric(hypercubeObj.data)
+0049     hypercubeObj.meta.onlyNumericDataBool = true;
+0050   <span class="keyword">elseif</span> iscellscalar(hypercubeObj.data)
+0051     hypercubeObj.meta.onlyNumericDataBool = true;
+0052     
+0053     hypercubeObj.data = cell2mat(hypercubeObj.data);
+0054   <span class="keyword">else</span>
+0055     hypercubeObj.meta.onlyNumericDataBool = false;
+0056     
+0057     numLogical = cellfun(@isscalar, hypercubeObj.data);
+0058     
+0059     strLogical = cellfun(@ischar, hypercubeObj.data);
+0060     <span class="keyword">if</span> any(strLogical(:))
+0061       <a href="#_sub1" class="code" title="subfunction processCategoricalData(hypercubeObj, dataSlice, structInd)">processCategoricalData</a>(hypercubeObj, hypercubeObj.data(strLogical));
+0062     <span class="keyword">end</span>
+0063   <span class="keyword">end</span>
+0064   
+0065 <span class="keyword">end</span>
+0066 
+0067 <span class="comment">% get numeric data limits</span>
+0068 <span class="keyword">if</span> hypercubeObj.meta.onlyNumericDataBool
+0069   dataMin = nanmin(hypercubeObj.data(:));
+0070   dataMax = nanmax(hypercubeObj.data(:));
+0071 <span class="keyword">else</span>
+0072   numData = cell2mat(hypercubeObj.data(numLogical));
+0073   
+0074   dataMin = nanmin(numData(:));
+0075   dataMax = nanmax(numData(:));
+0076 <span class="keyword">end</span>
+0077 hypercubeObj.meta.numericLimits = [dataMin dataMax];
+0078 
+0079 
+0080 <span class="comment">%% Nested Fn</span>
+0081   <a name="_sub1" href="#_subfunctions" class="code">function processCategoricalData(hypercubeObj, dataSlice, structInd)</a>
+0082     <span class="keyword">if</span> nargin &lt; 2
+0083       dataSlice = hypercubeObj.data;
+0084     <span class="keyword">end</span>
+0085     <span class="keyword">if</span> nargin &lt; 3
+0086       structInd = 1;
+0087     <span class="keyword">end</span>
+0088     
+0089     <span class="keyword">if</span> exist(<span class="string">'dataTypeAxInd'</span>,<span class="string">'var'</span>) &amp;&amp; isfield(hypercubeObj.axis(dataTypeAxInd).axismeta, <span class="string">'plotInfo'</span>)
+0090       plotInfoBool = length(hypercubeObj.axis(dataTypeAxInd).axismeta.plotInfo) &gt;= axValInd;
+0091       thisSlicePlotInfo = hypercubeObj.axis(dataTypeAxInd).axismeta.plotInfo{axValInd};
+0092     <span class="keyword">else</span>
+0093       plotInfoBool = false;
+0094     <span class="keyword">end</span>
+0095     
+0096     <span class="keyword">if</span> plotInfoBool &amp;&amp; isfield(thisSlicePlotInfo,<span class="string">'labels'</span>)
+0097       groups = thisSlicePlotInfo.labels;
+0098     <span class="keyword">else</span>
+0099       groups = unique(dataSlice);
+0100       groups(cellfun(@isempty,groups)) = [];
+0101       clear thisDataTypeSlice
+0102       
+0103       <span class="comment">% store for future plots</span>
+0104 <span class="comment">%       hypercubeObj.axis(dataTypeAxInd).axismeta.plotInfo{axValInd}.groups = groups;</span>
+0105     <span class="keyword">end</span>
+0106     nGroups = length(groups);
+0107     
+0108     <span class="keyword">if</span> plotInfoBool &amp;&amp; isfield(thisSlicePlotInfo,<span class="string">'colors'</span>)
+0109       colors = thisSlicePlotInfo.colors;
+0110     <span class="keyword">else</span>
+0111       colors = distinguishable_colors(nGroups);
+0112       
+0113       <span class="comment">% store for future plots</span>
+0114 <span class="comment">%       hypercubeObj.axis(dataTypeAxInd).axismeta.plotInfo{axValInd}.colors = colors;</span>
+0115     <span class="keyword">end</span>
+0116     
+0117     <span class="keyword">if</span> plotInfoBool &amp;&amp; isfield(thisSlicePlotInfo,<span class="string">'markers'</span>)
+0118       markers = thisSlicePlotInfo.markers;
+0119     <span class="keyword">else</span>
+0120       markers = cell(nGroups,1);
+0121       [markers{:}] = deal(<span class="string">'.'</span>);
+0122       
+0123       <span class="comment">% store for future plots</span>
+0124 <span class="comment">%       hypercubeObj.axis(dataTypeAxInd).axismeta.plotInfo{axValInd}.markers = markers;</span>
+0125     <span class="keyword">end</span>
+0126     
+0127     <span class="comment">% Store legend data</span>
+0128     hypercubeObj.meta.legend(structInd).groups = groups;
+0129     hypercubeObj.meta.legend(structInd).colors = colors;
+0130     hypercubeObj.meta.legend(structInd).markers = markers;
+0131   <span class="keyword">end</span>
+0132 
+0133 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

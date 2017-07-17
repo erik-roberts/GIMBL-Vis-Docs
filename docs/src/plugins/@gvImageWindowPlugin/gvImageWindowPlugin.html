@@ -1,0 +1,263 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of gvImageWindowPlugin</title>
+  <meta name="keywords" content="gvImageWindowPlugin">
+  <meta name="description" content="% gvImageWindowPlugin - Image Window Plugin Class for GIMBL-Vis">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- # plugins --><!-- menu.html @gvImageWindowPlugin -->
+<h1>gvImageWindowPlugin
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>% gvImageWindowPlugin - Image Window Plugin Class for GIMBL-Vis</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% gvImageWindowPlugin - Image Window Plugin Class for GIMBL-Vis
+
+ Description: An object of this class becomes a property of gvView to provide 
+              methods for a GIMBL-Vis image window.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../src/classes/@gvMainWindowPlugin/makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	makePanelControls - make list of plugins with load checkboxes</li><li><a href="../../../src/classes/@gvMainWindowPlugin/openWindow.html" class="code" title="function openWindow(pluginObj)">openWindow</a>	check for main window</li><li><a href="../../../src/classes/gvWindowPlugin.html" class="code" title="">gvWindowPlugin</a>	% gvWindow - Abstract UI Window Plugin Class for GIMBL-Vis</li><li><a href="../../../src/plugins/@gvAnalysisPlugin/makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	makePanelControls - make plot panel for tab in main window</li><li><a href="Callback_mouseMove.html" class="code" title="function Callback_mouseMove(src, evnt)">Callback_mouseMove</a>	</li><li><a href="gvImageWindowPlugin.html" class="code" title="">gvImageWindowPlugin</a>	% gvImageWindowPlugin - Image Window Plugin Class for GIMBL-Vis</li><li><a href="makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	% makePanelControls</li><li><a href="openWindow.html" class="code" title="function openWindow(pluginObj)">openWindow</a>	check for main window</li><li><a href="../../../src/plugins/@gvPlotWindowPlugin/makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	makePanelControls - make plot panel for tab in main window</li><li><a href="../../../src/plugins/@gvPlotWindowPlugin/openWindow.html" class="code" title="function openWindow(pluginObj)">openWindow</a>	check for main window</li><li><a href="../../../src/plugins/@gvSelectPlugin/makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	makePanelControls - make plot panel for tab in main window</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="gvImageWindowPlugin.html" class="code" title="">gvImageWindowPlugin</a>	% gvImageWindowPlugin - Image Window Plugin Class for GIMBL-Vis</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function pluginObj = gvImageWindowPlugin(varargin)</a></li><li><a href="#_sub2" class="code">function setup(pluginObj, cntrlObj)</a></li><li><a href="#_sub3" class="code">function makeFig(pluginObj)</a></li><li><a href="#_sub4" class="code">function addWindowOpenedListenerToPlotPlugin(pluginObj)</a></li><li><a href="#_sub5" class="code">function addMouseMoveCallbackToPlotFig(pluginObj)</a></li><li><a href="#_sub6" class="code">function pathStr = getImageDirPath(pluginObj)</a></li><li><a href="#_sub7" class="code">function imageTypes = getImageTypes(pluginObj)</a></li><li><a href="#_sub8" class="code">function imageType = getImageTypeFromGUI(pluginObj)</a></li><li><a href="#_sub9" class="code">function dirList = getImageList(pluginObj)</a></li><li><a href="#_sub10" class="code">function updateImageTypeListControl(pluginObj)</a></li><li><a href="#_sub11" class="code">function str = helpStr()</a></li><li><a href="#_sub12" class="code">function Callback_image_panel_openWindowButton(src, evnt)</a></li><li><a href="#_sub13" class="code">function Callback_image_panel_imageDirBox(src, evnt)</a></li><li><a href="#_sub14" class="code">function Callback_image_panel_imageTypeMenu(src, evnt)</a></li><li><a href="#_sub15" class="code">function Callback_plotWindowOpened(src, evnt)</a></li><li><a href="#_sub16" class="code">function Callback_image_panel_imageRegexpBox(src, evnt)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%% gvImageWindowPlugin - Image Window Plugin Class for GIMBL-Vis</span>
+0002 <span class="comment">%</span>
+0003 <span class="comment">% Description: An object of this class becomes a property of gvView to provide</span>
+0004 <span class="comment">%              methods for a GIMBL-Vis image window.</span>
+0005 
+0006 classdef <a href="gvImageWindowPlugin.html" class="code" title="">gvImageWindowPlugin</a> &lt; <a href="../../../src/classes/gvWindowPlugin.html" class="code" title="">gvWindowPlugin</a>
+0007 
+0008   <span class="comment">%% Public properties %%</span>
+0009   properties
+0010     metadata = struct()
+0011     
+0012     handles = struct()
+0013   <span class="keyword">end</span>
+0014   
+0015   
+0016   properties (Constant)
+0017     pluginName = <span class="string">'Image'</span>;
+0018     pluginFieldName = <span class="string">'image'</span>;
+0019     
+0020     windowName = <span class="string">'Image Window'</span>;
+0021   <span class="keyword">end</span>
+0022   
+0023   
+0024   <span class="comment">%% Events %%</span>
+0025   events
+0026     
+0027   <span class="keyword">end</span>
+0028   
+0029   
+0030   <span class="comment">%% Public methods %%</span>
+0031   methods
+0032     
+0033     <a name="_sub0" href="#_subfunctions" class="code">function pluginObj = gvImageWindowPlugin(varargin)</a>
+0034       pluginObj@<a href="../../../src/classes/gvWindowPlugin.html" class="code" title="">gvWindowPlugin</a>(varargin{:});
+0035     <span class="keyword">end</span>
+0036     
+0037     
+0038     <a name="_sub1" href="#_subfunctions" class="code">function setup(pluginObj, cntrlObj)</a>
+0039       <a href="#_sub2" class="code" title="subfunction setup(pluginObj, cntrlObj)">setup</a>@<a href="../../../src/classes/gvWindowPlugin.html" class="code" title="">gvWindowPlugin</a>(pluginObj, cntrlObj);
+0040       
+0041       pluginObj.metadata.imageRegexp = pluginObj.controller.app.config.defaultImageRegexp;
+0042       
+0043       pluginObj.addWindowOpenedListenerToPlotPlugin();
+0044     <span class="keyword">end</span>
+0045 
+0046     <a href="openWindow.html" class="code" title="function openWindow(pluginObj)">openWindow</a>(pluginObj)
+0047     
+0048     panelHandle = <a href="makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>(pluginObj, parentHandle)
+0049 
+0050   <span class="keyword">end</span>
+0051   
+0052   
+0053   <span class="comment">%% Protected methods %%</span>
+0054   methods (Access = protected)
+0055     
+0056     <a name="_sub2" href="#_subfunctions" class="code">function makeFig(pluginObj)</a>
+0057       <span class="comment">% makeFig - make image window figure</span>
+0058       
+0059       plotPanPos = pluginObj.controller.plugins.plot.handles.fig.Position;
+0060       newPos = plotPanPos; <span class="comment">% same size as plot window</span>
+0061       newPos(1) = newPos(1)+newPos(3)+50; <span class="comment">% move right</span>
+0062       <span class="comment">%       newPos(3:4) = newPos(3:4)*.8; %shrink</span>
+0063       imageWindowHandle = figure(<span class="keyword">...</span>
+0064         <span class="string">'Name'</span>,[<span class="string">'GIMBL-VIS: '</span> pluginObj.windowName],<span class="keyword">...</span>
+0065         <span class="string">'Tag'</span>,pluginObj.figTag(),<span class="keyword">...</span>
+0066         <span class="string">'NumberTitle'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0067         <span class="string">'Position'</span>,newPos);
+0068       
+0069       axes(imageWindowHandle, <span class="string">'Position'</span>, [0 0 1 1], <span class="string">'XTickLabels'</span>,[], <span class="string">'YTickLabels'</span>,[],<span class="keyword">...</span>
+0070         <span class="string">'XTick'</span>,[], <span class="string">'YTick'</span>,[]);
+0071       
+0072       <span class="comment">% set image handle</span>
+0073       pluginObj.handles.fig = imageWindowHandle;
+0074     <span class="keyword">end</span>
+0075     
+0076     
+0077     <a name="_sub3" href="#_subfunctions" class="code">function addWindowOpenedListenerToPlotPlugin(pluginObj)</a>
+0078       <span class="keyword">if</span> isfield(pluginObj.controller.windowPlugins, <span class="string">'plot'</span>)
+0079         <span class="keyword">if</span> isfield(pluginObj.metadata, <span class="string">'plotWindowListener'</span>)
+0080           delete(pluginObj.metadata.plotWindowListener)
+0081         <span class="keyword">end</span>
+0082         
+0083         pluginObj.metadata.plotWindowListener = addlistener(pluginObj.controller.windowPlugins.plot, <span class="string">'windowOpened'</span>, @gvImageWindowPlugin.Callback_plotWindowOpened);
+0084         
+0085         pluginObj.vprintf(<span class="string">'gvImageWindowPlugin: Added window opened listener to plot plugin.\n'</span>);
+0086       <span class="keyword">end</span>
+0087     <span class="keyword">end</span>
+0088     
+0089     
+0090     <a name="_sub4" href="#_subfunctions" class="code">function addMouseMoveCallbackToPlotFig(pluginObj)</a>
+0091       <span class="keyword">if</span> isfield(pluginObj.controller.windowPlugins, <span class="string">'plot'</span>)
+0092         plotFigH = pluginObj.controller.windowPlugins.plot.handles.fig;
+0093         set(plotFigH, <span class="string">'WindowButtonMotionFcn'</span>, @gvImageWindowPlugin.Callback_mouseMove);
+0094         
+0095         pluginObj.vprintf(<span class="string">'gvImageWindowPlugin: Added WindowButtonMotionFcn callback to plot plugin figure.\n'</span>);
+0096       <span class="keyword">end</span>
+0097     <span class="keyword">end</span>
+0098     
+0099     
+0100     <a name="_sub5" href="#_subfunctions" class="code">function pathStr = getImageDirPath(pluginObj)</a>
+0101       boxObj = findobjReTag(<span class="string">'image_panel_imageDirBox'</span>);
+0102       pathStr = boxObj.String;
+0103       
+0104       cwd = pluginObj.controller.app.workingDir;
+0105       <span class="keyword">if</span> isempty(pathStr) <span class="comment">% if blank</span>
+0106         pathStr = cwd;
+0107       <span class="keyword">elseif</span> pathStr(1) == <span class="string">'.'</span> <span class="comment">% if rel path</span>
+0108         pathStr = fullfile(cwd, pathStr);
+0109       <span class="keyword">end</span>
+0110     <span class="keyword">end</span>
+0111 
+0112     
+0113     <a name="_sub6" href="#_subfunctions" class="code">function imageTypes = getImageTypes(pluginObj)</a>
+0114       imageDir = pluginObj.getImageDirPath;
+0115       
+0116       <span class="keyword">if</span> exist(imageDir, <span class="string">'dir'</span>)
+0117         <span class="comment">% Find images in imageDir</span>
+0118         dirList = pluginObj.getImageList();
+0119               
+0120         <span class="comment">% Parse image names</span>
+0121         imageFiles = regexp(dirList, pluginObj.metadata.imageRegexp, <span class="string">'tokens'</span>);
+0122         imageFiles = imageFiles(~cellfun(@isempty, imageFiles));
+0123         imageFiles = cellfunu(@(x) x{1}, imageFiles);
+0124         imageFiles = cellfunu(@(x) x{1}, imageFiles);
+0125         
+0126         <span class="keyword">if</span> isempty(imageFiles)
+0127           imageTypes = <span class="string">'[ None ]'</span>;
+0128         <span class="keyword">else</span>
+0129           imageTypes = unique(imageFiles);
+0130         <span class="keyword">end</span>
+0131       <span class="keyword">else</span>
+0132         imageTypes = <span class="string">'[ None ]'</span>;
+0133       <span class="keyword">end</span>
+0134     <span class="keyword">end</span>
+0135     
+0136     <a name="_sub7" href="#_subfunctions" class="code">function imageType = getImageTypeFromGUI(pluginObj)</a>
+0137       <span class="comment">% get menu handle</span>
+0138       imgTypeMenu = findobjReTag(<span class="string">'image_panel_imageTypeMenu'</span>);
+0139       
+0140       imageTypes = imgTypeMenu.String;
+0141       
+0142       imageType = imageTypes{imgTypeMenu.Value};
+0143     <span class="keyword">end</span>
+0144     
+0145     
+0146     <a name="_sub8" href="#_subfunctions" class="code">function dirList = getImageList(pluginObj)</a>
+0147       imageDir = pluginObj.getImageDirPath;
+0148       
+0149       dirList = lscell(imageDir, true);
+0150     <span class="keyword">end</span>
+0151     
+0152     
+0153     <a name="_sub9" href="#_subfunctions" class="code">function updateImageTypeListControl(pluginObj)</a>
+0154       <span class="comment">% get menu handle</span>
+0155       imgTypeMenu = findobjReTag(<span class="string">'image_panel_imageTypeMenu'</span>);
+0156       
+0157       <span class="comment">% update menu string with image types from dir</span>
+0158       imgTypeMenu.String = pluginObj.getImageTypes();
+0159     <span class="keyword">end</span>
+0160     
+0161   <span class="keyword">end</span>
+0162   
+0163   <span class="comment">%% Static %%</span>
+0164   methods (Static, Hidden)
+0165     
+0166     <a name="_sub10" href="#_subfunctions" class="code">function str = helpStr()</a>
+0167       str = [gvImageWindowPlugin.pluginName <span class="string">':\n'</span>,<span class="keyword">...</span>
+0168         <span class="string">'Use the Select tab or mouse over a Plot window data point to choose an '</span>,<span class="keyword">...</span>
+0169         <span class="string">'image to display.\n'</span>
+0170         ];
+0171     <span class="keyword">end</span>
+0172     
+0173     
+0174     <span class="comment">%% Callbacks %%</span>
+0175     <a name="_sub11" href="#_subfunctions" class="code">function Callback_image_panel_openWindowButton(src, evnt)</a>
+0176       pluginObj = src.UserData.pluginObj; <span class="comment">% window plugin</span>
+0177       
+0178       pluginObj.openWindow();
+0179     <span class="keyword">end</span>
+0180     
+0181     
+0182     <a name="_sub12" href="#_subfunctions" class="code">function Callback_image_panel_imageDirBox(src, evnt)</a>
+0183       pluginObj = src.UserData.pluginObj; <span class="comment">% window plugin</span>
+0184       
+0185       pluginObj.updateImageTypeListControl();
+0186     <span class="keyword">end</span>
+0187     
+0188     
+0189     <a name="_sub13" href="#_subfunctions" class="code">function Callback_image_panel_imageTypeMenu(src, evnt)</a>
+0190 <span class="comment">%       pluginObj = src.UserData.pluginObj; % window plugin</span>
+0191     <span class="keyword">end</span>
+0192     
+0193     <a name="_sub14" href="#_subfunctions" class="code">function Callback_plotWindowOpened(src, evnt)</a>
+0194       pluginObj = src.controller.windowPlugins.image;
+0195       
+0196       pluginObj.addMouseMoveCallbackToPlotFig();
+0197     <span class="keyword">end</span>
+0198   
+0199     
+0200     <a name="_sub15" href="#_subfunctions" class="code">function Callback_image_panel_imageRegexpBox(src, evnt)</a>
+0201       pluginObj = src.UserData.pluginObj; <span class="comment">% window plugin</span>
+0202       
+0203       <span class="comment">% update imageRegexp</span>
+0204       pluginObj.metadata.imageRegexp = src.String;
+0205       
+0206       pluginObj.updateImageTypeListControl();
+0207     <span class="keyword">end</span>
+0208     
+0209     <a href="Callback_mouseMove.html" class="code" title="function Callback_mouseMove(src, evnt)">Callback_mouseMove</a>(src, evnt)
+0210   <span class="keyword">end</span>
+0211   
+0212 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

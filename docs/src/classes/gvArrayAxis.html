@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of gvArrayAxis</title>
+  <meta name="keywords" content="gvArrayAxis">
+  <meta name="description" content="% gvArrayAxis">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- menu.html classes -->
+<h1>gvArrayAxis
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>% gvArrayAxis</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% gvArrayAxis
+
+ Purpose: stores axis information (see superclass 'MDDAxis'), but also stores
+ axis type and plot info.
+
+ Notes:
+   Axis Type: stored in property 'axismeta.axisType'. Example is 'dataType'.
+
+   If axisType=='dataType', then this axis stores different data types,
+   including index, numeric, ordinal, and categorical. The data type for
+   each axis is stored in 'axismeta.dataType'. Plot metadata for each
+   data type index is stored in 'axismeta.plotInfo' in cells corresponding 
+   to the given data type index. Categorical data may store data labels,
+   along with corresponding marker colors and styles.
+
+ Author: Erik Roberts</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="gvArrayAxis.html" class="code" title="">gvArrayAxis</a>	% gvArrayAxis</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="gvArray.html" class="code" title="">gvArray</a>	% gvArray - GIMBL-Vis multidimensional data storage class</li><li><a href="gvArrayAxis.html" class="code" title="">gvArrayAxis</a>	% gvArrayAxis</li><li><a href="../../src/plugins/@gvAnalysisPlugin/applyFn.html" class="code" title="function applyFn(pluginObj)">applyFn</a>	</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function axObj = gvArrayAxis(varargin)</a></li><li><a href="#_sub2" class="code">function vals = valueAsStr(axObj, ind)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%% gvArrayAxis</span>
+0002 <span class="comment">%</span>
+0003 <span class="comment">% Purpose: stores axis information (see superclass 'MDDAxis'), but also stores</span>
+0004 <span class="comment">% axis type and plot info.</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">% Notes:</span>
+0007 <span class="comment">%   Axis Type: stored in property 'axismeta.axisType'. Example is 'dataType'.</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">%   If axisType=='dataType', then this axis stores different data types,</span>
+0010 <span class="comment">%   including index, numeric, ordinal, and categorical. The data type for</span>
+0011 <span class="comment">%   each axis is stored in 'axismeta.dataType'. Plot metadata for each</span>
+0012 <span class="comment">%   data type index is stored in 'axismeta.plotInfo' in cells corresponding</span>
+0013 <span class="comment">%   to the given data type index. Categorical data may store data labels,</span>
+0014 <span class="comment">%   along with corresponding marker colors and styles.</span>
+0015 <span class="comment">%</span>
+0016 <span class="comment">% Author: Erik Roberts</span>
+0017 
+0018 classdef <a href="gvArrayAxis.html" class="code" title="">gvArrayAxis</a> &lt; MDDAxis
+0019   
+0020   methods
+0021     
+0022     <a name="_sub0" href="#_subfunctions" class="code">function axObj = gvArrayAxis(varargin)</a>
+0023       <span class="comment">% gvArrayAxis - constructor</span>
+0024       <span class="comment">%</span>
+0025       <span class="comment">% Usage:</span>
+0026       <span class="comment">%   obj = gvArrayAxis()</span>
+0027       <span class="comment">%   obj = gvArrayAxis(axis_vals)</span>
+0028       <span class="comment">%   obj = gvArrayAxis(axis_vals, axis_name)</span>
+0029       <span class="comment">%   obj = gvArrayAxis(axis_vals, axis_name, axismeta)</span>
+0030             
+0031       axObj@MDDAxis(varargin{:});
+0032     <span class="keyword">end</span>
+0033     
+0034     <a name="_sub1" href="#_subfunctions" class="code">function vals = valueAsStr(axObj, ind)</a>
+0035        vals = axObj.getvalue_char(ind);
+0036     <span class="keyword">end</span>
+0037     
+0038   <span class="keyword">end</span>
+0039   
+0040 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of makeMenu</title>
+  <meta name="keywords" content="makeMenu">
+  <meta name="description" content="% makeMainWindowMenu">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- ../menu.html classes --><!-- menu.html @gvMainWindowPlugin -->
+<h1>makeMenu
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>% makeMainWindowMenu</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function makeMenu(pluginObj, parentHandle) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% makeMainWindowMenu
+
+ Input: parentHandle - handle for uimenu parent
+
+ Notes: These handles are arranged in a cell matrix corresponding to the 
+        positions in the toolbar and menu columns. The first row contains the 
+        toolbar titles.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="gvMainWindowPlugin.html" class="code" title="">gvMainWindowPlugin</a>	% gvMainWindowPlugin - Main Window Class for GIMBL-Vis</li><li><a href="openWindow.html" class="code" title="function openWindow(pluginObj)">openWindow</a>	check for main window</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function menuColHandle = makeMenuCol()</a></li><li><a href="#_sub2" class="code">function makeMenuRow()</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function makeMenu(pluginObj, parentHandle)</a>
+0002 <span class="comment">%% makeMainWindowMenu</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">% Input: parentHandle - handle for uimenu parent</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">% Notes: These handles are arranged in a cell matrix corresponding to the</span>
+0007 <span class="comment">%        positions in the toolbar and menu columns. The first row contains the</span>
+0008 <span class="comment">%        toolbar titles.</span>
+0009 
+0010 uiMenuHandles = {};
+0011 menuCol = 0;
+0012 menuRow = 0;
+0013 
+0014 <span class="comment">%% File</span>
+0015 menuLabel = <span class="string">'File'</span>;
+0016 menuHandleStr = lower(menuLabel);
+0017 rowParent = <a href="#_sub1" class="code" title="subfunction menuColHandle = makeMenuCol()">makeMenuCol</a>();
+0018 
+0019 handleStr = <span class="string">'changeWD'</span>;
+0020 menuLabel = <span class="string">'Change Working Directory'</span>;
+0021 <a href="#_sub2" class="code" title="subfunction makeMenuRow()">makeMenuRow</a>();
+0022 
+0023 handleStr = <span class="string">'load'</span>;
+0024 menuLabel = <span class="string">'Load Object'</span>;
+0025 <a href="#_sub2" class="code" title="subfunction makeMenuRow()">makeMenuRow</a>();
+0026 
+0027 handleStr = <span class="string">'importMdData'</span>;
+0028 menuLabel = <span class="string">'Import Multidimensional Data'</span>;
+0029 <a href="#_sub2" class="code" title="subfunction makeMenuRow()">makeMenuRow</a>();
+0030 
+0031 handleStr = <span class="string">'importTable'</span>;
+0032 menuLabel = <span class="string">'Import Tabular Data'</span>;
+0033 <a href="#_sub2" class="code" title="subfunction makeMenuRow()">makeMenuRow</a>();
+0034 
+0035 handleStr = <span class="string">'saveGV'</span>;
+0036 menuLabel = <span class="string">'Save GV Object'</span>;
+0037 <a href="#_sub2" class="code" title="subfunction makeMenuRow()">makeMenuRow</a>();
+0038 
+0039 handleStr = <span class="string">'saveHC'</span>;
+0040 menuLabel = <span class="string">'Save Hypercube as MDD Object'</span>;
+0041 <a href="#_sub2" class="code" title="subfunction makeMenuRow()">makeMenuRow</a>();
+0042 
+0043 handleStr = <span class="string">'evalInBase'</span>;
+0044 menuLabel = <span class="string">'Evaluate GV Object in Command Window'</span>;
+0045 <a href="#_sub2" class="code" title="subfunction makeMenuRow()">makeMenuRow</a>();
+0046 
+0047 
+0048 <span class="comment">%% Model</span>
+0049 menuLabel = <span class="string">'Model'</span>;
+0050 menuHandleStr = lower(menuLabel);
+0051 rowParent = <a href="#_sub1" class="code" title="subfunction menuColHandle = makeMenuCol()">makeMenuCol</a>();
+0052 
+0053 handleStr = <span class="string">'loadFromWS'</span>;
+0054 menuLabel = <span class="string">'Load/Import Data from Workspace'</span>;
+0055 <a href="#_sub2" class="code" title="subfunction makeMenuRow()">makeMenuRow</a>();
+0056 
+0057 <span class="comment">% TODO fix MDDRef to allow merge</span>
+0058 <span class="comment">% handleStr = 'mergeHypercubes';</span>
+0059 <span class="comment">% menuLabel = 'Merge Hypercube with Active Hypercube';</span>
+0060 <span class="comment">% makeMenuRow();</span>
+0061 
+0062 <span class="comment">% handleStr = 'mergeFromWS';</span>
+0063 <span class="comment">% menuLabel = 'Merge Object From Workspace with Active Hypercube';</span>
+0064 <span class="comment">% makeMenuRow();</span>
+0065 
+0066 handleStr = <span class="string">'deleteHypercube'</span>;
+0067 menuLabel = <span class="string">'Delete Active Hypercube'</span>;
+0068 <a href="#_sub2" class="code" title="subfunction makeMenuRow()">makeMenuRow</a>();
+0069 
+0070 
+0071 <span class="comment">%% View</span>
+0072 menuLabel = <span class="string">'View'</span>;
+0073 menuHandleStr = lower(menuLabel);
+0074 rowParent = <a href="#_sub1" class="code" title="subfunction menuColHandle = makeMenuCol()">makeMenuCol</a>();
+0075 
+0076 handleStr = <span class="string">'setFontSize'</span>;
+0077 menuLabel = <span class="string">'Set Font Size'</span>;
+0078 <a href="#_sub2" class="code" title="subfunction makeMenuRow()">makeMenuRow</a>();
+0079 
+0080 
+0081 handleStr = <span class="string">'reset'</span>;
+0082 menuLabel = <span class="string">'Reset Window'</span>;
+0083 <a href="#_sub2" class="code" title="subfunction makeMenuRow()">makeMenuRow</a>();
+0084 
+0085 
+0086 <span class="comment">%% Help</span>
+0087 menuLabel = <span class="string">'Help'</span>;
+0088 menuHandleStr = lower(menuLabel);
+0089 rowParent = <a href="#_sub1" class="code" title="subfunction menuColHandle = makeMenuCol()">makeMenuCol</a>();
+0090 
+0091 handleStr = <span class="string">'pluginHelp'</span>;
+0092 menuLabel = <span class="string">'Current Plugin Help in Command Window'</span>;
+0093 <a href="#_sub2" class="code" title="subfunction makeMenuRow()">makeMenuRow</a>();
+0094 
+0095 handleStr = <span class="string">'onlineHelp'</span>;
+0096 menuLabel = <span class="string">'Online Help in Browser'</span>;
+0097 <a href="#_sub2" class="code" title="subfunction makeMenuRow()">makeMenuRow</a>();
+0098 
+0099 handleStr = <span class="string">'pluginDocs'</span>;
+0100 menuLabel = <span class="string">'Current Plugin Reference page in Help browser'</span>;
+0101 <a href="#_sub2" class="code" title="subfunction makeMenuRow()">makeMenuRow</a>();
+0102 
+0103 
+0104 
+0105 <span class="comment">%% Store Handles</span>
+0106 pluginObj.handles.menu = uiMenuHandles;
+0107 
+0108 
+0109 <span class="comment">%% Nested Fn</span>
+0110   <a name="_sub1" href="#_subfunctions" class="code">function menuColHandle = makeMenuCol()</a>
+0111     menuCol = menuCol + 1;
+0112     menuRow = 0;
+0113     
+0114     thisTag = [pluginObj.pluginFieldName <span class="string">'_menu_'</span> menuHandleStr];
+0115     
+0116     menuColHandle = uimenu(<span class="keyword">...</span>
+0117       <span class="string">'Label'</span>,menuLabel,<span class="keyword">...</span>
+0118       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0119       <span class="string">'Callback'</span>,[],<span class="keyword">...</span>
+0120       <span class="string">'Parent'</span>,parentHandle<span class="keyword">...</span>
+0121       );
+0122     uiMenuHandles{1,menuCol} = menuColHandle;
+0123   <span class="keyword">end</span>
+0124 
+0125 
+0126   <a name="_sub2" href="#_subfunctions" class="code">function makeMenuRow()</a>
+0127     menuRow = menuRow + 1;
+0128     
+0129     thisTag = [pluginObj.pluginFieldName <span class="string">'_menu_'</span> menuHandleStr <span class="string">'_'</span> handleStr];
+0130     
+0131     uiMenuHandles{menuRow,menuCol} = uimenu(<span class="keyword">...</span>
+0132       <span class="string">'Label'</span>,menuLabel,<span class="keyword">...</span>
+0133       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0134       <span class="string">'Callback'</span>,pluginObj.callbackHandle(thisTag),<span class="keyword">...</span>
+0135       <span class="string">'UserData'</span>,pluginObj.userData,<span class="keyword">...</span>
+0136       <span class="string">'Parent'</span>,rowParent<span class="keyword">...</span>
+0137       );
+0138   <span class="keyword">end</span>
+0139 
+0140 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of gvArrayRef</title>
+  <meta name="keywords" content="gvArrayRef">
+  <meta name="description" content="% gvArrayRef - GIMBL-Vis multidimensional data handle class wrapper for gvArray">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- menu.html classes -->
+<h1>gvArrayRef
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>% gvArrayRef - GIMBL-Vis multidimensional data handle class wrapper for gvArray</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% gvArrayRef - GIMBL-Vis multidimensional data handle class wrapper for gvArray
+
+ Description: The gvArrayRef class inherets from the MDDRef class. It uses  
+              gvArray instead of MDD as its value object property.
+
+ Author: Erik Roberts</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="gvArray.html" class="code" title="">gvArray</a>	% gvArray - GIMBL-Vis multidimensional data storage class</li><li><a href="gvArrayRef.html" class="code" title="">gvArrayRef</a>	% gvArrayRef - GIMBL-Vis multidimensional data handle class wrapper for gvArray</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../src/classes/@gv/gv.html" class="code" title="">gv</a>	% gv - main class for GIMBL-Vis</li><li><a href="../../src/classes/@gvModel/gvModel.html" class="code" title="">gvModel</a>	% gvModel - Model class for the GIMBL-Vis Model-View-Controller</li><li><a href="../../src/classes/@gvModel/importDataFromWorkspace.html" class="code" title="function importDataFromWorkspace(modelObj, data, fld, staticBool)">importDataFromWorkspace</a>	importDataFromWorkspace</li><li><a href="../../src/classes/@gvModel/importDsData.html" class="code" title="function importDsData(modelObj, src, varargin)">importDsData</a>	importDsData - import dynasim data</li><li><a href="gvArrayRef.html" class="code" title="">gvArrayRef</a>	% gvArrayRef - GIMBL-Vis multidimensional data handle class wrapper for gvArray</li><li><a href="../../src/plugins/@gvAnalysisPlugin/applyFn.html" class="code" title="function applyFn(pluginObj)">applyFn</a>	</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function obj = gvArrayRef(varargin)</a></li><li><a href="#_sub2" class="code">function gvArrayCast(obj)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%% gvArrayRef - GIMBL-Vis multidimensional data handle class wrapper for gvArray</span>
+0002 <span class="comment">%</span>
+0003 <span class="comment">% Description: The gvArrayRef class inherets from the MDDRef class. It uses</span>
+0004 <span class="comment">%              gvArray instead of MDD as its value object property.</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">% Author: Erik Roberts</span>
+0007 
+0008 classdef <a href="gvArrayRef.html" class="code" title="">gvArrayRef</a> &lt; MDDRef &amp; matlab.mixin.Copyable
+0009   
+0010   properties (Access = private, SetObservable) <span class="comment">% allows listener callback, aborts if set to current value</span>
+0011     valueObj
+0012     valueObjClass = <a href="gvArray.html" class="code" title="">gvArray</a>
+0013   <span class="keyword">end</span>
+0014   
+0015   methods
+0016     
+0017     <a name="_sub0" href="#_subfunctions" class="code">function obj = gvArrayRef(varargin)</a>
+0018       metaObj = ?gvArrayRef;
+0019       valueObjClass = metaObj.PropertyList(strcmp(<span class="string">'valueObjClass'</span>, {metaObj.PropertyList.Name})).DefaultValue;
+0020       
+0021       obj@MDDRef(valueObjClass, varargin{:});
+0022     <span class="keyword">end</span>
+0023     
+0024     
+0025     <a name="_sub1" href="#_subfunctions" class="code">function gvArrayCast(obj)</a>
+0026       obj.valueObj = <a href="gvArray.html" class="code" title="">gvArray</a>(obj.valueObj);
+0027     <span class="keyword">end</span>
+0028     
+0029   <span class="keyword">end</span>
+0030   
+0031 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

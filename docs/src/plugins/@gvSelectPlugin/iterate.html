@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of iterate</title>
+  <meta name="keywords" content="iterate">
+  <meta name="description" content="const var">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- # plugins --><!-- menu.html @gvSelectPlugin -->
+<h1>iterate
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>const var</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function iterate(pluginObj) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> const var</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="gvSelectPlugin.html" class="code" title="">gvSelectPlugin</a>	% gvSelectPlugin - Select GUI Plugin Class for GIMBL-Vis</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function incrementSliders()</a></li><li><a href="#_sub2" class="code">function ind = recursiveIterate(ind, maxInd, currI)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function iterate(pluginObj)</a>
+0002 <span class="comment">% const var</span>
+0003 hObject = findobjReTag(<span class="string">'select_panel_iterateToggle'</span>);
+0004 nDimVals = cellfun(@length, pluginObj.controller.activeHypercube.axisValues);
+0005 sliderHandles = pluginObj.sliderHandles;
+0006 
+0007 <span class="comment">% Loop</span>
+0008 iterBool = hObject.Value;
+0009 <span class="keyword">while</span> iterBool
+0010   tic
+0011   
+0012   <span class="comment">% Changing Vars</span>
+0013   disabledDims = pluginObj.view.dynamic.disabledDims;
+0014   viewDims = pluginObj.view.dynamic.viewDims;
+0015 
+0016   <span class="keyword">if</span> sum(viewDims) &gt; 2
+0017     viewDims(:) = 0;
+0018   <span class="keyword">end</span>
+0019   incrDims = ~viewDims;
+0020   
+0021   <a href="#_sub1" class="code" title="subfunction incrementSliders()">incrementSliders</a>();
+0022   
+0023   <span class="comment">% Check for off</span>
+0024   iterBool = hObject.Value;
+0025   
+0026   <span class="comment">% Check for delay time</span>
+0027   delayBoxObj = findobjReTag(<span class="string">'select_panel_delayValueBox'</span>);
+0028   <span class="keyword">try</span>
+0029     delayTime = delayBoxObj.Value;
+0030   <span class="keyword">catch</span>
+0031     <span class="keyword">if</span> ~exist(delayTime,<span class="string">'var'</span>)
+0032       delayTime = .1;
+0033     <span class="keyword">end</span>
+0034   <span class="keyword">end</span>
+0035     iterTime = toc;
+0036     delayTimeFinal = max( (delayTime - iterTime), 0);
+0037     pause(delayTimeFinal)
+0038 <span class="keyword">end</span>
+0039 
+0040 <span class="comment">%% Sub functions</span>
+0041   <a name="_sub1" href="#_subfunctions" class="code">function incrementSliders()</a>
+0042     axInd = pluginObj.view.dynamic.sliderVals;
+0043     axInd(disabledDims) = nDimVals(disabledDims); <span class="comment">% set disabled dims to max</span>
+0044     
+0045     <span class="comment">%% New slider position</span>
+0046     <span class="keyword">if</span> any(axInd &lt; nDimVals) <span class="comment">% Increment</span>
+0047       <span class="comment">% find new axis indices</span>
+0048       axIndNew = <a href="#_sub2" class="code" title="subfunction ind = recursiveIterate(ind, maxInd, currI)">recursiveIterate</a>(axInd, nDimVals, 1);
+0049       incrAxLogical = axIndNew - axInd; <span class="comment">% includes resets as negatives and increments as 1, all doubles</span>
+0050       resetAx = incrAxLogical &lt; 0;
+0051       incrAxLogical(resetAx) = 0; <span class="comment">% remove resets from incr</span>
+0052       incrAxLogical = logical(incrAxLogical);
+0053       
+0054       <span class="comment">% change slider that icnrements</span>
+0055       sliderObject = sliderHandles(incrAxLogical);
+0056       sliderObject.Value = sliderObject.Value + sliderObject.SliderStep(1)*(sliderObject.Max-sliderObject.Min);
+0057       
+0058       <span class="comment">% Callback slider</span>
+0059       pluginObj.Callback_select_panel_slider(sliderObject, []);
+0060     <span class="keyword">else</span>
+0061       resetAx = incrDims;
+0062       resetAx(disabledDims) = 0;
+0063     <span class="keyword">end</span> <span class="comment">%if</span>
+0064     
+0065     <span class="comment">%% Reset any sliders</span>
+0066     <span class="comment">% loop over slider handles and set value to min</span>
+0067     <span class="keyword">if</span> any(resetAx)
+0068       <span class="keyword">for</span> iSlider = find(resetAx) <span class="comment">%logical to indices</span>
+0069         sliderObject = sliderHandles(iSlider);
+0070         sliderObject.Value = 1;
+0071         
+0072         pluginObj.Callback_select_panel_slider(sliderObject, []);
+0073       <span class="keyword">end</span>
+0074     <span class="keyword">end</span>
+0075     
+0076     <span class="comment">%% Update plot and image</span>
+0077     <span class="comment">% replot</span>
+0078     notify(pluginObj.controller, <span class="string">'doPlot'</span>);
+0079     
+0080   <span class="keyword">end</span> <span class="comment">%incrementSliders</span>
+0081 
+0082 <span class="keyword">end</span> <span class="comment">%main fun</span>
+0083 
+0084 <span class="comment">%% Private functions</span>
+0085 <a name="_sub2" href="#_subfunctions" class="code">function ind = recursiveIterate(ind, maxInd, currI)</a>
+0086 
+0087 <span class="keyword">if</span> currI &lt; length(ind)
+0088   <span class="keyword">if</span> any(ind(currI+1:end) ~= maxInd(currI+1:end))
+0089     currI = currI+1;
+0090     ind = <a href="#_sub2" class="code" title="subfunction ind = recursiveIterate(ind, maxInd, currI)">recursiveIterate</a>(ind, maxInd, currI);
+0091   <span class="keyword">else</span>
+0092     ind(currI) = ind(currI)+1;
+0093     ind(currI+1:end) = 1;
+0094   <span class="keyword">end</span>
+0095 <span class="keyword">else</span>
+0096   ind(currI) = ind(currI)+1;
+0097 <span class="keyword">end</span>
+0098 
+0099 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

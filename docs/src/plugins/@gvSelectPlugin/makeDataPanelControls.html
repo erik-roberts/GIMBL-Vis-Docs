@@ -1,0 +1,297 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of makeDataPanelControls</title>
+  <meta name="keywords" content="makeDataPanelControls">
+  <meta name="description" content="% makeHypercubePanelControls">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- # plugins --><!-- menu.html @gvSelectPlugin -->
+<h1>makeDataPanelControls
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>% makeHypercubePanelControls</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function uiControlsHandles = makeDataPanelControls(pluginObj, parentHandle) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% makeHypercubePanelControls
+
+ Input: parentHandle - handle for uicontrol parent
+ Outputs:
+   dataPanelheight - height in px of all rows</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="gvSelectPlugin.html" class="code" title="">gvSelectPlugin</a>	% gvSelectPlugin - Select GUI Plugin Class for GIMBL-Vis</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function makeActiveHypercubeEdit(parentHandle)</a></li><li><a href="#_sub2" class="code">function makeDataPanelGrid(parentHandle)</a></li><li><a href="#_sub3" class="code">function makeVarCol(parentHandle)</a></li><li><a href="#_sub4" class="code">function makeValCol(parentHandle)</a></li><li><a href="#_sub5" class="code">function makeViewCol(parentHandle)</a></li><li><a href="#_sub6" class="code">function makeLockCol(parentHandle)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function uiControlsHandles = makeDataPanelControls(pluginObj, parentHandle)</a>
+0002 <span class="comment">%% makeHypercubePanelControls</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">% Input: parentHandle - handle for uicontrol parent</span>
+0005 <span class="comment">% Outputs:</span>
+0006 <span class="comment">%   dataPanelheight - height in px of all rows</span>
+0007 
+0008 nDims = pluginObj.controller.activeHypercube.ndims;
+0009 axisNames = pluginObj.controller.activeHypercube.axisNames;
+0010 
+0011 <span class="comment">% TODO figure out way to remove this</span>
+0012 <span class="keyword">if</span> nDims ~= length(pluginObj.view.dynamic.sliderVals)
+0013   pluginObj.initializeSliderVals();
+0014 <span class="keyword">end</span>
+0015 
+0016 <span class="comment">% Notes</span>
+0017 <span class="comment">% - set the container to be based on amount of dims</span>
+0018 
+0019 spacing = 10; <span class="comment">% px</span>
+0020 padding = 5; <span class="comment">% px</span>
+0021 
+0022 fontSize = pluginObj.fontSize;
+0023 fontWidth = pluginObj.fontWidth;
+0024 fontHeight = pluginObj.fontHeight;
+0025 pxHeight = fontHeight + spacing; <span class="comment">% px</span>
+0026 
+0027 uiControlsHandles = struct();
+0028 
+0029 thisTag = pluginObj.panelTag(<span class="string">'dataPanel'</span>);
+0030 dataPanel = uix.Panel(<span class="keyword">...</span>
+0031   <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0032   <span class="string">'Parent'</span>, parentHandle,<span class="keyword">...</span>
+0033   <span class="string">'Title'</span>, <span class="string">'Active Hypercube Data'</span>,<span class="keyword">...</span>
+0034   <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0035   <span class="string">'FontSize'</span>,fontSize <span class="keyword">...</span>
+0036   );
+0037 
+0038 dataVbox = uix.VBox(<span class="string">'Parent'</span>,dataPanel); <span class="comment">% make box to hold 1)titles and 2)data</span>
+0039 
+0040 uiControlsHandles.parent = dataVbox;
+0041 
+0042 <span class="comment">% 1) Name</span>
+0043 <a href="#_sub1" class="code" title="subfunction makeActiveHypercubeEdit(parentHandle)">makeActiveHypercubeEdit</a>(dataVbox)
+0044 
+0045 <span class="comment">% 2) Titles</span>
+0046 pluginObj.makeDataPanelTitles(dataVbox);
+0047 
+0048 <span class="comment">% 3) Data</span>
+0049 thisTag = pluginObj.panelTag(<span class="string">'dataScrollingPanel'</span>);
+0050 dataScrollingPanel = uix.ScrollingPanel(<span class="keyword">...</span>
+0051   <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0052   <span class="string">'Parent'</span>, dataVbox<span class="keyword">...</span>
+0053   );
+0054 uiControlsHandles.dataScrollingPanel = dataScrollingPanel;
+0055 
+0056 <a href="#_sub2" class="code" title="subfunction makeDataPanelGrid(parentHandle)">makeDataPanelGrid</a>(dataScrollingPanel);
+0057 
+0058 <span class="comment">%% Set layout sizes</span>
+0059 set(dataVbox, <span class="string">'Heights'</span>,[fontHeight*2, fontHeight*2,-1]);
+0060 dataPanelheight = (pxHeight+spacing)*nDims + padding*2;
+0061 set(dataScrollingPanel, <span class="string">'Heights'</span>,dataPanelheight);
+0062 
+0063 
+0064 <span class="comment">%% Nested fn</span>
+0065   <a name="_sub1" href="#_subfunctions" class="code">function makeActiveHypercubeEdit(parentHandle)</a>
+0066     hypercubeHbox = uix.HBox(<span class="string">'Parent'</span>,parentHandle, <span class="string">'Spacing'</span>,spacing, <span class="string">'Padding'</span>,padding);
+0067     
+0068     <span class="comment">% activeHypercubeLabel</span>
+0069     thisTag = pluginObj.panelTag(<span class="string">'activeHypercubeLabel'</span>);
+0070     uiControlsHandles.activeHypercubeText = uicontrol(<span class="keyword">...</span>
+0071       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0072       <span class="string">'Style'</span>,<span class="string">'text'</span>,<span class="keyword">...</span>
+0073       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0074       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0075       <span class="string">'String'</span>,<span class="string">'Name:'</span>,<span class="keyword">...</span>
+0076       <span class="string">'Parent'</span>,hypercubeHbox);
+0077     
+0078     <span class="comment">% activeHypercubeText</span>
+0079     thisTag = pluginObj.panelTag(<span class="string">'activeHypercubeText'</span>);
+0080     uiControlsHandles.activeHypercubeNameEdit = uicontrol(<span class="keyword">...</span>
+0081       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0082       <span class="string">'Style'</span>,<span class="string">'text'</span>,<span class="keyword">...</span>
+0083       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0084       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0085       <span class="string">'String'</span>,pluginObj.controller.activeHypercubeName,<span class="keyword">...</span>
+0086       <span class="string">'Callback'</span>,pluginObj.callbackHandle(thisTag),<span class="keyword">...</span>
+0087       <span class="string">'UserData'</span>,pluginObj.userData,<span class="keyword">...</span>
+0088       <span class="string">'Parent'</span>,hypercubeHbox);
+0089     
+0090     set(hypercubeHbox, <span class="string">'Widths'</span>, [-1,-1])
+0091   <span class="keyword">end</span>
+0092 
+0093   <a name="_sub2" href="#_subfunctions" class="code">function makeDataPanelGrid(parentHandle)</a>
+0094     <span class="comment">% Make grid of nDims x 4</span>
+0095     thisTag = pluginObj.panelTag(<span class="string">'dataPanelGrid'</span>);
+0096     dataPanelGrid = uix.Grid(<span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0097       <span class="string">'Parent'</span>,parentHandle, <span class="string">'Spacing'</span>,spacing, <span class="string">'Padding'</span>,padding);
+0098     uiControlsHandles.dataPanelGrid = dataPanelGrid;
+0099     
+0100     <span class="comment">% grid (:,1)</span>
+0101     <a href="#_sub3" class="code" title="subfunction makeVarCol(parentHandle)">makeVarCol</a>(dataPanelGrid)
+0102     
+0103     <span class="comment">% grid (:,2)</span>
+0104     <a href="#_sub4" class="code" title="subfunction makeValCol(parentHandle)">makeValCol</a>(dataPanelGrid)
+0105     
+0106     <span class="comment">% grid (:,3)</span>
+0107     <a href="#_sub5" class="code" title="subfunction makeViewCol(parentHandle)">makeViewCol</a>(dataPanelGrid)
+0108     
+0109     <span class="comment">% grid (:,4)</span>
+0110     <a href="#_sub6" class="code" title="subfunction makeLockCol(parentHandle)">makeLockCol</a>(dataPanelGrid)
+0111     
+0112     <span class="comment">% Set grid sizes</span>
+0113     set(dataPanelGrid, <span class="string">'Heights'</span>,pxHeight*ones(1, nDims), <span class="string">'Widths'</span>,[-3,-5,fontWidth*6,fontWidth*6])
+0114   <span class="keyword">end</span>
+0115 
+0116 
+0117   <a name="_sub3" href="#_subfunctions" class="code">function makeVarCol(parentHandle)</a>
+0118     <span class="comment">% Row 1</span>
+0119     <span class="comment">%   titles from 'makeDataPanelTitles.m'</span>
+0120     
+0121     <span class="comment">% Row 2:nDims+1</span>
+0122     <span class="keyword">for</span> n = 1:nDims
+0123       <span class="comment">% varText1</span>
+0124       nStr = num2str(n);
+0125       thisTag = pluginObj.panelTag([<span class="string">'varText'</span> nStr]);
+0126       uiControlsHandles.([<span class="string">'varText'</span> nStr]) = uicontrol(<span class="keyword">...</span>
+0127         <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0128         <span class="string">'Style'</span>,<span class="string">'text'</span>,<span class="keyword">...</span>
+0129         <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0130         <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0131         <span class="string">'String'</span>, axisNames{n},<span class="keyword">...</span>
+0132         <span class="string">'UserData'</span>,pluginObj.userData,<span class="keyword">...</span>
+0133         <span class="string">'Callback'</span>,pluginObj.callbackHandle(pluginObj.panelTag(<span class="string">'varText'</span>)),<span class="keyword">...</span>
+0134         <span class="string">'Parent'</span>,parentHandle);
+0135     <span class="keyword">end</span>
+0136   <span class="keyword">end</span>
+0137 
+0138 
+0139   <a name="_sub4" href="#_subfunctions" class="code">function makeValCol(parentHandle)</a>
+0140     <span class="comment">% Row 2:nDims+1</span>
+0141     <span class="keyword">for</span> n = 1:nDims
+0142       nStr = num2str(n);
+0143       
+0144       <span class="comment">% sliderHbox</span>
+0145       sliderHbox = uix.HBox(<span class="string">'Parent'</span>,parentHandle, <span class="string">'Spacing'</span>,spacing);
+0146 
+0147       sliderValInd = pluginObj.view.dynamic.sliderVals(n);
+0148       
+0149       thisSliderTag = pluginObj.panelTag([<span class="string">'slider'</span> nStr]);
+0150       thisEditTag = pluginObj.panelTag([<span class="string">'sliderVal'</span> nStr]);
+0151       
+0152       <span class="comment">% slider</span>
+0153       thisMax = pluginObj.controller.activeHypercube.size(n);
+0154       <span class="keyword">if</span> thisMax == 1
+0155         thisFracIncrOne = 0;
+0156       <span class="keyword">else</span>
+0157         thisFracIncrOne = 1/(thisMax-1); <span class="comment">% frac change for increment of 1 index</span>
+0158       <span class="keyword">end</span>
+0159       thisTag = thisSliderTag;
+0160       uiControlsHandles.([<span class="string">'slider'</span> nStr]) = uicontrol(<span class="keyword">...</span>
+0161         <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0162         <span class="string">'Style'</span>,<span class="string">'slider'</span>,<span class="keyword">...</span>
+0163         <span class="string">'Min'</span>,1,<span class="keyword">...</span>
+0164         <span class="string">'Max'</span>,pluginObj.controller.activeHypercube.size(n),<span class="keyword">...</span>
+0165         <span class="string">'SliderStep'</span>,[thisFracIncrOne max(thisFracIncrOne, 0.10)],<span class="keyword">...</span>
+0166         <span class="string">'Value'</span>,sliderValInd,<span class="keyword">...</span>
+0167         <span class="string">'UserData'</span>,catstruct(pluginObj.userData, struct(<span class="string">'siblingTag'</span>, thisEditTag)),<span class="keyword">...</span>
+0168         <span class="string">'Callback'</span>,pluginObj.callbackHandle(pluginObj.panelTag(<span class="string">'slider'</span>)),<span class="keyword">...</span><span class="comment">  use same callback for each</span>
+0169         <span class="string">'Parent'</span>,sliderHbox);
+0170 
+0171       <span class="comment">% sliderVal</span>
+0172       thisStr = pluginObj.getSliderValStr(n);
+0173       thisTag = thisEditTag;
+0174       uiControlsHandles.([<span class="string">'sliderVal'</span> nStr]) = uicontrol(<span class="keyword">...</span>
+0175         <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0176         <span class="string">'Style'</span>,<span class="string">'edit'</span>,<span class="keyword">...</span>
+0177         <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0178         <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0179         <span class="string">'String'</span>,thisStr,<span class="keyword">...</span>
+0180         <span class="string">'UserData'</span>,catstruct(pluginObj.userData, struct(<span class="string">'siblingTag'</span>, thisSliderTag)),<span class="keyword">...</span>
+0181         <span class="string">'Callback'</span>,pluginObj.callbackHandle(pluginObj.panelTag(<span class="string">'sliderVal'</span>)),<span class="keyword">...</span><span class="comment">  use same callback for each</span>
+0182         <span class="string">'Parent'</span>,sliderHbox);
+0183       
+0184         set(sliderHbox, <span class="string">'Widths'</span>,[-1, -1]);
+0185     <span class="keyword">end</span>
+0186     
+0187   <span class="keyword">end</span>
+0188 
+0189 
+0190   <a name="_sub5" href="#_subfunctions" class="code">function makeViewCol(parentHandle)</a>
+0191     pluginObj.handles.dataPanel.viewCheckboxHandles = cell(1, nDims);
+0192     
+0193     <span class="comment">% Row 2:nDims+1</span>
+0194     <span class="keyword">for</span> n = 1:nDims
+0195       nStr = num2str(n);
+0196       
+0197       <span class="keyword">if</span> isfield(pluginObj.view.dynamic, <span class="string">'viewDims'</span>) &amp;&amp; (n &lt;= length(pluginObj.view.dynamic.viewDims))
+0198         thisVal = pluginObj.view.dynamic.viewDims(n);
+0199       <span class="keyword">else</span>
+0200         thisVal = 0;
+0201       <span class="keyword">end</span>
+0202       
+0203       <span class="comment">% viewCheckbox</span>
+0204       thisTag = pluginObj.panelTag([<span class="string">'viewCheckbox'</span> nStr]);
+0205       uiControlsHandles.([<span class="string">'viewCheckbox'</span> nStr]) = uicontrol(<span class="keyword">...</span>
+0206         <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0207         <span class="string">'Style'</span>,<span class="string">'checkbox'</span>,<span class="keyword">...</span>
+0208         <span class="string">'Value'</span>,thisVal,<span class="keyword">...</span>
+0209         <span class="string">'UserData'</span>,pluginObj.userData,<span class="keyword">...</span>
+0210         <span class="string">'Callback'</span>,pluginObj.callbackHandle(pluginObj.panelTag(<span class="string">'viewCheckbox'</span>)),<span class="keyword">...</span><span class="comment"> % use same callback for each</span>
+0211         <span class="string">'Parent'</span>,parentHandle);
+0212       
+0213       pluginObj.handles.dataPanel.viewCheckboxHandles{n} = uiControlsHandles.([<span class="string">'viewCheckbox'</span> nStr]);
+0214     <span class="keyword">end</span>
+0215   <span class="keyword">end</span>
+0216 
+0217 
+0218   <a name="_sub6" href="#_subfunctions" class="code">function makeLockCol(parentHandle)</a>
+0219     pluginObj.handles.dataPanel.lockCheckboxHandles = cell(1, nDims);
+0220     
+0221     <span class="comment">% Row 2:nDims+1</span>
+0222     <span class="keyword">for</span> n = 1:nDims
+0223       nStr = num2str(n);
+0224       
+0225       <span class="keyword">if</span> isfield(pluginObj.view.dynamic, <span class="string">'lockDims'</span>) &amp;&amp; (n &lt;= length(pluginObj.view.dynamic.lockDims))
+0226         thisVal = pluginObj.view.dynamic.lockDims(n);
+0227       <span class="keyword">else</span>
+0228         thisVal = 0;
+0229       <span class="keyword">end</span>
+0230       
+0231       <span class="comment">% viewCheckbox</span>
+0232       thisTag = pluginObj.panelTag([<span class="string">'lockCheckbox'</span> nStr]);
+0233       uiControlsHandles.([<span class="string">'lockCheckbox'</span> nStr]) = uicontrol(<span class="keyword">...</span>
+0234         <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0235         <span class="string">'Style'</span>,<span class="string">'checkbox'</span>,<span class="keyword">...</span>
+0236         <span class="string">'Value'</span>,thisVal,<span class="keyword">...</span>
+0237         <span class="string">'UserData'</span>,pluginObj.userData,<span class="keyword">...</span>
+0238         <span class="string">'Callback'</span>,pluginObj.callbackHandle(pluginObj.panelTag(<span class="string">'lockCheckbox'</span>)),<span class="keyword">...</span><span class="comment">% use same callback for each</span>
+0239         <span class="string">'Parent'</span>,parentHandle);
+0240       
+0241       pluginObj.handles.dataPanel.lockCheckboxHandles{n} = uiControlsHandles.([<span class="string">'lockCheckbox'</span> nStr]);
+0242     <span class="keyword">end</span>
+0243   <span class="keyword">end</span>
+0244 
+0245 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,16 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  gvSelectPlugin -> Callback_WindowScrollWheelFcn;
+  gvSelectPlugin -> gvSelectPlugin;
+  gvSelectPlugin -> iterate;
+  gvSelectPlugin -> makeDataPanelControls;
+  gvSelectPlugin -> makeDataPanelTitles;
+  gvSelectPlugin -> makePanelControls;
+
+  Callback_WindowScrollWheelFcn [URL="Callback_WindowScrollWheelFcn.html"];
+  gvSelectPlugin [URL="gvSelectPlugin.html"];
+  iterate [URL="iterate.html"];
+  makeDataPanelControls [URL="makeDataPanelControls.html"];
+  makeDataPanelTitles [URL="makeDataPanelTitles.html"];
+  makePanelControls [URL="makePanelControls.html"];
+}

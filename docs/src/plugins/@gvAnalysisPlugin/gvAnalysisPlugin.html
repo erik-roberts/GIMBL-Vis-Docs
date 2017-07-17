@@ -1,0 +1,281 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of gvAnalysisPlugin</title>
+  <meta name="keywords" content="gvAnalysisPlugin">
+  <meta name="description" content="% gvAnalysisPlugin - Select GUI Class for GIMBL-Vis">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- # plugins --><!-- menu.html @gvAnalysisPlugin -->
+<h1>gvAnalysisPlugin
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>% gvAnalysisPlugin - Select GUI Class for GIMBL-Vis</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% gvAnalysisPlugin - Select GUI Class for GIMBL-Vis
+
+ Description: An object of this class becomes a property of gvView to provide 
+              methods for a GIMBL-Vis analysis tab in the main  window.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../src/classes/@gvMainWindowPlugin/makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	makePanelControls - make list of plugins with load checkboxes</li><li><a href="../../../src/classes/gvGuiPlugin.html" class="code" title="">gvGuiPlugin</a>	% gvGuiPlugin - Abstract GUI Plugin Class for GIMBL-Vis</li><li><a href="applyFn.html" class="code" title="function applyFn(pluginObj)">applyFn</a>	</li><li><a href="gvAnalysisPlugin.html" class="code" title="">gvAnalysisPlugin</a>	% gvAnalysisPlugin - Select GUI Class for GIMBL-Vis</li><li><a href="makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	makePanelControls - make plot panel for tab in main window</li><li><a href="../../../src/plugins/@gvImageWindowPlugin/makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	% makePanelControls</li><li><a href="../../../src/plugins/@gvPlotWindowPlugin/makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	makePanelControls - make plot panel for tab in main window</li><li><a href="../../../src/plugins/@gvSelectPlugin/makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	makePanelControls - make plot panel for tab in main window</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="gvAnalysisPlugin.html" class="code" title="">gvAnalysisPlugin</a>	% gvAnalysisPlugin - Select GUI Class for GIMBL-Vis</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function pluginObj = gvAnalysisPlugin(varargin)</a></li><li><a href="#_sub2" class="code">function setup(pluginObj, cntrlObj)</a></li><li><a href="#_sub3" class="code">function fns = getFnList(pluginObj)</a></li><li><a href="#_sub4" class="code">function label = getTargetNameLabel(pluginObj)</a></li><li><a href="#_sub5" class="code">function updateSettingsFromPanel(pluginObj)</a></li><li><a href="#_sub6" class="code">function args = parseArgStr(argsStr)</a></li><li><a href="#_sub7" class="code">function str = helpStr()</a></li><li><a href="#_sub8" class="code">function Callback_analysis_panel_targetRadioBox(src)</a></li><li><a href="#_sub9" class="code">function Callback_analysis_panel_sourceRadioBox(src)</a></li><li><a href="#_sub10" class="code">function Callback_analysis_panel_fnMenu(src, evnt)</a></li><li><a href="#_sub11" class="code">function Callback_analysis_panel_deleteSourceHcToggle(src, evnt)</a></li><li><a href="#_sub12" class="code">function Callback_analysis_panel_applyButton(src, evnt)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%% gvAnalysisPlugin - Select GUI Class for GIMBL-Vis</span>
+0002 <span class="comment">%</span>
+0003 <span class="comment">% Description: An object of this class becomes a property of gvView to provide</span>
+0004 <span class="comment">%              methods for a GIMBL-Vis analysis tab in the main  window.</span>
+0005 
+0006 classdef <a href="gvAnalysisPlugin.html" class="code" title="">gvAnalysisPlugin</a> &lt; <a href="../../../src/classes/gvGuiPlugin.html" class="code" title="">gvGuiPlugin</a>
+0007   
+0008   <span class="comment">%% Public properties %%</span>
+0009   properties (Constant)
+0010     pluginName = <span class="string">'Analysis'</span>
+0011     pluginFieldName = <span class="string">'analysis'</span>
+0012   <span class="keyword">end</span>
+0013   
+0014   properties
+0015     metadata = struct()
+0016     
+0017     handles = struct()
+0018   <span class="keyword">end</span>
+0019   
+0020   <span class="comment">%% Public methods %%</span>
+0021   methods
+0022     
+0023     <a name="_sub0" href="#_subfunctions" class="code">function pluginObj = gvAnalysisPlugin(varargin)</a>
+0024       pluginObj@<a href="../../../src/classes/gvGuiPlugin.html" class="code" title="">gvGuiPlugin</a>(varargin{:});
+0025     <span class="keyword">end</span>
+0026     
+0027     
+0028     <a name="_sub1" href="#_subfunctions" class="code">function setup(pluginObj, cntrlObj)</a>
+0029       <a href="#_sub2" class="code" title="subfunction setup(pluginObj, cntrlObj)">setup</a>@<a href="../../../src/classes/gvGuiPlugin.html" class="code" title="">gvGuiPlugin</a>(pluginObj, cntrlObj);
+0030     <span class="keyword">end</span>
+0031 
+0032     
+0033     panelHandle = <a href="makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>(pluginObj, parentHandle)
+0034     
+0035     <a href="applyFn.html" class="code" title="function applyFn(pluginObj)">applyFn</a>(pluginObj)
+0036     
+0037   <span class="keyword">end</span>
+0038   
+0039   
+0040   <span class="comment">%% Protected methods %%</span>
+0041   methods (Access = protected)
+0042     
+0043     <a name="_sub2" href="#_subfunctions" class="code">function fns = getFnList(pluginObj)</a>
+0044       fnDir = fullfile(gv.RootPath, <span class="string">'src'</span>, <span class="string">'analysisFunctions'</span>);
+0045       fns = lscell(fnDir);
+0046       fns = strrep(fns, <span class="string">'.m'</span>,<span class="string">''</span>); <span class="comment">% remove .m</span>
+0047       fns = [<span class="string">'[ User Specified ]'</span>, fns];
+0048       fns = fns(:); <span class="comment">% convert to cell col vec</span>
+0049     <span class="keyword">end</span>
+0050     
+0051     
+0052     <a name="_sub3" href="#_subfunctions" class="code">function label = getTargetNameLabel(pluginObj)</a>
+0053       radioBox = findobjReTag(<span class="string">'targetRadioBox'</span>);
+0054       
+0055       buttonString = radioBox.Button.String;
+0056       
+0057       <span class="keyword">switch</span> buttonString
+0058         <span class="keyword">case</span> <span class="string">'Merge into Source Hypercube'</span>
+0059           label = <span class="string">'Target Axis:'</span>;
+0060         <span class="keyword">case</span> <span class="string">'New Hypercube'</span>
+0061           label = <span class="string">'Target Hypercube:'</span>;
+0062         <span class="keyword">case</span> <span class="string">'Workspace Variable'</span>
+0063           label = <span class="string">'Target Variable:'</span>;
+0064         <span class="keyword">case</span> <span class="string">'New File'</span>
+0065           label = <span class="string">'Target File Path:'</span>;
+0066         <span class="keyword">otherwise</span>
+0067           error(<span class="string">'Could not find correct target type string.'</span>)
+0068       <span class="keyword">end</span>
+0069     <span class="keyword">end</span>
+0070     
+0071     
+0072     <a name="_sub4" href="#_subfunctions" class="code">function updateSettingsFromPanel(pluginObj)</a>
+0073       <span class="comment">% Input:</span>
+0074       <span class="comment">% get source</span>
+0075       obj = findobjReTag(<span class="string">'analysis_panel_hypercubeMenu'</span>);
+0076       hypercubeName = obj.String{obj.Value};
+0077       settings.sourceHypercubeName = hypercubeName;
+0078       
+0079       <span class="comment">% get source type</span>
+0080       obj = findobjReTag(<span class="string">'analysis_panel_sourceRadioBox'</span>);
+0081       settings.sourceType = obj.Button.String;
+0082       
+0083       <span class="comment">% get apply fn</span>
+0084       obj = findobjReTag(<span class="string">'analysis_panel_fnMenu'</span>);
+0085       <span class="keyword">if</span> obj.Value == 1 <span class="comment">% then use custom fn from box</span>
+0086         obj = findobjReTag(<span class="string">'analysis_panel_fnBox'</span>);
+0087         
+0088         fnStr = shebangParse(obj.String);
+0089         <span class="keyword">if</span> ~isempty(fnStr)
+0090           fnHandle = str2func(fnStr);
+0091         <span class="keyword">else</span>
+0092           error(<span class="string">'Enter a custom function name or choose a function from the dropdown menu.'</span>)
+0093         <span class="keyword">end</span>
+0094       <span class="keyword">else</span>
+0095         fnHandle = str2func(obj.String{obj.Value});
+0096       <span class="keyword">end</span>
+0097       settings.fn = fnHandle;
+0098       
+0099       <span class="comment">% get fn args</span>
+0100       obj = findobjReTag(<span class="string">'fnArgsBox'</span>);
+0101       argsStr = shebangParse(obj.String);
+0102       settings.fnArgs = <a href="#_sub6" class="code" title="subfunction args = parseArgStr(argsStr)">parseArgStr</a>(argsStr);
+0103 
+0104       <span class="comment">% Output:</span>
+0105       <span class="comment">% get target type</span>
+0106       obj = findobjReTag(<span class="string">'analysis_panel_targetRadioBox'</span>);
+0107       settings.targetType = obj.Button.String;
+0108       
+0109       <span class="comment">% get target string</span>
+0110       obj = findobjReTag(<span class="string">'targetNameBox'</span>);
+0111       settings.targetStr =  shebangParse(obj.String);
+0112       
+0113       <span class="comment">% delete source toggle</span>
+0114       obj = findobjReTag(<span class="string">'deleteSourceHcToggle'</span>);
+0115       settings.deleteSourceBool =  logical(obj.Value);
+0116       
+0117       <span class="comment">% update pluginObj property</span>
+0118       pluginObj.metadata.settings = settings;
+0119       
+0120       <span class="comment">% Nested Fn</span>
+0121       <a name="_sub5" href="#_subfunctions" class="code">function args = parseArgStr(argsStr)</a>
+0122         <span class="keyword">if</span> iscell(argsStr)
+0123           args = argsStr;
+0124         <span class="keyword">elseif</span> ~isempty(argsStr)
+0125           <span class="keyword">if</span> strcmp(argsStr([1,end]), <span class="string">'{}'</span>)
+0126             args = evalin(<span class="string">'base'</span>, argsStr);
+0127           <span class="keyword">elseif</span> strcmp(argsStr([1,end]), <span class="string">'()'</span>)
+0128             argsStr([1,end]) = <span class="string">'{}'</span>;
+0129             args = <a href="#_sub6" class="code" title="subfunction args = parseArgStr(argsStr)">parseArgStr</a>(argsStr);
+0130           <span class="keyword">else</span>
+0131             argsStr = [<span class="string">'{'</span> argsStr <span class="string">'}'</span>];
+0132             args = <a href="#_sub6" class="code" title="subfunction args = parseArgStr(argsStr)">parseArgStr</a>(argsStr);
+0133           <span class="keyword">end</span>
+0134         <span class="keyword">else</span>
+0135           args = {};
+0136         <span class="keyword">end</span>
+0137       <span class="keyword">end</span>
+0138     <span class="keyword">end</span>
+0139     
+0140   <span class="keyword">end</span>
+0141   
+0142   
+0143   <span class="comment">%% Static %%</span>
+0144   methods (Static, Hidden)
+0145     
+0146     <a name="_sub6" href="#_subfunctions" class="code">function str = helpStr()</a>
+0147       str = [gvAnalysisPlugin.pluginName <span class="string">':\n'</span>,<span class="keyword">...</span>
+0148         <span class="string">'Select an input source and output target and press the Apply button to '</span>,<span class="keyword">...</span>
+0149         <span class="string">'call the function.\n'</span>
+0150         ];
+0151     <span class="keyword">end</span>
+0152     
+0153     
+0154     <span class="comment">%% Callbacks %%</span>
+0155     <a name="_sub7" href="#_subfunctions" class="code">function Callback_analysis_panel_targetRadioBox(src)</a>
+0156       nameLabelObj = findobjReTag(<span class="string">'analysis_panel_targetNameLabel'</span>);
+0157       
+0158       deleteSourceHcLabelObj = findobjReTag(<span class="string">'analysis_panel_deleteSourceHcLabel'</span>);
+0159       deleteSourceHcToggleObj = findobjReTag(<span class="string">'analysis_panel_deleteSourceHcToggle'</span>);
+0160       
+0161       <span class="keyword">switch</span> src.Button.String
+0162         <span class="keyword">case</span> <span class="string">'Merge into Source Hypercube'</span>
+0163           nameLabelObj.String = <span class="string">'Target Axis'</span>;
+0164           
+0165           deleteSourceHcLabelObj.Enable = <span class="string">'off'</span>;
+0166           deleteSourceHcToggleObj.Enable = <span class="string">'off'</span>;
+0167         <span class="keyword">case</span> <span class="string">'New Hypercube'</span>
+0168           nameLabelObj.String = <span class="string">'Target Hypercube'</span>;
+0169           
+0170           deleteSourceHcLabelObj.Enable = <span class="string">'on'</span>;
+0171           deleteSourceHcToggleObj.Enable = <span class="string">'on'</span>;
+0172         <span class="keyword">case</span> <span class="string">'Workspace Variable'</span>
+0173           nameLabelObj.String = <span class="string">'Target Variable'</span>;
+0174           
+0175           deleteSourceHcLabelObj.Enable = <span class="string">'on'</span>;
+0176           deleteSourceHcToggleObj.Enable = <span class="string">'on'</span>;
+0177         <span class="keyword">case</span> <span class="string">'New File'</span>
+0178           nameLabelObj.String = <span class="string">'Target File Path'</span>;
+0179           
+0180           deleteSourceHcLabelObj.Enable = <span class="string">'on'</span>;
+0181           deleteSourceHcToggleObj.Enable = <span class="string">'on'</span>;
+0182       <span class="keyword">end</span>
+0183     <span class="keyword">end</span>
+0184     
+0185     <a name="_sub8" href="#_subfunctions" class="code">function Callback_analysis_panel_sourceRadioBox(src)</a>
+0186       fnArgsBoxObj = findobjReTag(<span class="string">'analysis_panel_fnArgsBox'</span>);
+0187       fnArgsLabelObj = findobjReTag(<span class="string">'analysis_panel_fnArgsLabel'</span>);
+0188       
+0189       <span class="keyword">if</span> src.Value == 2
+0190         fnArgsLabelObj.Enable = <span class="string">'off'</span>;
+0191         fnArgsBoxObj.Enable = <span class="string">'off'</span>;
+0192       <span class="keyword">else</span>
+0193         fnArgsLabelObj.Enable = <span class="string">'on'</span>;
+0194         fnArgsBoxObj.Enable = <span class="string">'on'</span>;
+0195       <span class="keyword">end</span>
+0196     <span class="keyword">end</span>
+0197 
+0198     
+0199     <a name="_sub9" href="#_subfunctions" class="code">function Callback_analysis_panel_fnMenu(src, evnt)</a>
+0200       fnBoxObj = findobjReTag(<span class="string">'analysis_panel_fnBox'</span>);
+0201       <span class="keyword">if</span> src.Value == 1
+0202         fnBoxObj.Enable = <span class="string">'on'</span>;
+0203       <span class="keyword">else</span>
+0204         fnBoxObj.Enable = <span class="string">'off'</span>;
+0205       <span class="keyword">end</span>
+0206     <span class="keyword">end</span>
+0207     
+0208     
+0209     <a name="_sub10" href="#_subfunctions" class="code">function Callback_analysis_panel_deleteSourceHcToggle(src, evnt)</a>
+0210 <span class="comment">%       pluginObj = src.UserData.pluginObj; % window plugin</span>
+0211       
+0212       <span class="keyword">if</span> src.Value
+0213         src.String = sprintf(<span class="string">'( %s )'</span>, char(hex2dec(<span class="string">'2714'</span>))); <span class="comment">% checkmark</span>
+0214       <span class="keyword">else</span>
+0215         src.String = <span class="string">'(   )'</span>;
+0216       <span class="keyword">end</span>
+0217     <span class="keyword">end</span>
+0218     
+0219     
+0220     <a name="_sub11" href="#_subfunctions" class="code">function Callback_analysis_panel_applyButton(src, evnt)</a>
+0221       pluginObj = src.UserData.pluginObj;
+0222       
+0223       pluginObj.updateSettingsFromPanel();
+0224       
+0225       pluginObj.applyFn();
+0226     <span class="keyword">end</span>
+0227     
+0228   <span class="keyword">end</span>
+0229   
+0230 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

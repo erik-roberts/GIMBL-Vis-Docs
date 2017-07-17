@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of openWindow</title>
+  <meta name="keywords" content="openWindow">
+  <meta name="description" content="check for main window">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- # plugins --><!-- menu.html @gvImageWindowPlugin -->
+<h1>openWindow
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>check for main window</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function openWindow(pluginObj) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> check for main window</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../src/classes/@gvMainWindowPlugin/gvMainWindowPlugin.html" class="code" title="">gvMainWindowPlugin</a>	% gvMainWindowPlugin - Main Window Class for GIMBL-Vis</li><li><a href="../../../src/classes/gvWindowPlugin.html" class="code" title="">gvWindowPlugin</a>	% gvWindow - Abstract UI Window Plugin Class for GIMBL-Vis</li><li><a href="gvImageWindowPlugin.html" class="code" title="">gvImageWindowPlugin</a>	% gvImageWindowPlugin - Image Window Plugin Class for GIMBL-Vis</li><li><a href="../../../src/plugins/@gvPlotWindowPlugin/gvPlotWindowPlugin.html" class="code" title="">gvPlotWindowPlugin</a>	% gvPlotWindowPlugin - Plot Window Plugin Class for GIMBL-Vis</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function openWindow(pluginObj)</a>
+0002 
+0003 <span class="comment">% check for main window</span>
+0004 warnBool = true;
+0005 mainWindowExistBool = pluginObj.view.checkMainWindowExists(warnBool);
+0006 
+0007 <span class="keyword">if</span> mainWindowExistBool &amp;&amp; ~pluginObj.checkWindowExists()
+0008     <span class="comment">%% Make Image Window</span>
+0009     pluginObj.makeFig();
+0010     
+0011     pluginObj.addWindowOpenedListenerToPlotPlugin();
+0012     pluginObj.addMouseMoveCallbackToPlotFig();
+0013     
+0014     notify(pluginObj, <span class="string">'windowOpened'</span>);
+0015 <span class="keyword">end</span>
+0016 
+0017 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

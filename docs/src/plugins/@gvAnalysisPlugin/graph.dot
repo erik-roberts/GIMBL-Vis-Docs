@@ -1,0 +1,12 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  gvAnalysisPlugin -> applyFn;
+  gvAnalysisPlugin -> gvAnalysisPlugin;
+  gvAnalysisPlugin -> makePanelControls;
+
+  applyFn [URL="applyFn.html"];
+  gvAnalysisPlugin [URL="gvAnalysisPlugin.html"];
+  makeInputPanelControls [URL="makeInputPanelControls.html"];
+  makeOutputPanelControls [URL="makeOutputPanelControls.html"];
+  makePanelControls [URL="makePanelControls.html"];
+}

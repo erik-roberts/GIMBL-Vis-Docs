@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of Callback_mouseMove</title>
+  <meta name="keywords" content="Callback_mouseMove">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- # plugins --><!-- menu.html @gvImageWindowPlugin -->
+<h1>Callback_mouseMove
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function Callback_mouseMove(src, evnt) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../src/functions/gvGetAxisType.html" class="code" title="function dataAxesType = gvGetAxisType(mddObj)">gvGetAxisType</a>	gvGetAxisType - get axis type from axismeta of mdd object</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="gvImageWindowPlugin.html" class="code" title="">gvImageWindowPlugin</a>	% gvImageWindowPlugin - Image Window Plugin Class for GIMBL-Vis</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function Callback_mouseMove(src, evnt)</a>
+0002 
+0003 plotFig = src;
+0004 plotPluginObj = plotFig.UserData.pluginObj;
+0005 imagePluginObj = plotPluginObj.controller.guiPlugins.image;
+0006 
+0007 <span class="keyword">if</span> plotPluginObj.checkWindowExists() &amp;&amp; plotPluginObj.view.dynamic.nViewDims &gt; 0
+0008   
+0009   mousePosPx = get(plotFig, <span class="string">'CurrentPoint'</span>); <span class="comment">%pixels</span>
+0010   figPos = plotFig.Position;
+0011 <span class="comment">%   mousePosRel = mousePosPx ./ figPos(3:4); %relative</span>
+0012   
+0013   <span class="comment">% Get all axes</span>
+0014   ax = findobj(plotFig.Children,<span class="string">'type'</span>,<span class="string">'axes'</span>);
+0015   
+0016   axPos = cat(1,ax.Position);
+0017   
+0018   <span class="comment">% Find Positions of LL and UR corners for each ax</span>
+0019   axLLx  = axPos(:,1)*figPos(3);
+0020   axLLy  = axPos(:,2)*figPos(4);
+0021   axURx  = (axPos(:,1)+axPos(:,3))*figPos(3);
+0022   axURy  = (axPos(:,2)+axPos(:,4))*figPos(4);
+0023   
+0024   <span class="comment">% determine which axis</span>
+0025   axInd = find((mousePosPx(1)&gt;=axLLx) .* (mousePosPx(1)&lt;=axURx) .* (mousePosPx(2)&gt;=axLLy) .* (mousePosPx(2)&lt;=axURy));
+0026   
+0027   <span class="keyword">if</span> ~isempty(axInd)
+0028     currAx = ax(axInd);
+0029     
+0030     <span class="comment">% get mouse position</span>
+0031     mouseAxPosIndScale = get(currAx, <span class="string">'CurrentPoint'</span>); <span class="comment">%in axis scale</span>
+0032       <span class="comment">% Dev note: returns the points into and out of the plot volume</span>
+0033     mouseAxPosIndScale = mouseAxPosIndScale(1,:);
+0034     <span class="keyword">if</span> mouseAxPosIndScale(3) ~= 1 <span class="comment">%in 3d scale</span>
+0035       <span class="keyword">return</span>
+0036     <span class="keyword">end</span>
+0037     mouseAxPosIndScale = mouseAxPosIndScale(1:2);
+0038     mouseAxPosIndScale = round(mouseAxPosIndScale); <span class="comment">% round</span>
+0039     
+0040     <span class="keyword">try</span>
+0041       plotDims = currAx.UserData.plotDims;
+0042       nPlotDims = length(plotDims);
+0043     <span class="keyword">catch</span>
+0044       <span class="keyword">return</span> <span class="comment">% in case axis is deleted</span>
+0045     <span class="keyword">end</span>
+0046     <span class="keyword">if</span> nPlotDims &gt; 2 <span class="comment">%only 1d or 2d</span>
+0047       <span class="keyword">return</span>
+0048     <span class="keyword">end</span>
+0049     
+0050     
+0051     <span class="comment">% get hypercube data</span>
+0052     hypercubeObj = plotPluginObj.controller.activeHypercube;
+0053     axesType = <a href="../../../src/functions/gvGetAxisType.html" class="code" title="function dataAxesType = gvGetAxisType(mddObj)">gvGetAxisType</a>(hypercubeObj);
+0054     <span class="keyword">if</span> ~isempty(axesType)
+0055       <span class="comment">% check for axisType = 'dataType'</span>
+0056       dataTypeAxInd = find(strcmp(axesType, <span class="string">'dataType'</span>), 1);
+0057       
+0058       <span class="keyword">if</span> isempty(dataTypeAxInd)
+0059         plotPluginObj.vprintf(<span class="string">'gvImageWindowPlugin: Cannot find dataType axis.\n'</span>);
+0060         <span class="keyword">return</span>
+0061       <span class="keyword">end</span>
+0062     <span class="keyword">else</span>
+0063       plotPluginObj.vprintf(<span class="string">'gvImageWindowPlugin: Cannot find any axis types.\n'</span>);
+0064       <span class="keyword">return</span>
+0065     <span class="keyword">end</span>
+0066     
+0067     <span class="comment">% find corresponding index</span>
+0068     indexAxInd = find(strcmp(plotPluginObj.controller.activeHypercube.axis(dataTypeAxInd).axismeta.dataType, <span class="string">'index'</span>),1);
+0069     sliderVals = plotPluginObj.view.dynamic.sliderVals;
+0070     sliderVals(dataTypeAxInd) = indexAxInd; <span class="comment">% set sliderVals dataType axis number to axis position for hypercube index.</span>
+0071     sliderVals(plotDims) = mouseAxPosIndScale; <span class="comment">% set sliderVals plot dims to closest point to mouse</span>
+0072     
+0073     <span class="comment">% get image index from slider vals</span>
+0074     sliderVals = num2cell(sliderVals); <span class="comment">% convert to cell for indexing</span>
+0075     imageIndex = hypercubeObj.data(sliderVals{:});
+0076     <span class="keyword">if</span> iscell(imageIndex)
+0077       imageIndex = imageIndex{1};
+0078     <span class="keyword">end</span>
+0079     <span class="keyword">if</span> ischar(imageIndex)
+0080       imageIndex = str2double(imageIndex);
+0081     <span class="keyword">end</span>
+0082     
+0083     <span class="comment">% show image</span>
+0084     <span class="keyword">if</span> ~isempty(imageIndex)
+0085       imagePluginObj.showImage(imageIndex);
+0086     <span class="keyword">end</span>
+0087     
+0088      <span class="comment">% TODO: % check if distance to nearest point is &lt; x% of axis size</span>
+0089   <span class="keyword">end</span>
+0090 <span class="keyword">end</span>
+0091 
+0092 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

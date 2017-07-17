@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of MakeDefaultConfig</title>
+  <meta name="keywords" content="MakeDefaultConfig">
+  <meta name="description" content="Dev Notes: make first characters '#!' for eval on load">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- ../menu.html classes --><!-- menu.html @gv -->
+<h1>MakeDefaultConfig
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>Dev Notes: make first characters '#!' for eval on load</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function MakeDefaultConfig() </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Dev Notes: make first characters '#!' for eval on load</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="gv.html" class="code" title="">gv</a>	% gv - main class for GIMBL-Vis</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function MakeDefaultConfig()</a>
+0002 <span class="comment">% Dev Notes: make first characters '#!' for eval on load</span>
+0003 
+0004 <span class="comment">%% Get Vars</span>
+0005 defaultPlugins = <span class="string">'#!{''gvMainWindowPlugin'', ''gvSelectPlugin'', ''gvPlotWindowPlugin''}'</span>;
+0006 baseFontSize = <span class="string">'12'</span>;
+0007 closeMainWindowSaveDialogBool = <span class="string">'#!true'</span>;
+0008 verboseModeBool = <span class="string">'#!false'</span>;
+0009 autoOpenLoadedPluginWindows = <span class="string">'#!true'</span>;
+0010 
+0011 <span class="comment">% gvPlotWindowPlugin</span>
+0012 plotColormapScope = <span class="string">'hypercube'</span>; <span class="comment">% {'hypercube', 'slice'}</span>
+0013 
+0014 <span class="comment">% gvImageWindowPlugin</span>
+0015 defaultImagePath = <span class="string">'./images/'</span>;
+0016 defaultImageRegexp = <span class="string">'^(.+)(\d+)\.\w+$'</span>; <span class="comment">% 2 capture groups: 1 for image type, 1 for index</span>
+0017 
+0018 <span class="comment">%% Write vars to disk</span>
+0019 vars = who; <span class="comment">% get all vars</span>
+0020 
+0021 configPath = fullfile(gv.RootPath, <span class="string">'gvConfig.txt'</span>);
+0022 fid = fopen(configPath, <span class="string">'w'</span>);
+0023 
+0024 <span class="keyword">for</span> thisVar = vars(:)'
+0025   thisVar = thisVar{1};
+0026   
+0027   fprintf(fid, <span class="string">'%s = &quot;%s&quot;\r\n'</span>, thisVar,eval(thisVar));
+0028 <span class="keyword">end</span>
+0029 
+0030 fclose(fid);
+0031 
+0032 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

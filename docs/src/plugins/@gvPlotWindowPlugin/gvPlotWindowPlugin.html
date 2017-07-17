@@ -1,0 +1,358 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of gvPlotWindowPlugin</title>
+  <meta name="keywords" content="gvPlotWindowPlugin">
+  <meta name="description" content="% gvPlotWindowPlugin - Plot Window Plugin Class for GIMBL-Vis">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- # plugins --><!-- menu.html @gvPlotWindowPlugin -->
+<h1>gvPlotWindowPlugin
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>% gvPlotWindowPlugin - Plot Window Plugin Class for GIMBL-Vis</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% gvPlotWindowPlugin - Plot Window Plugin Class for GIMBL-Vis
+
+ Description: An object of this class becomes a property of gvView to provide 
+              methods for a GIMBL-Vis plot window.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../src/classes/@gvMainWindowPlugin/makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	makePanelControls - make list of plugins with load checkboxes</li><li><a href="../../../src/classes/@gvMainWindowPlugin/openWindow.html" class="code" title="function openWindow(pluginObj)">openWindow</a>	check for main window</li><li><a href="../../../src/classes/gvWindowPlugin.html" class="code" title="">gvWindowPlugin</a>	% gvWindow - Abstract UI Window Plugin Class for GIMBL-Vis</li><li><a href="../../../src/plugins/@gvAnalysisPlugin/makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	makePanelControls - make plot panel for tab in main window</li><li><a href="../../../src/plugins/@gvImageWindowPlugin/makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	% makePanelControls</li><li><a href="../../../src/plugins/@gvImageWindowPlugin/openWindow.html" class="code" title="function openWindow(pluginObj)">openWindow</a>	check for main window</li><li><a href="Callback_WindowScrollWheelFcn.html" class="code" title="function Callback_WindowScrollWheelFcn(src, evnt)">Callback_WindowScrollWheelFcn</a>	Permits scrolling of select panel sliders in main window</li><li><a href="Callback_dataCursor.html" class="code" title="function output_txt = Callback_dataCursor(src, evnt)">Callback_dataCursor</a>	Display the position of the data cursor</li><li><a href="getPlotMetadataFromData.html" class="code" title="function getPlotMetadataFromData(pluginObj, hypercubeObj)">getPlotMetadataFromData</a>	getPlotMetadataFromData - get plotting and legend metadata from data and</li><li><a href="gvPlotWindowPlugin.html" class="code" title="">gvPlotWindowPlugin</a>	% gvPlotWindowPlugin - Plot Window Plugin Class for GIMBL-Vis</li><li><a href="makeAxes.html" class="code" title="function makeAxes(pluginObj)">makeAxes</a>	makeAxes - make plot window figure axes grid based on number of viewDims</li><li><a href="makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	makePanelControls - make plot panel for tab in main window</li><li><a href="makePlotMarkerPanelControls.html" class="code" title="function makePlotMarkerPanelControls(pluginObj, parentHandle)">makePlotMarkerPanelControls</a>	% makePlotMarkerPanelControls</li><li><a href="makePlotPanelControls.html" class="code" title="function makePlotPanelControls(pluginObj, parentHandle)">makePlotPanelControls</a>	% makePlotPanelControls</li><li><a href="openLegendWindow.html" class="code" title="function openLegendWindow(pluginObj)">openLegendWindow</a>	% gvLegendWindow - UI Legend Window Class for GIMBL-Vis</li><li><a href="openWindow.html" class="code" title="function openWindow(pluginObj)">openWindow</a>	check for main window</li><li><a href="plot.html" class="code" title="function plot(pluginObj)">plot</a>	TODO</li><li><a href="../../../src/plugins/@gvSelectPlugin/Callback_WindowScrollWheelFcn.html" class="code" title="function Callback_WindowScrollWheelFcn(src, evnt)">Callback_WindowScrollWheelFcn</a>	Permits scrolling of select panel sliders in main window</li><li><a href="../../../src/plugins/@gvSelectPlugin/makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	makePanelControls - make plot panel for tab in main window</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="gvPlotWindowPlugin.html" class="code" title="">gvPlotWindowPlugin</a>	% gvPlotWindowPlugin - Plot Window Plugin Class for GIMBL-Vis</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function pluginObj = gvPlotWindowPlugin(varargin)</a></li><li><a href="#_sub2" class="code">function setup(pluginObj, cntrlObj)</a></li><li><a href="#_sub3" class="code">function closeWindow(pluginObj)</a></li><li><a href="#_sub4" class="code">function sliderPos = getSliderAbsolutePosition(pluginObj)</a></li><li><a href="#_sub5" class="code">function out = getPos(x)</a></li><li><a href="#_sub6" class="code">function initializeControlsDynamicVars(pluginObj)</a></li><li><a href="#_sub7" class="code">function makeFig(pluginObj)</a></li><li><a href="#_sub8" class="code">function addDataCursor(pluginObj)</a></li><li><a href="#_sub9" class="code">function makeSliderAncestryMetadata(pluginObj)</a></li><li><a href="#_sub10" class="code">function str = helpStr()</a></li><li><a href="#_sub11" class="code">function Callback_panelControlsMade(src, evnt)</a></li><li><a href="#_sub12" class="code">function Callback_plot_panel_openPlotButton(src, evnt)</a></li><li><a href="#_sub13" class="code">function Callback_plot_panel_showLegendButton(src, evnt)</a></li><li><a href="#_sub14" class="code">function Callback_activeHypercubeChanged(src, evnt)</a></li><li><a href="#_sub15" class="code">function Callback_activeHypercubeAxisLabelChanged(src, evnt)</a></li><li><a href="#_sub16" class="code">function Callback_activeHypercubeSliceChanged(src, evnt)</a></li><li><a href="#_sub17" class="code">function Callback_nViewDimsChanged(src, evnt)</a></li><li><a href="#_sub18" class="code">function Callback_makeAxes(src, evnt)</a></li><li><a href="#_sub19" class="code">function Callback_doPlot(src, evnt)</a></li><li><a href="#_sub20" class="code">function Callback_plot_panel_autoSizeToggle(src, evnt)</a></li><li><a href="#_sub21" class="code">function Callback_plot_panel_markerSizeSlider(src, evnt)</a></li><li><a href="#_sub22" class="code">function Callback_plot_panel_markerTypeMenu(src, evnt)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%% gvPlotWindowPlugin - Plot Window Plugin Class for GIMBL-Vis</span>
+0002 <span class="comment">%</span>
+0003 <span class="comment">% Description: An object of this class becomes a property of gvView to provide</span>
+0004 <span class="comment">%              methods for a GIMBL-Vis plot window.</span>
+0005 
+0006 classdef <a href="gvPlotWindowPlugin.html" class="code" title="">gvPlotWindowPlugin</a> &lt; <a href="../../../src/classes/gvWindowPlugin.html" class="code" title="">gvWindowPlugin</a>
+0007 
+0008   <span class="comment">%% Public properties %%</span>
+0009   properties
+0010     metadata = struct()
+0011     
+0012     handles = struct()
+0013   <span class="keyword">end</span>
+0014   
+0015   properties (Constant)
+0016     pluginName = <span class="string">'Plot'</span>;
+0017     pluginFieldName = <span class="string">'plot'</span>;
+0018     
+0019     windowName = <span class="string">'Plot Window'</span>;
+0020     
+0021     markerTypes = {<span class="string">'scatter'</span>, <span class="string">'grid'</span>};
+0022   <span class="keyword">end</span>
+0023   
+0024   
+0025   <span class="comment">%% Public methods %%</span>
+0026   methods
+0027     
+0028     <a name="_sub0" href="#_subfunctions" class="code">function pluginObj = gvPlotWindowPlugin(varargin)</a>
+0029       pluginObj@<a href="../../../src/classes/gvWindowPlugin.html" class="code" title="">gvWindowPlugin</a>(varargin{:});
+0030     <span class="keyword">end</span>
+0031 
+0032     
+0033     <a name="_sub1" href="#_subfunctions" class="code">function setup(pluginObj, cntrlObj)</a>
+0034       <a href="#_sub2" class="code" title="subfunction setup(pluginObj, cntrlObj)">setup</a>@<a href="../../../src/classes/gvWindowPlugin.html" class="code" title="">gvWindowPlugin</a>(pluginObj, cntrlObj);
+0035       
+0036       <span class="comment">% Event listeners</span>
+0037       cntrlObj.newListener(<span class="string">'activeHypercubeChanged'</span>, @gvPlotWindowPlugin.Callback_activeHypercubeChanged);
+0038       cntrlObj.newListener(<span class="string">'activeHypercubeAxisLabelChanged'</span>, @gvPlotWindowPlugin.Callback_activeHypercubeAxisLabelChanged);
+0039       cntrlObj.newListener(<span class="string">'activeHypercubeSliceChanged'</span>, @gvPlotWindowPlugin.Callback_activeHypercubeSliceChanged);
+0040       
+0041       cntrlObj.newListener(<span class="string">'nViewDimsChanged'</span>, @gvPlotWindowPlugin.Callback_nViewDimsChanged);
+0042       cntrlObj.newListener(<span class="string">'makeAxes'</span>, @gvPlotWindowPlugin.Callback_makeAxes);
+0043       cntrlObj.newListener(<span class="string">'doPlot'</span>, @gvPlotWindowPlugin.Callback_doPlot);
+0044       
+0045       addlistener(pluginObj, <span class="string">'panelControlsMade'</span>, @gvPlotWindowPlugin.Callback_panelControlsMade);
+0046       
+0047       pluginObj.initializeControlsDynamicVars();
+0048     <span class="keyword">end</span>
+0049 
+0050     
+0051     <a href="openWindow.html" class="code" title="function openWindow(pluginObj)">openWindow</a>(pluginObj)
+0052     
+0053     
+0054     <a name="_sub2" href="#_subfunctions" class="code">function closeWindow(pluginObj)</a>
+0055       <a href="#_sub3" class="code" title="subfunction closeWindow(pluginObj)">closeWindow</a>@<a href="../../../src/classes/gvWindowPlugin.html" class="code" title="">gvWindowPlugin</a>(pluginObj)
+0056       
+0057       pluginObj.handles.ax = [];
+0058     <span class="keyword">end</span>
+0059     
+0060     
+0061     <a href="openLegendWindow.html" class="code" title="function openLegendWindow(pluginObj)">openLegendWindow</a>(pluginObj)
+0062 
+0063     
+0064     <a href="plot.html" class="code" title="function plot(pluginObj)">plot</a>(pluginObj)
+0065 
+0066     
+0067     panelHandle = <a href="makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>(pluginObj, parentHandle)
+0068     
+0069     
+0070     <a name="_sub3" href="#_subfunctions" class="code">function sliderPos = getSliderAbsolutePosition(pluginObj)</a>
+0071       thisPosCell = cellfunu(@<a href="#_sub5" class="code" title="subfunction out = getPos(x)">getPos</a>, pluginObj.view.dynamic.plotSliderAncestry);
+0072       thisPos = vertcat(thisPosCell{:});
+0073       thisPos = sum(thisPos);
+0074       
+0075       sliderPos= [thisPos, pluginObj.view.dynamic.plotSliderAncestry{1}.Position(3:4)];
+0076       
+0077       <a name="_sub4" href="#_subfunctions" class="code">function out = getPos(x)</a>
+0078         thisUnits = x.Units;
+0079         <span class="keyword">if</span> ~strcmp(thisUnits, <span class="string">'pixels'</span>)
+0080           x.Units = <span class="string">'pixels'</span>;
+0081           out = x.Position;
+0082           x.Units = thisUnits; 
+0083         <span class="keyword">else</span>
+0084           out = x.Position;
+0085         <span class="keyword">end</span>
+0086         
+0087         out = out(1:2);
+0088       <span class="keyword">end</span>
+0089     <span class="keyword">end</span>
+0090     
+0091   <span class="keyword">end</span>
+0092   
+0093   
+0094   <span class="comment">%% Protected methods %%</span>
+0095   methods (Access = protected)
+0096     
+0097     <a name="_sub5" href="#_subfunctions" class="code">function initializeControlsDynamicVars(pluginObj)</a>
+0098       pluginObj.view.dynamic.markerVal = 1;
+0099     <span class="keyword">end</span>
+0100     
+0101     <a href="makePlotMarkerPanelControls.html" class="code" title="function makePlotMarkerPanelControls(pluginObj, parentHandle)">makePlotMarkerPanelControls</a>(pluginObj, parentHandle)
+0102     
+0103     
+0104     <a href="makePlotPanelControls.html" class="code" title="function makePlotPanelControls(pluginObj, parentHandle)">makePlotPanelControls</a>(pluginObj, parentHandle)
+0105     
+0106     
+0107     <a name="_sub6" href="#_subfunctions" class="code">function makeFig(pluginObj)</a>
+0108       <span class="comment">% makeFig - make plot window figure</span>
+0109       
+0110       mainWindowPos = pluginObj.controller.windowPlugins.main.handles.fig.Position;
+0111     
+0112       plotWindowHandle = figure(<span class="keyword">...</span>
+0113         <span class="string">'Name'</span>,[<span class="string">'GIMBL-VIS: '</span> pluginObj.windowName],<span class="keyword">...</span>
+0114         <span class="string">'Tag'</span>, pluginObj.figTag(),<span class="keyword">...</span>
+0115         <span class="string">'NumberTitle'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0116         <span class="string">'Position'</span>,[mainWindowPos(1)+mainWindowPos(3)+50, mainWindowPos(2), 600,500],<span class="keyword">...</span>
+0117         <span class="string">'UserData'</span>,pluginObj.userData<span class="keyword">...</span>
+0118         );
+0119 
+0120       <span class="comment">% set plot handle</span>
+0121       pluginObj.handles.fig = plotWindowHandle;
+0122     <span class="keyword">end</span>
+0123     
+0124     
+0125     <a href="makeAxes.html" class="code" title="function makeAxes(pluginObj)">makeAxes</a>(pluginObj)
+0126     
+0127     
+0128     <a name="_sub7" href="#_subfunctions" class="code">function addDataCursor(pluginObj)</a>
+0129       <span class="comment">% TODO</span>
+0130       <span class="comment">%       dcm = datacursormode(pluginObj.handles.fig);</span>
+0131 <span class="comment">%       dcm.UpdateFcn = @gvPlotWindowPlugin.Callback_dataCursor;</span>
+0132     <span class="keyword">end</span>
+0133     
+0134     
+0135     <a href="getPlotMetadataFromData.html" class="code" title="function getPlotMetadataFromData(pluginObj, hypercubeObj)">getPlotMetadataFromData</a>(pluginObj, hypercubeObj)
+0136     
+0137     
+0138     <a name="_sub8" href="#_subfunctions" class="code">function makeSliderAncestryMetadata(pluginObj)</a>
+0139       sliderHandle = findobjReTag(<span class="string">'plot_panel_markerSizeSlider'</span>);
+0140       
+0141       pluginObj.view.dynamic.plotSliderAncestry = {};
+0142       
+0143       h = sliderHandle;    
+0144       
+0145       notFigParent = true;
+0146       <span class="keyword">while</span> notFigParent
+0147         <span class="keyword">if</span> isequal(h, pluginObj.view.main.handles.fig)
+0148           notFigParent = false;
+0149           <span class="keyword">continue</span>
+0150         <span class="keyword">end</span>
+0151         
+0152         pluginObj.view.dynamic.plotSliderAncestry{end+1} = h;
+0153         
+0154         h = h.Parent;
+0155       <span class="keyword">end</span>
+0156     <span class="keyword">end</span>
+0157 
+0158   <span class="keyword">end</span>
+0159   
+0160   <span class="comment">%% Static %%</span>
+0161   methods (Static, Hidden)
+0162     
+0163     <a name="_sub9" href="#_subfunctions" class="code">function str = helpStr()</a>
+0164       str = [gvPlotWindowPlugin.pluginName <span class="string">':\n'</span>,<span class="keyword">...</span>
+0165         <span class="string">'Choose plot seetings.\n'</span>
+0166         ];
+0167     <span class="keyword">end</span>
+0168     
+0169     
+0170     <span class="comment">%% Callbacks %%</span>
+0171     <a name="_sub10" href="#_subfunctions" class="code">function Callback_panelControlsMade(src, evnt)</a>
+0172       pluginObj = src; <span class="comment">% window plugin</span>
+0173       
+0174       pluginObj.makeSliderAncestryMetadata();
+0175     <span class="keyword">end</span>
+0176     
+0177 
+0178     <a name="_sub11" href="#_subfunctions" class="code">function Callback_plot_panel_openPlotButton(src, evnt)</a>
+0179       pluginObj = src.UserData.pluginObj; <span class="comment">% window plugin</span>
+0180       
+0181       pluginObj.openWindow();
+0182     <span class="keyword">end</span>
+0183     
+0184     
+0185     <a name="_sub12" href="#_subfunctions" class="code">function Callback_plot_panel_showLegendButton(src, evnt)</a>
+0186       pluginObj = src.UserData.pluginObj; <span class="comment">% window plugin</span>
+0187       
+0188       <span class="comment">% TODO: show colorbar, in panel legend, or extern legend/colorbar</span>
+0189       
+0190       pluginObj.openLegendWindow();
+0191     <span class="keyword">end</span>
+0192 
+0193     
+0194     <a name="_sub13" href="#_subfunctions" class="code">function Callback_activeHypercubeChanged(src, evnt)</a>
+0195       cntrlObj = src;
+0196       pluginObj = src.windowPlugins.(gvPlotWindowPlugin.pluginFieldName); <span class="comment">% window plugin</span>
+0197       
+0198       <span class="comment">% check data type</span>
+0199       pluginObj.getPlotMetadataFromData(pluginObj.controller.activeHypercube);
+0200 
+0201       notify(cntrlObj, <span class="string">'doPlot'</span>);
+0202     <span class="keyword">end</span>
+0203  
+0204     
+0205     <a name="_sub14" href="#_subfunctions" class="code">function Callback_activeHypercubeAxisLabelChanged(src, evnt)</a>
+0206       cntrlObj = src;
+0207       
+0208       notify(cntrlObj, <span class="string">'doPlot'</span>);
+0209     <span class="keyword">end</span>
+0210     
+0211     
+0212     <a name="_sub15" href="#_subfunctions" class="code">function Callback_activeHypercubeSliceChanged(src, evnt)</a>
+0213       cntrlObj = src;
+0214       
+0215       notify(cntrlObj, <span class="string">'doPlot'</span>);
+0216     <span class="keyword">end</span>
+0217     
+0218     
+0219     <a name="_sub16" href="#_subfunctions" class="code">function Callback_nViewDimsChanged(src, evnt)</a>
+0220       cntrlObj = src;
+0221 <span class="comment">%       pluginObj = src.windowPlugins.(gvPlotWindowPlugin.pluginFieldName); % window plugin</span>
+0222       
+0223       notify(cntrlObj, <span class="string">'makeAxes'</span>);
+0224     <span class="keyword">end</span>
+0225     
+0226     
+0227     <a name="_sub17" href="#_subfunctions" class="code">function Callback_makeAxes(src, evnt)</a>
+0228       cntrlObj = src;
+0229       pluginObj = src.windowPlugins.(gvPlotWindowPlugin.pluginFieldName); <span class="comment">% window plugin</span>
+0230  
+0231       <span class="keyword">if</span> pluginObj.view.checkMainWindowExists() &amp;&amp; pluginObj.checkWindowExists()
+0232         pluginObj.makeAxes();
+0233         
+0234         notify(cntrlObj, <span class="string">'doPlot'</span>);
+0235       <span class="keyword">end</span>
+0236     <span class="keyword">end</span>
+0237     
+0238     
+0239     <a name="_sub18" href="#_subfunctions" class="code">function Callback_doPlot(src, evnt)</a>
+0240       pluginObj = src.windowPlugins.(gvPlotWindowPlugin.pluginFieldName); <span class="comment">% window plugin</span>
+0241  
+0242       <span class="keyword">if</span> pluginObj.view.checkMainWindowExists()
+0243         
+0244         nViewDims = pluginObj.view.dynamic.nViewDims;
+0245 <span class="comment">%         nViewDimsLast = pluginObj.view.dynamic.nViewDimsLast;</span>
+0246 
+0247         <span class="keyword">if</span> ~(nViewDims &gt; 0)
+0248           pluginObj.vprintf(<span class="string">'gvPlotWindowPlugin: Skipping Plot\n'</span>)
+0249           <span class="keyword">return</span>
+0250         <span class="keyword">end</span>
+0251 
+0252         <span class="keyword">if</span> ~pluginObj.checkWindowExists()
+0253           pluginObj.openWindow();
+0254         <span class="keyword">end</span>
+0255         
+0256         pluginObj.plot();
+0257       <span class="keyword">end</span>
+0258     <span class="keyword">end</span>
+0259     
+0260     
+0261     <a name="_sub19" href="#_subfunctions" class="code">function Callback_plot_panel_autoSizeToggle(src, evnt)</a>
+0262       pluginObj = src.UserData.pluginObj; <span class="comment">% window plugin</span>
+0263       cntrlObj = pluginObj.controller;
+0264       
+0265       markerSizeSlider = findobj(<span class="string">'-regexp'</span>, <span class="string">'Tag'</span>,<span class="string">'markerSizeSlider'</span>);
+0266       
+0267       <span class="keyword">if</span> src.Value
+0268         src.String = sprintf(<span class="string">'AutoSize (%s)'</span>, char(hex2dec(<span class="string">'2714'</span>)));
+0269         markerSizeSlider.Enable = <span class="string">'off'</span>;
+0270       <span class="keyword">else</span>
+0271         src.String = sprintf(<span class="string">'AutoSize (%s)'</span>, <span class="string">'  '</span>);
+0272         markerSizeSlider.Enable = <span class="string">'on'</span>;
+0273       <span class="keyword">end</span>
+0274       
+0275       notify(cntrlObj, <span class="string">'doPlot'</span>);
+0276     <span class="keyword">end</span>
+0277     
+0278     
+0279     <a name="_sub20" href="#_subfunctions" class="code">function Callback_plot_panel_markerSizeSlider(src, evnt)</a>
+0280       pluginObj = src.UserData.pluginObj; <span class="comment">% window plugin</span>
+0281       cntrlObj = pluginObj.controller;
+0282       
+0283       notify(cntrlObj, <span class="string">'doPlot'</span>);
+0284     <span class="keyword">end</span>
+0285     
+0286     
+0287     <a name="_sub21" href="#_subfunctions" class="code">function Callback_plot_panel_markerTypeMenu(src, evnt)</a>
+0288       pluginObj = src.UserData.pluginObj; <span class="comment">% window plugin</span>
+0289       
+0290       <span class="comment">% update and plot if changed value</span>
+0291       <span class="keyword">if</span> pluginObj.view.dynamic.markerVal ~= src.Value
+0292         pluginObj.view.dynamic.markerVal = src.Value;
+0293 
+0294         cntrlObj = pluginObj.controller;
+0295         notify(cntrlObj, <span class="string">'doPlot'</span>);
+0296       <span class="keyword">end</span>
+0297     <span class="keyword">end</span>
+0298     
+0299     
+0300     <a href="Callback_WindowScrollWheelFcn.html" class="code" title="function Callback_WindowScrollWheelFcn(src, evnt)">Callback_WindowScrollWheelFcn</a>(src, evnt)
+0301     
+0302     
+0303     <a href="Callback_dataCursor.html" class="code" title="function output_txt = Callback_dataCursor(src, evnt)">Callback_dataCursor</a>(src, evnt)
+0304     
+0305   <span class="keyword">end</span>
+0306   
+0307 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

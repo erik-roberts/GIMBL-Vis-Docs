@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of makePlotMarkerPanelControls</title>
+  <meta name="keywords" content="makePlotMarkerPanelControls">
+  <meta name="description" content="% makePlotMarkerPanelControls">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- # plugins --><!-- menu.html @gvPlotWindowPlugin -->
+<h1>makePlotMarkerPanelControls
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>% makePlotMarkerPanelControls</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function makePlotMarkerPanelControls(pluginObj, parentHandle) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% makePlotMarkerPanelControls
+
+ Input: parentHandle - handle for uicontrol parent</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="gvPlotWindowPlugin.html" class="code" title="">gvPlotWindowPlugin</a>	% gvPlotWindowPlugin - Plot Window Plugin Class for GIMBL-Vis</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function makeRow1hBox(parentHandle)</a></li><li><a href="#_sub2" class="code">function makeRow2hBox(parentHandle)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function makePlotMarkerPanelControls(pluginObj, parentHandle)</a>
+0002 <span class="comment">%% makePlotMarkerPanelControls</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">% Input: parentHandle - handle for uicontrol parent</span>
+0005 
+0006 markerDefaultSize = 16;
+0007 markerMinSize = 2;
+0008 markerMaxSize = 100;
+0009 
+0010 markerTypes = pluginObj.markerTypes;
+0011 
+0012 fontSize = pluginObj.fontSize;
+0013 
+0014 spacing = 2; <span class="comment">% px</span>
+0015 padding = 2; <span class="comment">% px</span>
+0016 
+0017 uiControlsHandles = struct();
+0018 
+0019 vBox = uix.VBox(<span class="string">'Parent'</span>,parentHandle, <span class="string">'Spacing'</span>,spacing, <span class="string">'Padding'</span>,padding);
+0020 
+0021 <span class="comment">% Row 1</span>
+0022 <a href="#_sub1" class="code" title="subfunction makeRow1hBox(parentHandle)">makeRow1hBox</a>(vBox);
+0023 
+0024 <span class="comment">% Row 2</span>
+0025 <a href="#_sub2" class="code" title="subfunction makeRow2hBox(parentHandle)">makeRow2hBox</a>(vBox);
+0026 
+0027 <span class="comment">% Set vBox Heights</span>
+0028 set(vBox, <span class="string">'Heights'</span>,[-1 -1]);
+0029 
+0030 
+0031 <span class="comment">%% Nested fn</span>
+0032   <a name="_sub1" href="#_subfunctions" class="code">function makeRow1hBox(parentHandle)</a>
+0033     thisHbox = uix.HBox(<span class="string">'Parent'</span>, parentHandle, <span class="string">'Spacing'</span>, spacing);
+0034     
+0035     <span class="comment">% autoSizeToggle</span>
+0036     thisTag = pluginObj.panelTag(<span class="string">'autoSizeToggle'</span>);
+0037     uiControlsHandles.autoSizeMarkerLabel = uicontrol(<span class="keyword">...</span>
+0038       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span><span class="comment">    </span>
+0039       <span class="string">'Style'</span>,<span class="string">'togglebutton'</span>,<span class="keyword">...</span>
+0040       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0041       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0042       <span class="string">'String'</span>,sprintf(<span class="string">'AutoSize (%s)'</span>, char(hex2dec(<span class="string">'2714'</span>))),<span class="keyword">...</span>
+0043       <span class="string">'Value'</span>,1,<span class="keyword">...</span>
+0044       <span class="string">'UserData'</span>,pluginObj.userData,<span class="keyword">...</span>
+0045       <span class="string">'Callback'</span>,pluginObj.callbackHandle(thisTag),<span class="keyword">...</span>
+0046       <span class="string">'Parent'</span>,thisHbox);
+0047     
+0048     <span class="comment">% markerSizeSlider</span>
+0049     thisTag = pluginObj.panelTag(<span class="string">'markerSizeSlider'</span>);
+0050     uiControlsHandles.markerSizeSlider = uicontrol(<span class="keyword">...</span>
+0051       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0052       <span class="string">'Style'</span>,<span class="string">'slider'</span>,<span class="keyword">...</span>
+0053       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0054       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0055       <span class="string">'Min'</span>,markerMinSize,<span class="keyword">...</span>
+0056       <span class="string">'Max'</span>,markerMaxSize,<span class="keyword">...</span>
+0057       <span class="string">'Value'</span>,markerDefaultSize,<span class="keyword">...</span>
+0058       <span class="string">'SliderStep'</span>,get(0,<span class="string">'defaultuicontrolSliderStep'</span>),<span class="keyword">...</span>
+0059       <span class="string">'Enable'</span>, <span class="string">'off'</span>,<span class="keyword">...</span>
+0060       <span class="string">'UserData'</span>,pluginObj.userData,<span class="keyword">...</span>
+0061       <span class="string">'Callback'</span>,pluginObj.callbackHandle(thisTag),<span class="keyword">...</span>
+0062       <span class="string">'Parent'</span>,thisHbox);
+0063     
+0064     <span class="comment">% Set Box Widths</span>
+0065     set(thisHbox, <span class="string">'Widths'</span>,[-2 -3]);
+0066   <span class="keyword">end</span>
+0067 
+0068 
+0069   <a name="_sub2" href="#_subfunctions" class="code">function makeRow2hBox(parentHandle)</a>
+0070     thisHbox = uix.HBox( <span class="string">'Parent'</span>, parentHandle, <span class="string">'Spacing'</span>, spacing);
+0071     
+0072     <span class="comment">% markerTypeLabel</span>
+0073     thisTag = pluginObj.panelTag(<span class="string">'markerTypeLabel'</span>);
+0074     uiControlsHandles.markerTypeLabel = uicontrol(<span class="keyword">...</span>
+0075       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0076       <span class="string">'Style'</span>,<span class="string">'text'</span>,<span class="keyword">...</span><span class="comment">    </span>
+0077       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0078       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0079       <span class="string">'String'</span>,<span class="string">'2D Marker Type:'</span>,<span class="keyword">...</span>
+0080       <span class="string">'Parent'</span>,thisHbox);
+0081     
+0082     
+0083     <span class="comment">% markerTypeMenu</span>
+0084     markerVal = pluginObj.view.dynamic.markerVal;
+0085     thisTag = pluginObj.panelTag(<span class="string">'markerTypeMenu'</span>);
+0086     uiControlsHandles.markerTypeMenu = uicontrol(<span class="keyword">...</span>
+0087       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0088       <span class="string">'Style'</span>,<span class="string">'popupmenu'</span>,<span class="keyword">...</span><span class="comment">  </span>
+0089       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0090       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0091       <span class="string">'String'</span>,markerTypes,<span class="keyword">...</span>
+0092       <span class="string">'Value'</span>,markerVal,<span class="keyword">...</span>
+0093       <span class="string">'UserData'</span>,pluginObj.userData,<span class="keyword">...</span>
+0094       <span class="string">'Callback'</span>,pluginObj.callbackHandle(thisTag),<span class="keyword">...</span>
+0095       <span class="string">'Parent'</span>,thisHbox);
+0096     
+0097     <span class="comment">% Set row2hBox Widths</span>
+0098     set(thisHbox, <span class="string">'Widths'</span>,[-2 -3]);
+0099   <span class="keyword">end</span>
+0100 
+0101 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

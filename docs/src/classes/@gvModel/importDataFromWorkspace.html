@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of importDataFromWorkspace</title>
+  <meta name="keywords" content="importDataFromWorkspace">
+  <meta name="description" content="importDataFromWorkspace">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- ../menu.html classes --><!-- menu.html @gvModel -->
+<h1>importDataFromWorkspace
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>importDataFromWorkspace</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function importDataFromWorkspace(modelObj, data, fld, staticBool) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> importDataFromWorkspace
+
+ Usage: obj.importDataFromWorkspace(variable)
+        obj.importDataFromWorkspace(variable, hypercubeName)
+
+ Inputs:
+   variable: variable from workspace, either variable itself or variable
+             name as string. variable can an object of class/subclass gv,
+             MDD, or gvArray.
+   hypercubeName: is a hypercubeName to store loaded data in. If empty
+                  will use default indexing.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../src/classes/gvArray.html" class="code" title="">gvArray</a>	% gvArray - GIMBL-Vis multidimensional data storage class</li><li><a href="../../../src/classes/gvArrayRef.html" class="code" title="">gvArrayRef</a>	% gvArrayRef - GIMBL-Vis multidimensional data handle class wrapper for gvArray</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="gvModel.html" class="code" title="">gvModel</a>	% gvModel - Model class for the GIMBL-Vis Model-View-Controller</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function importDataFromWorkspace(modelObj, data, fld, staticBool)</a>
+0002 <span class="comment">% importDataFromWorkspace</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">% Usage: obj.importDataFromWorkspace(variable)</span>
+0005 <span class="comment">%        obj.importDataFromWorkspace(variable, hypercubeName)</span>
+0006 <span class="comment">%</span>
+0007 <span class="comment">% Inputs:</span>
+0008 <span class="comment">%   variable: variable from workspace, either variable itself or variable</span>
+0009 <span class="comment">%             name as string. variable can an object of class/subclass gv,</span>
+0010 <span class="comment">%             MDD, or gvArray.</span>
+0011 <span class="comment">%   hypercubeName: is a hypercubeName to store loaded data in. If empty</span>
+0012 <span class="comment">%                  will use default indexing.</span>
+0013 
+0014 <span class="comment">% Setup args</span>
+0015 <span class="keyword">if</span> nargin &lt; 3
+0016   fld = [];
+0017 <span class="keyword">end</span>
+0018 <span class="keyword">if</span> nargin &lt; 4
+0019   staticBool = false;
+0020 <span class="keyword">end</span>
+0021 
+0022 <span class="comment">% if data given as data name string</span>
+0023 <span class="keyword">if</span> ischar(data)
+0024   data = evalin(<span class="string">'base'</span>, data);
+0025 <span class="keyword">end</span>
+0026 
+0027 <span class="comment">% check data type</span>
+0028 <span class="keyword">if</span> isa(data, <span class="string">'gv'</span>)
+0029   <span class="keyword">if</span> ~staticBool
+0030     <span class="keyword">for</span> modelFld = fieldnames(data.model.data)'
+0031       modelFld = modelFld{1};
+0032       modelFldNew = modelObj.checkHypercubeName(modelFld); <span class="comment">% check fld name</span>
+0033       modelObj.data.(modelFldNew) = data.model.data.(modelFld); <span class="comment">% add fld to checked fld name</span>
+0034       modelObj.data.(modelFldNew).hypercubeName = modelFldNew;
+0035     <span class="keyword">end</span>
+0036     
+0037     notify(modelObj.controller, <span class="string">'modelChanged'</span>);
+0038   <span class="keyword">else</span>
+0039     modelObj.app.replaceApp(data);
+0040   <span class="keyword">end</span>
+0041   modelObj.vprintf(<span class="string">'gvModel: Loaded gv object data.\n'</span>)
+0042 <span class="keyword">elseif</span> isa(data, <span class="string">'MDD'</span>) || isa(data, <span class="string">'MDDRef'</span>) || isnumeric(data) || iscell(data)
+0043   <span class="comment">% Determine fld/hypercubeName</span>
+0044   <span class="keyword">if</span> isempty(fld)
+0045     fld = modelObj.checkHypercubeName(<a href="../../../src/classes/gvArray.html" class="code" title="">gvArray</a>(data));
+0046   <span class="keyword">else</span>
+0047     fld = modelObj.checkHypercubeName(fld);
+0048   <span class="keyword">end</span>
+0049   
+0050   <span class="comment">% Add hypercube</span>
+0051   hypercubeObj = <a href="../../../src/classes/gvArrayRef.html" class="code" title="">gvArrayRef</a>(<a href="../../../src/classes/gvArray.html" class="code" title="">gvArray</a>(data));
+0052   hypercubeName = fld;
+0053   modelObj.addHypercube(hypercubeObj, hypercubeName);
+0054   
+0055   modelObj.vprintf(<span class="string">'gvModel: Loaded multidimensional array object data.\n'</span>)
+0056 <span class="keyword">else</span>
+0057   error(<span class="string">'Attempting to load non-gv/non-multidimensional data. Use ''obj.importTabularDataFromFile'' instead.'</span>)
+0058 <span class="keyword">end</span>
+0059 
+0060 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

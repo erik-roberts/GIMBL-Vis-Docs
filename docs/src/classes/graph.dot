@@ -1,0 +1,26 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  gvArray -> gvArray;
+  gvArray -> gvArrayAxis;
+  gvArrayAxis -> gvArrayAxis;
+  gvArrayRef -> gvArray;
+  gvArrayRef -> gvArrayRef;
+  gvController -> gvArray;
+  gvController -> gvController;
+  gvController -> gvEvent;
+  gvEvent -> gvEvent;
+  gvGuiPlugin -> gvGuiPlugin;
+  gvGuiPlugin -> gvPlugin;
+  gvPlugin -> gvPlugin;
+  gvWindowPlugin -> gvGuiPlugin;
+  gvWindowPlugin -> gvWindowPlugin;
+
+  gvArray [URL="gvArray.html"];
+  gvArrayAxis [URL="gvArrayAxis.html"];
+  gvArrayRef [URL="gvArrayRef.html"];
+  gvController [URL="gvController.html"];
+  gvEvent [URL="gvEvent.html"];
+  gvGuiPlugin [URL="gvGuiPlugin.html"];
+  gvPlugin [URL="gvPlugin.html"];
+  gvWindowPlugin [URL="gvWindowPlugin.html"];
+}

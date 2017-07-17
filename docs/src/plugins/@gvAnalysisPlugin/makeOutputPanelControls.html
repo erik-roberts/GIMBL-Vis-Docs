@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of makeOutputPanelControls</title>
+  <meta name="keywords" content="makeOutputPanelControls">
+  <meta name="description" content="params">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- # plugins --><!-- menu.html @gvAnalysisPlugin -->
+<h1>makeOutputPanelControls
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>params</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function makeOutputPanelControls(pluginObj, parentHandle) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> params</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function makeTargetControls(parentHandle)</a></li><li><a href="#_sub2" class="code">function makeTargetNameControls(parentHandle)</a></li><li><a href="#_sub3" class="code">function makeDeleteSourceControls(parentHandle)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function makeOutputPanelControls(pluginObj, parentHandle)</a>
+0002 
+0003 <span class="comment">% params</span>
+0004 spacing = 5;
+0005 padding = 5;
+0006 fontSize = pluginObj.fontSize;
+0007 fontHeight = pluginObj.fontHeight;
+0008 
+0009 thisTag = pluginObj.panelTag(<span class="string">'scrollingPanel'</span>);
+0010 scrollingPanel = uix.ScrollingPanel(<span class="string">'Tag'</span>,thisTag, <span class="string">'Parent'</span>,parentHandle);
+0011 
+0012 panelVbox = uix.VBox(<span class="string">'Parent'</span>,scrollingPanel, <span class="string">'Spacing'</span>,spacing, <span class="string">'Padding'</span>, padding);
+0013 
+0014 <a href="#_sub1" class="code" title="subfunction makeTargetControls(parentHandle)">makeTargetControls</a>(panelVbox);
+0015 
+0016 <a href="#_sub2" class="code" title="subfunction makeTargetNameControls(parentHandle)">makeTargetNameControls</a>(panelVbox);
+0017 
+0018 <a href="#_sub3" class="code" title="subfunction makeDeleteSourceControls(parentHandle)">makeDeleteSourceControls</a>(panelVbox);
+0019 
+0020 <span class="comment">% set sizes</span>
+0021 <span class="comment">% controlHeight = fontHeight + spacing + padding;</span>
+0022 controlHeight = 1.5*fontHeight + spacing;
+0023 vBoxHeights = [controlHeight*4, fontHeight*1.5, fontHeight*1.5];
+0024 set(panelVbox, <span class="string">'Heights'</span>, vBoxHeights );
+0025 set(scrollingPanel, <span class="string">'Heights'</span>, sum(vBoxHeights)+spacing*2+padding*2 );
+0026 
+0027 <span class="comment">%% Nested Fn</span>
+0028   <a name="_sub1" href="#_subfunctions" class="code">function makeTargetControls(parentHandle)</a>
+0029     thisHbox = uix.HBox( <span class="string">'Parent'</span>, parentHandle, <span class="string">'Spacing'</span>, spacing);
+0030     
+0031     <span class="comment">% targetTypeLabel</span>
+0032     thisTag = pluginObj.panelTag(<span class="string">'targetTypeLabel'</span>);
+0033     uicontrol(<span class="keyword">...</span>
+0034       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0035       <span class="string">'Style'</span>,<span class="string">'text'</span>,<span class="keyword">...</span><span class="comment">    </span>
+0036       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0037       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0038       <span class="string">'String'</span>,<span class="string">'Target Type:'</span>,<span class="keyword">...</span>
+0039       <span class="string">'Parent'</span>,thisHbox);
+0040 
+0041     thisTag = pluginObj.panelTag(<span class="string">'targetRadioBox'</span>);
+0042     thisVbox = uixVRadioBox( <span class="string">'Parent'</span>, thisHbox, <span class="string">'Spacing'</span>, spacing,<span class="keyword">...</span>
+0043       <span class="string">'Tag'</span>,thisTag, <span class="string">'Callback'</span>,pluginObj.callbackHandle(thisTag));
+0044     
+0045     <span class="comment">% mergeTarget</span>
+0046     thisTag = pluginObj.panelTag(<span class="string">'mergeTargetRadio'</span>);
+0047     uicontrol(<span class="keyword">...</span>
+0048       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0049       <span class="string">'Style'</span>,<span class="string">'radiobutton'</span>,<span class="keyword">...</span><span class="comment">  </span>
+0050       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0051       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0052       <span class="string">'String'</span>,<span class="string">'Merge into Source Hypercube'</span>,<span class="keyword">...</span>
+0053       <span class="string">'UserData'</span>,pluginObj.userData,<span class="keyword">...</span>
+0054       <span class="string">'Parent'</span>,thisVbox);
+0055     
+0056     <span class="comment">% newHcTarget</span>
+0057     thisTag = pluginObj.panelTag(<span class="string">'newHcTargetRadio'</span>);
+0058     uicontrol(<span class="keyword">...</span>
+0059       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0060       <span class="string">'Style'</span>,<span class="string">'radiobutton'</span>,<span class="keyword">...</span><span class="comment">  </span>
+0061       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0062       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0063       <span class="string">'String'</span>,<span class="string">'New Hypercube'</span>,<span class="keyword">...</span>
+0064       <span class="string">'UserData'</span>,pluginObj.userData,<span class="keyword">...</span>
+0065       <span class="string">'Parent'</span>,thisVbox);
+0066     
+0067     <span class="comment">% workspaceTarget</span>
+0068     thisTag = pluginObj.panelTag(<span class="string">'fileTargetRadio'</span>);
+0069     uicontrol(<span class="keyword">...</span>
+0070       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0071       <span class="string">'Style'</span>,<span class="string">'radiobutton'</span>,<span class="keyword">...</span><span class="comment">  </span>
+0072       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0073       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0074       <span class="string">'String'</span>,<span class="string">'Workspace Variable'</span>,<span class="keyword">...</span>
+0075       <span class="string">'UserData'</span>,pluginObj.userData,<span class="keyword">...</span>
+0076       <span class="string">'Parent'</span>,thisVbox);
+0077     
+0078     <span class="comment">% fileTarget</span>
+0079     thisTag = pluginObj.panelTag(<span class="string">'fileTargetRadio'</span>);
+0080     uicontrol(<span class="keyword">...</span>
+0081       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0082       <span class="string">'Style'</span>,<span class="string">'radiobutton'</span>,<span class="keyword">...</span><span class="comment">  </span>
+0083       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0084       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0085       <span class="string">'String'</span>,<span class="string">'New File'</span>,<span class="keyword">...</span>
+0086       <span class="string">'UserData'</span>,pluginObj.userData,<span class="keyword">...</span>
+0087       <span class="string">'Parent'</span>,thisVbox);
+0088     
+0089     set(thisHbox, <span class="string">'Widths'</span>,[-2 -3]);
+0090   <span class="keyword">end</span>
+0091 
+0092   <a name="_sub2" href="#_subfunctions" class="code">function makeTargetNameControls(parentHandle)</a>
+0093     thisHbox = uix.HBox( <span class="string">'Parent'</span>, parentHandle, <span class="string">'Spacing'</span>, spacing);
+0094     
+0095     <span class="comment">% targetNameLabel</span>
+0096     thisTag = pluginObj.panelTag(<span class="string">'targetNameLabel'</span>);
+0097     uicontrol(<span class="keyword">...</span>
+0098       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0099       <span class="string">'Style'</span>,<span class="string">'text'</span>,<span class="keyword">...</span><span class="comment">    </span>
+0100       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0101       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0102       <span class="string">'String'</span>,pluginObj.getTargetNameLabel(),<span class="keyword">...</span>
+0103       <span class="string">'Parent'</span>,thisHbox);
+0104     
+0105     <span class="comment">% targetNameBox</span>
+0106     thisTag = pluginObj.panelTag(<span class="string">'targetNameBox'</span>);
+0107     uicontrol(<span class="keyword">...</span>
+0108       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0109       <span class="string">'Style'</span>,<span class="string">'edit'</span>,<span class="keyword">...</span><span class="comment">  </span>
+0110       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0111       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0112       <span class="string">'String'</span>,<span class="string">''</span>,<span class="keyword">...</span>
+0113       <span class="string">'Parent'</span>,thisHbox);
+0114     
+0115     <span class="comment">% Set box size</span>
+0116     set(thisHbox, <span class="string">'Widths'</span>,[-2 -3]);
+0117   <span class="keyword">end</span>
+0118 
+0119   <a name="_sub3" href="#_subfunctions" class="code">function makeDeleteSourceControls(parentHandle)</a>
+0120     thisHbox = uix.HBox( <span class="string">'Parent'</span>, parentHandle, <span class="string">'Spacing'</span>, spacing);
+0121     
+0122     <span class="comment">% deleteSourceHcLabel</span>
+0123     thisTag = pluginObj.panelTag(<span class="string">'deleteSourceHcLabel'</span>);
+0124     uicontrol(<span class="keyword">...</span>
+0125       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0126       <span class="string">'Style'</span>,<span class="string">'text'</span>,<span class="keyword">...</span><span class="comment">    </span>
+0127       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0128       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0129       <span class="string">'String'</span>,<span class="string">'Toggle Delete Source Hypercube:'</span>,<span class="keyword">...</span>
+0130       <span class="string">'Enable'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0131       <span class="string">'Parent'</span>,thisHbox);
+0132     
+0133     <span class="comment">% deleteSourceHcToggle</span>
+0134     thisTag = pluginObj.panelTag(<span class="string">'deleteSourceHcToggle'</span>);
+0135     uicontrol(<span class="keyword">...</span>
+0136       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0137       <span class="string">'Style'</span>,<span class="string">'togglebutton'</span>,<span class="keyword">...</span><span class="comment">    </span>
+0138       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0139       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0140       <span class="string">'String'</span>,<span class="string">'(   )'</span>,<span class="keyword">...</span><span class="comment">%sprintf('Delete Source Hypercube (%s)', char(hex2dec('2714'))),...</span>
+0141       <span class="string">'Value'</span>,0,<span class="keyword">...</span>
+0142       <span class="string">'Enable'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0143       <span class="string">'UserData'</span>,pluginObj.userData,<span class="keyword">...</span>
+0144       <span class="string">'Callback'</span>,pluginObj.callbackHandle(thisTag),<span class="keyword">...</span>
+0145       <span class="string">'Parent'</span>,thisHbox);
+0146     
+0147     <span class="comment">% Set box size</span>
+0148     set(thisHbox, <span class="string">'Widths'</span>,[-2 -3]);
+0149   <span class="keyword">end</span>
+0150 
+0151 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

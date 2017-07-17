@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of makePlotPanelControls</title>
+  <meta name="keywords" content="makePlotPanelControls">
+  <meta name="description" content="% makePlotPanelControls">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- # plugins --><!-- menu.html @gvPlotWindowPlugin -->
+<h1>makePlotPanelControls
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>% makePlotPanelControls</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function makePlotPanelControls(pluginObj, parentHandle) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% makePlotPanelControls
+
+ Input: parentHandle - handle for uicontrol parent</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="gvPlotWindowPlugin.html" class="code" title="">gvPlotWindowPlugin</a>	% gvPlotWindowPlugin - Plot Window Plugin Class for GIMBL-Vis</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function makePlotPanelControls(pluginObj, parentHandle)</a>
+0002 <span class="comment">%% makePlotPanelControls</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">% Input: parentHandle - handle for uicontrol parent</span>
+0005 
+0006 fontSize = pluginObj.fontSize;
+0007 spacing = 2; <span class="comment">% px</span>
+0008 padding = 2; <span class="comment">% px</span>
+0009 
+0010 uiControlsHandles = struct();
+0011 
+0012 <span class="comment">% Make grid</span>
+0013 grid = uix.Grid(<span class="string">'Parent'</span>,parentHandle, <span class="string">'Spacing'</span>,spacing, <span class="string">'Padding'</span>,padding);
+0014 
+0015 <span class="comment">% (1,1)</span>
+0016 <span class="comment">% openPlotButton</span>
+0017 thisTag = pluginObj.panelTag(<span class="string">'openPlotButton'</span>);
+0018 uiControlsHandles.openPlotButton = uicontrol(<span class="keyword">...</span>
+0019 <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0020 <span class="string">'Style'</span>,<span class="string">'pushbutton'</span>,<span class="keyword">...</span>
+0021 <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0022 <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0023 <span class="string">'String'</span>,<span class="string">'Open Plot Window'</span>,<span class="keyword">...</span>
+0024 <span class="string">'UserData'</span>,pluginObj.userData,<span class="keyword">...</span>
+0025 <span class="string">'Callback'</span>,pluginObj.callbackHandle(thisTag),<span class="keyword">...</span>
+0026 <span class="string">'Parent'</span>,grid);
+0027 
+0028 <span class="comment">% (1,2)</span>
+0029 <span class="comment">% showLegendButton</span>
+0030 thisTag = pluginObj.panelTag(<span class="string">'showLegendButton'</span>);
+0031 uiControlsHandles.showLegendButton = uicontrol(<span class="keyword">...</span>
+0032 <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0033 <span class="string">'Style'</span>,<span class="string">'pushbutton'</span>,<span class="keyword">...</span>
+0034 <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0035 <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0036 <span class="string">'String'</span>,<span class="string">'Show Legend'</span>,<span class="keyword">...</span>
+0037 <span class="string">'UserData'</span>,pluginObj.userData,<span class="keyword">...</span>
+0038 <span class="string">'Callback'</span>,pluginObj.callbackHandle(thisTag),<span class="keyword">...</span>
+0039 <span class="string">'Parent'</span>,grid);
+0040 
+0041 <span class="comment">% Set layout sizes</span>
+0042 set(grid, <span class="string">'Heights'</span>,[-1], <span class="string">'Widths'</span>,[-1 -1]);
+0043 
+0044 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

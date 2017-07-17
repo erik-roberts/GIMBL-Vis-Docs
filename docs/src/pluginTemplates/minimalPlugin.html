@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of minimalPlugin</title>
+  <meta name="keywords" content="minimalPlugin">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- menu.html pluginTemplates -->
+<h1>minimalPlugin
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../src/classes/gvPlugin.html" class="code" title="">gvPlugin</a>	% gvPlugin - Abstract Plugin Class for GIMBL-Vis</li><li><a href="minimalPlugin.html" class="code" title="">minimalPlugin</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="minimalPlugin.html" class="code" title="">minimalPlugin</a>	</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function out = makePanelControls(pluginObj, parentHandle)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 classdef <a href="minimalPlugin.html" class="code" title="">minimalPlugin</a> &lt; <a href="../../src/classes/gvPlugin.html" class="code" title="">gvPlugin</a>
+0002   
+0003   <span class="comment">%% Public properties %%</span>
+0004   properties (Constant)
+0005     pluginName = <span class="string">'MinimalPlugin'</span>
+0006     pluginFieldName = <span class="string">'minimalPlugin'</span>
+0007   <span class="keyword">end</span>
+0008   
+0009   properties
+0010     metadata
+0011     
+0012     handles
+0013   <span class="keyword">end</span>
+0014   
+0015   <span class="comment">%% Public methods %%</span>
+0016   methods
+0017     
+0018     <a name="_sub0" href="#_subfunctions" class="code">function out = makePanelControls(pluginObj, parentHandle)</a>
+0019       out = uix.Empty(<span class="string">'Parent'</span>,parentHandle);
+0020     <span class="keyword">end</span>
+0021     
+0022   <span class="keyword">end</span>
+0023   
+0024 <span class="keyword">end</span>
+0025</pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

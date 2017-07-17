@@ -1,0 +1,448 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of plot</title>
+  <meta name="keywords" content="plot">
+  <meta name="description" content="TODO">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- # plugins --><!-- menu.html @gvPlotWindowPlugin -->
+<h1>plot
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>TODO</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function plot(pluginObj) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> TODO
+ - fn on cells
+ - hypercube scale colormap</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../src/functions/gvGetAxisType.html" class="code" title="function dataAxesType = gvGetAxisType(mddObj)">gvGetAxisType</a>	gvGetAxisType - get axis type from axismeta of mdd object</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="gvPlotWindowPlugin.html" class="code" title="">gvPlotWindowPlugin</a>	% gvPlotWindowPlugin - Plot Window Plugin Class for GIMBL-Vis</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function makeAllSubplots()</a></li><li><a href="#_sub2" class="code">function makeSubplot(hAx, plotDims)</a></li><li><a href="#_sub3" class="code">function makePlot(hAx, plotDims, plotSlice, legendInfo)</a></li><li><a href="#_sub4" class="code">function out = makeAxInd(x)</a></li><li><a href="#_sub5" class="code">function vals = getValsForAxis(x)</a></li><li><a href="#_sub6" class="code">function x = linearize(x)</a></li><li><a href="#_sub7" class="code">function x = removeEmpty(x)</a></li><li><a href="#_sub8" class="code">function x = removeNan(x)</a></li><li><a href="#_sub9" class="code">function scatter3dPlot(plotData)</a></li><li><a href="#_sub10" class="code">function shrinkText2Fit(txtH)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function plot(pluginObj)</a>
+0002 
+0003 <span class="comment">% TODO</span>
+0004 <span class="comment">% - fn on cells</span>
+0005 <span class="comment">% - hypercube scale colormap</span>
+0006 
+0007 <span class="comment">% Dev notes:</span>
+0008 <span class="comment">%  Data Type Strategy:</span>
+0009 <span class="comment">%   - check if all data is numeric</span>
+0010 <span class="comment">%   - check if slice or hypercube numeric scale</span>
+0011 <span class="comment">%   - if mixed, set non-numeric to nans</span>
+0012 <span class="comment">%   - if only non-numeric, get legend info</span>
+0013 
+0014 hFig = pluginObj.handles.fig;
+0015 hAx = pluginObj.handles.ax;
+0016 figure(hFig); <span class="comment">% make hFig gcf</span>
+0017 
+0018 nViewDims = pluginObj.view.dynamic.nViewDims;
+0019 <span class="keyword">if</span> nViewDims == 0
+0020   <span class="keyword">return</span>
+0021 <span class="keyword">end</span>
+0022 viewDims = pluginObj.view.dynamic.viewDims;
+0023 
+0024 fontSize = pluginObj.view.fontSize;
+0025 
+0026 hypercubeObj = pluginObj.controller.activeHypercube;
+0027 dimNames = hypercubeObj.axisNames;
+0028 dimNames = strrep(dimNames, <span class="string">'_'</span>, <span class="string">' '</span>); <span class="comment">% replace '_' with ' ' to avoid subscript</span>
+0029 sliderVals = pluginObj.view.dynamic.sliderVals;
+0030 
+0031 <a href="#_sub1" class="code" title="subfunction makeAllSubplots()">makeAllSubplots</a>();
+0032 
+0033 
+0034 <span class="comment">%% Nested functions</span>
+0035   <a name="_sub1" href="#_subfunctions" class="code">function makeAllSubplots()</a>
+0036     <span class="keyword">switch</span> nViewDims
+0037       <span class="keyword">case</span> 1
+0038         <span class="comment">% 1 1d pane</span>
+0039         plotDim = find(viewDims);
+0040 
+0041         <a href="#_sub2" class="code" title="subfunction makeSubplot(hAx, plotDims)">makeSubplot</a>(hAx, plotDim);
+0042         
+0043       <span class="keyword">case</span> 2
+0044         <span class="comment">% 1 2d pane</span>
+0045         plotDims = find(viewDims);
+0046         
+0047         <a href="#_sub2" class="code" title="subfunction makeSubplot(hAx, plotDims)">makeSubplot</a>(hAx, plotDims);
+0048         
+0049       <span class="keyword">case</span> {3,4,5}
+0050         <span class="comment">% 3D: 3 2d panes + 1 3d pane = 4 subplots</span>
+0051         <span class="comment">% 4D: 6 2d panes + 4 3d pane = 10 subplots</span>
+0052         <span class="comment">% 5D: 10 2d panes + 10 3d pane = 20 subplots</span>
+0053         
+0054         plotDims = find(viewDims);
+0055         
+0056         <span class="comment">% 2d plots</span>
+0057         plotDims2d = sort(combnk(plotDims,2));
+0058         <span class="keyword">for</span> iAx2d = 1:size(plotDims2d, 1)
+0059           ax2d = hAx(iAx2d);
+0060           
+0061           <a href="#_sub2" class="code" title="subfunction makeSubplot(hAx, plotDims)">makeSubplot</a>(ax2d, plotDims2d(iAx2d,:));
+0062         <span class="keyword">end</span>
+0063         
+0064         <span class="comment">% 3d plot</span>
+0065         plotDims3d = sort(combnk(plotDims,3));
+0066         
+0067         <span class="keyword">for</span> iAx3d = iAx2d+1:iAx2d+size(plotDims3d, 1)
+0068           ax3d = hAx(iAx3d);
+0069 <span class="comment">%           if isgraphics(ax3d) &amp;&amp; isempty(get(ax3d,'Children'))</span>
+0070             <a href="#_sub2" class="code" title="subfunction makeSubplot(hAx, plotDims)">makeSubplot</a>(ax3d, plotDims3d(iAx3d-iAx2d,:))
+0071 <span class="comment">%           end</span>
+0072         <span class="keyword">end</span>
+0073         
+0074       <span class="keyword">case</span> {6, 7, 8}
+0075         <span class="comment">% 6D: 15 2d panes = 15 subplots</span>
+0076         <span class="comment">% 7D: 21 2d panes = 21 subplots</span>
+0077         <span class="comment">% 8D: 28 2d panes = 28 subplots</span>
+0078         
+0079         plotDims = find(viewDims);
+0080         
+0081         <span class="comment">% 2d plots</span>
+0082         plotDims2d = sort(combnk(plotDims,2));
+0083         <span class="keyword">for</span> iAx2d = 1:size(plotDims2d, 1)
+0084           ax2d = hAx(iAx2d);
+0085           
+0086           <a href="#_sub2" class="code" title="subfunction makeSubplot(hAx, plotDims)">makeSubplot</a>(ax2d, plotDims2d(iAx2d,:));
+0087         <span class="keyword">end</span>
+0088       <span class="keyword">otherwise</span>
+0089         wprintf(<span class="string">'Unsupported Number of Dimensions'</span>);
+0090     <span class="keyword">end</span>
+0091     
+0092     hideEmptyAxes(hFig);
+0093     
+0094   <span class="keyword">end</span>
+0095 
+0096 
+0097   <a name="_sub2" href="#_subfunctions" class="code">function makeSubplot(hAx, plotDims)</a>
+0098     set(hFig,<span class="string">'CurrentAxes'</span>, hAx);
+0099 
+0100     sliceInds = sliderVals;
+0101     sliceInds = num2cell(sliceInds);
+0102     [sliceInds{plotDims}] = deal(<span class="string">':'</span>);
+0103     plotSlice = squeeze(hypercubeObj.data(sliceInds{:}));
+0104     
+0105     <span class="keyword">if</span> hypercubeObj.meta.onlyNumericDataBool
+0106       anyNumBool = true;
+0107     <span class="keyword">else</span>
+0108       <span class="comment">% check if any numeric in slice</span>
+0109       numInds = cellfun(@isscalar, plotSlice);
+0110       
+0111       <span class="keyword">if</span> any(numInds(:))
+0112         anyNumBool = true;
+0113         
+0114         <span class="comment">% convert non-numeric to nan</span>
+0115         <span class="keyword">if</span> ~all(numInds(:))
+0116           plotSlice(~numInds) = deal({nan});
+0117         <span class="keyword">end</span>
+0118         
+0119         <span class="comment">% convert slice to mat</span>
+0120         plotSlice = cell2mat(plotSlice);
+0121         clear plotSliceTemp
+0122       <span class="keyword">else</span> <span class="comment">% all non-num</span>
+0123         anyNumBool = false;
+0124         
+0125         <span class="keyword">if</span> length(hypercubeObj.meta.legend) &gt; 1
+0126           axesType = <a href="../../../src/functions/gvGetAxisType.html" class="code" title="function dataAxesType = gvGetAxisType(mddObj)">gvGetAxisType</a>(hypercubeObj);
+0127           dataTypeAxInd = find(strcmp(axesType, <span class="string">'dataType'</span>), 1);
+0128           
+0129           legendInfo = hypercubeObj.meta.legend(sliderVals(dataTypeAxInd));
+0130         <span class="keyword">else</span>
+0131           legendInfo = hypercubeObj.meta.legend(1);
+0132         <span class="keyword">end</span>
+0133       <span class="keyword">end</span>
+0134     <span class="keyword">end</span>
+0135     
+0136     <span class="comment">% fill empty cell with nan</span>
+0137     <span class="keyword">if</span> iscell(plotSlice)
+0138       plotSlice(cellfun(@isempty,plotSlice)) = deal({nan});
+0139     <span class="keyword">end</span>
+0140     
+0141     <span class="comment">% make plot</span>
+0142     <span class="keyword">if</span> anyNumBool
+0143       <a href="#_sub3" class="code" title="subfunction makePlot(hAx, plotDims, plotSlice, legendInfo)">makePlot</a>(hAx, plotDims, plotSlice);
+0144     <span class="keyword">else</span>
+0145       <a href="#_sub3" class="code" title="subfunction makePlot(hAx, plotDims, plotSlice, legendInfo)">makePlot</a>(hAx, plotDims, plotSlice, legendInfo);
+0146     <span class="keyword">end</span>
+0147   <span class="keyword">end</span>
+0148 
+0149 
+0150   <a name="_sub3" href="#_subfunctions" class="code">function makePlot(hAx, plotDims, plotSlice, legendInfo)</a>
+0151     <span class="keyword">if</span> nargin&lt;4
+0152       legendInfo = [];
+0153     <span class="keyword">end</span>
+0154 
+0155     axInds = arrayfun(@<a href="#_sub4" class="code" title="subfunction out = makeAxInd(x)">makeAxInd</a>, plotDims,<span class="string">'Uni'</span>,0); <span class="comment">% for ticks</span>
+0156     axVals = arrayfun(@<a href="#_sub5" class="code" title="subfunction vals = getValsForAxis(x)">getValsForAxis</a>, plotDims,<span class="string">'Uni'</span>,0); <span class="comment">% for tick labels</span>
+0157     
+0158     markerType = pluginObj.markerTypes{pluginObj.view.dynamic.markerVal};
+0159     <span class="keyword">if</span> length(axInds) ~= 2
+0160       markerType = <span class="string">'scatter'</span>;
+0161     <span class="keyword">end</span>
+0162     
+0163     <span class="keyword">switch</span> markerType
+0164       <span class="keyword">case</span> <span class="string">'scatter'</span>
+0165         <span class="comment">% turn ax vals into mesh grids</span>
+0166         <span class="keyword">if</span> length(axInds) == 3
+0167           axValsVector = cell(1, length(axInds));
+0168           [axValsVector{:}] = meshgrid(axInds{2}, axInds{1}, axInds{3});
+0169         <span class="keyword">elseif</span> length(axInds) == 2
+0170           axValsVector = cell(1, length(axInds));
+0171           [axValsVector{:}] = meshgrid(axInds{2}, axInds{1});
+0172         <span class="keyword">else</span> <span class="comment">% turn 1D into 2D</span>
+0173           axValsVector{2} = axInds{1};
+0174           axValsVector{1} = axValsVector{2}*0;
+0175         <span class="keyword">end</span>
+0176         axValsVector([1,2]) = axValsVector([2,1]);
+0177         
+0178         <span class="comment">% linearize ax vals and data</span>
+0179         axValsVector = cellfunu(@<a href="#_sub6" class="code" title="subfunction x = linearize(x)">linearize</a>, axValsVector);
+0180         plotSlice = plotSlice(:);
+0181         
+0182         <span class="comment">% remove empty cells</span>
+0183         <span class="keyword">if</span> iscell(plotSlice)
+0184           emptyCells = cellfun(@isempty,plotSlice);
+0185           <span class="keyword">if</span> any(emptyCells)
+0186             axValsVector = cellfun(@<a href="#_sub7" class="code" title="subfunction x = removeEmpty(x)">removeEmpty</a>, axValsVector);
+0187             plotSlice(emptyCells) = [];
+0188           <span class="keyword">end</span>
+0189         <span class="keyword">end</span>
+0190       <span class="keyword">case</span> <span class="string">'grid'</span>
+0191         axValsVector = axInds;
+0192         
+0193         plotSlice = plotSlice'; <span class="comment">% since 'image' plots x on y</span>
+0194       <span class="keyword">otherwise</span>
+0195         wprintf(<span class="string">'Unknown Marker Type'</span>)
+0196         <span class="keyword">return</span>
+0197     <span class="keyword">end</span>
+0198     
+0199     <span class="comment">% remove empty cells</span>
+0200     <span class="keyword">if</span> iscell(plotSlice)
+0201       nanCells = cellfun(@isnan2,plotSlice);
+0202       <span class="keyword">if</span> all(nanCells)
+0203         cla
+0204         <span class="keyword">return</span>
+0205       <span class="keyword">end</span>
+0206       <span class="keyword">if</span> any(nanCells)
+0207         axValsVector = cellfun(@<a href="#_sub8" class="code" title="subfunction x = removeNan(x)">removeNan</a>, axValsVector);
+0208         <span class="keyword">if</span> isnumeric(axValsVector)
+0209           axValsVector = num2cell(axValsVector);
+0210         <span class="keyword">end</span>
+0211         plotSlice(nanCells) = [];
+0212       <span class="keyword">end</span>
+0213     <span class="keyword">end</span>
+0214     
+0215     axisLabels = dimNames(plotDims);
+0216 
+0217     <span class="comment">% Marker Size</span>
+0218     markerSizeSlider = findobjReTag(<span class="string">'plot_panel_markerSizeSlider'</span>);
+0219     autoSizeMarkerCheckboxHandle = findobjReTag(<span class="string">'plot_panel_autoSizeToggle'</span>);
+0220     <span class="keyword">if</span> autoSizeMarkerCheckboxHandle.Value <span class="comment">%auto size marker</span>
+0221       axUnit = get(hAx,<span class="string">'unit'</span>);
+0222       set(hAx,<span class="string">'unit'</span>, <span class="string">'pixels'</span>);
+0223       pos = get(hAx,<span class="string">'position'</span>);
+0224       axSize = pos(3:4);
+0225       markerSize = min(axSize) / max(cellfun(@length, axInds));
+0226       set(hAx,<span class="string">'unit'</span>, axUnit);
+0227     <span class="keyword">else</span> <span class="comment">%manual size marker</span>
+0228       markerSize = markerSizeSlider.Value;
+0229     <span class="keyword">end</span>
+0230     
+0231     <span class="comment">% get slice ready</span>
+0232     <span class="keyword">if</span> ~isempty(legendInfo) <span class="comment">% categorical cells</span>
+0233       groups = legendInfo.groups;
+0234       colors = legendInfo.colors;
+0235       markers = legendInfo.markers;
+0236 
+0237       [~, gInd] = ismember(plotSlice, groups);
+0238       clear plotSlice
+0239       plotSlice = colors(gInd,:);
+0240       
+0241       <span class="comment">% for grid</span>
+0242       <span class="keyword">if</span> ~isvector(gInd)
+0243         plotSlice = reshape(plotSlice, [size(gInd), 3]);
+0244       <span class="keyword">end</span>
+0245     <span class="keyword">end</span>
+0246     
+0247     <span class="comment">% make plot</span>
+0248     <span class="keyword">if</span> length(axInds) &lt; 3
+0249       <span class="keyword">switch</span> markerType
+0250         <span class="keyword">case</span> <span class="string">'scatter'</span>
+0251           scatter(axValsVector{:}, markerSize, plotSlice, <span class="string">'filled'</span>); <span class="comment">% slice specific colormap</span>
+0252         <span class="keyword">case</span> <span class="string">'grid'</span>
+0253           <span class="keyword">if</span> isempty(legendInfo)
+0254             image(axValsVector{:}, plotSlice, <span class="string">'CDataMapping'</span>,<span class="string">'scaled'</span>); <span class="comment">% slice specific colormap</span>
+0255           <span class="keyword">else</span>
+0256             image(axValsVector{:}, plotSlice); <span class="comment">% slice specific colormap</span>
+0257           <span class="keyword">end</span>
+0258           axis xy
+0259         <span class="keyword">otherwise</span>
+0260           wprintf(<span class="string">'Unknown Marker Type'</span>)
+0261           <span class="keyword">return</span>
+0262       <span class="keyword">end</span>
+0263     <span class="keyword">else</span>
+0264       scatter3(axValsVector{:}, markerSize, plotSlice, <span class="string">'filled'</span>); <span class="comment">% slice specific colormap</span>
+0265     <span class="keyword">end</span>
+0266     <span class="keyword">if</span> isempty(legendInfo)
+0267       colorbar
+0268     <span class="keyword">end</span>
+0269     
+0270     <span class="comment">% Set axes</span>
+0271     set(hAx,<span class="string">'XTick'</span>, axInds{1});
+0272     set(hAx,<span class="string">'XTicklabel'</span>, axVals{1});
+0273     <span class="keyword">if</span> length(axInds) &gt; 1
+0274       set(hAx,<span class="string">'YTick'</span>, axInds{2});
+0275       set(hAx,<span class="string">'YTicklabel'</span>, axVals{2});
+0276       <span class="keyword">if</span> length(axInds) &gt; 2
+0277         set(hAx,<span class="string">'ZTick'</span>, axInds{3});
+0278         set(hAx,<span class="string">'ZTicklabel'</span>, axVals{3});
+0279       <span class="keyword">end</span>
+0280     <span class="keyword">end</span>
+0281     
+0282     <span class="comment">% Remove 1D y axis</span>
+0283     <span class="keyword">if</span> length(axInds) == 1
+0284       set(hAx,<span class="string">'YTick'</span>, []);
+0285     <span class="keyword">end</span>
+0286     
+0287     <span class="comment">% lims</span>
+0288     xlim([axInds{1}(1), axInds{1}(end)]);
+0289     <span class="keyword">try</span>
+0290       <span class="comment">% Rescale xlim</span>
+0291       xlims = get(hAx,<span class="string">'xlim'</span>);
+0292       set(hAx, <span class="string">'xlim'</span>, [xlims(1)- 0.05*range(xlims) xlims(2)+0.05*range(xlims)]);
+0293     <span class="keyword">end</span>
+0294     xlabel(axisLabels{1})
+0295     
+0296     <span class="keyword">if</span> length(axInds) &gt; 1
+0297       ylim([axInds{2}(1), axInds{2}(end)]);
+0298       <span class="keyword">try</span>
+0299         <span class="comment">% Rescale ylim</span>
+0300         ylims = get(hAx,<span class="string">'ylim'</span>);
+0301         set(hAx, <span class="string">'ylim'</span>, [ylims(1)- 0.05*range(ylims) ylims(2)+0.05*range(ylims)]);
+0302       <span class="keyword">end</span>
+0303       ylabel(axisLabels{2})
+0304       
+0305       <span class="keyword">if</span> length(axInds) &gt; 2
+0306         zlim([axInds{3}(1), axInds{3}(end)]);
+0307         <span class="keyword">try</span>    
+0308           <span class="comment">% Rescale zlim</span>
+0309           zlims = get(hAx,<span class="string">'zlim'</span>);
+0310           set(hAx, <span class="string">'zlim'</span>, [zlims(1)- 0.05*range(zlims) zlims(2)+0.05*range(zlims)]);
+0311         <span class="keyword">end</span>
+0312         zlabel(axisLabels{3})
+0313       <span class="keyword">end</span>
+0314     <span class="keyword">end</span>
+0315     
+0316     hAx.FontSize = fontSize;
+0317     
+0318     <span class="comment">% add plotDims to ax user data</span>
+0319     hAx.UserData = struct(<span class="string">'plotDims'</span>, plotDims);
+0320     
+0321     
+0322     <span class="comment">%% Nested fn</span>
+0323     <a name="_sub4" href="#_subfunctions" class="code">function out = makeAxInd(x)</a>
+0324       out = 1:length(hypercubeObj.axisValues{x});
+0325     <span class="keyword">end</span>
+0326     
+0327     <a name="_sub5" href="#_subfunctions" class="code">function vals = getValsForAxis(x)</a>
+0328       vals = hypercubeObj.axisValues{x};
+0329     <span class="keyword">end</span>
+0330     
+0331     <a name="_sub6" href="#_subfunctions" class="code">function x = linearize(x)</a>
+0332       x = x(:);
+0333     <span class="keyword">end</span>
+0334     
+0335     <a name="_sub7" href="#_subfunctions" class="code">function x = removeEmpty(x)</a>
+0336       x(emptyCells) = [];
+0337     <span class="keyword">end</span>
+0338     
+0339     <a name="_sub8" href="#_subfunctions" class="code">function x = removeNan(x)</a>
+0340       x(nanCells) = [];
+0341     <span class="keyword">end</span>
+0342   <span class="keyword">end</span>
+0343 
+0344 
+0345   <a name="_sub9" href="#_subfunctions" class="code">function scatter3dPlot(plotData)</a>
+0346     <span class="comment">%     [uniqueGroups, uga, ugc] = unique(group);</span>
+0347     <span class="comment">%     colors = colormap;</span>
+0348     <span class="comment">%     markersize = 20;</span>
+0349     <span class="comment">%     scatter3(x(:), y(:), z(:), markersize, colors(ugc,:));</span>
+0350     
+0351     <span class="keyword">try</span>
+0352       [~, ~, groupInd4color] = unique(plotData.g);
+0353       
+0354 <span class="comment">%       plotData.sym</span>
+0355 
+0356       scatter3(plotData.x, plotData.y, plotData.z, plotData.siz, plotData.clr(groupInd4color,:), <span class="string">'.'</span>);
+0357       
+0358       xlabel(plotData.xlabel)
+0359       ylabel(plotData.ylabel)
+0360       zlabel(plotData.zlabel)
+0361       
+0362 <span class="comment">%       if handles.MainWindow.legendBool</span>
+0363 <span class="comment">%         uG = unique(plotData.g);</span>
+0364 <span class="comment">%         [lH,icons] = legend(uG); % TODO: hide legend before making changes</span>
+0365 <span class="comment">%</span>
+0366 <span class="comment">%         % Increase legend width</span>
+0367 <span class="comment">%     %     lPos = lH.Position;</span>
+0368 <span class="comment">%     %     lPos(3) = lPos(3) * 1.05; % increase width of legend</span>
+0369 <span class="comment">%     %     lH.Position = lPos;</span>
+0370 <span class="comment">%</span>
+0371 <span class="comment">%         [icons(1:length(uG)).FontSize] = deal(lFontSize);</span>
+0372 <span class="comment">%         [icons(1:length(uG)).FontUnits] = deal('normalized');</span>
+0373 <span class="comment">%</span>
+0374 <span class="comment">%         shrinkText2Fit(icons(1:length(uG)))</span>
+0375 <span class="comment">%</span>
+0376 <span class="comment">%         [icons(length(uG)+2:2:end).MarkerSize] = deal(lMarkerSize);</span>
+0377 <span class="comment">%</span>
+0378 <span class="comment">% %         legend(hFig,'boxoff')</span>
+0379 <span class="comment">% %         legend(hFig,'Location','SouthEast')</span>
+0380 <span class="comment">%       end</span>
+0381     <span class="keyword">end</span>
+0382   <span class="keyword">end</span>
+0383 
+0384 
+0385   <a name="_sub10" href="#_subfunctions" class="code">function shrinkText2Fit(txtH)</a>
+0386     <span class="keyword">for</span> iTxt=1:length(txtH)
+0387       <span class="comment">% Check width</span>
+0388       ex = txtH(iTxt).Extent;
+0389       bigBool = ( (ex(1) + ex(3)) &gt; 1 );
+0390       <span class="keyword">while</span> bigBool
+0391         txtH(iTxt).FontSize = txtH(iTxt).FontSize * 0.99;
+0392         ex = txtH(iTxt).Extent;
+0393         bigBool = ( (ex(1) + ex(3)) &gt; 1 );
+0394       <span class="keyword">end</span>
+0395     <span class="keyword">end</span>
+0396   <span class="keyword">end</span>
+0397 
+0398 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

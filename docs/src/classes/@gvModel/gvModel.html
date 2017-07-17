@@ -1,0 +1,337 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of gvModel</title>
+  <meta name="keywords" content="gvModel">
+  <meta name="description" content="% gvModel - Model class for the GIMBL-Vis Model-View-Controller">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- ../menu.html classes --><!-- menu.html @gvModel -->
+<h1>gvModel
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>% gvModel - Model class for the GIMBL-Vis Model-View-Controller</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% gvModel - Model class for the GIMBL-Vis Model-View-Controller
+
+ Methods (public):
+   toRef - convert all model data to gvArrayRef
+
+ Methods (protected):
+   nextModelFieldName - get next default field for model
+   checkHypercubeName - check if hypercubeName exists as field in model
+
+ Author: Erik Roberts</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="gvModel.html" class="code" title="">gvModel</a>	% gvModel - Model class for the GIMBL-Vis Model-View-Controller</li><li><a href="importDataFromWorkspace.html" class="code" title="function importDataFromWorkspace(modelObj, data, fld, staticBool)">importDataFromWorkspace</a>	importDataFromWorkspace</li><li><a href="importDsData.html" class="code" title="function importDsData(modelObj, src, varargin)">importDsData</a>	importDsData - import dynasim data</li><li><a href="importTabularDataFromFile.html" class="code" title="function importTabularDataFromFile(modelObj, fld, varargin)">importTabularDataFromFile</a>	importTabularDataFromFile (public) - Imports tabular data from a file to</li><li><a href="load.html" class="code" title="function load(modelObj, src, fld, staticBool)">load</a>	load - load gv, gvArray, or multidimensional object data</li><li><a href="../../../src/classes/gvArrayRef.html" class="code" title="">gvArrayRef</a>	% gvArrayRef - GIMBL-Vis multidimensional data handle class wrapper for gvArray</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../src/classes/@gv/gv.html" class="code" title="">gv</a>	% gv - main class for GIMBL-Vis</li><li><a href="gvModel.html" class="code" title="">gvModel</a>	% gvModel - Model class for the GIMBL-Vis Model-View-Controller</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function value = get.activeHypercube(viewObj)</a></li><li><a href="#_sub2" class="code">function value = get.activeHypercubeName(viewObj)</a></li><li><a href="#_sub3" class="code">function modelObj = gvModel(gvObj)</a></li><li><a href="#_sub4" class="code">function varargout = printHypercubeList(modelObj)</a></li><li><a href="#_sub5" class="code">function summary(modelObj)</a></li><li><a href="#_sub6" class="code">function modelObj = toRef(modelObj, flds)</a></li><li><a href="#_sub7" class="code">function saveHypercube(modelObj, hypercubeName, filePath, overwriteBool)</a></li><li><a href="#_sub8" class="code">function setup(modelObj)</a></li><li><a href="#_sub9" class="code">function mergeHypercubes(modelObj, hypercube, hypercube2merge)</a></li><li><a href="#_sub10" class="code">function changeHypercubeName(modelObj, oldHypercubeName, newHypercubeName)</a></li><li><a href="#_sub11" class="code">function addHypercube(modelObj, hypercubeObj, hypercubeName)</a></li><li><a href="#_sub12" class="code">function deleteHypercube(modelObj, hypercubeName)</a></li><li><a href="#_sub13" class="code">function fld = nextModelFieldName(modelObj)</a></li><li><a href="#_sub14" class="code">function fldOut = checkHypercubeName(modelObj, src)</a></li><li><a href="#_sub15" class="code">function vprintf(obj, varargin)</a></li><li><a href="#_sub16" class="code">function toHypercubeName(modelObj, src)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%% gvModel - Model class for the GIMBL-Vis Model-View-Controller</span>
+0002 <span class="comment">%</span>
+0003 <span class="comment">% Methods (public):</span>
+0004 <span class="comment">%   toRef - convert all model data to gvArrayRef</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">% Methods (protected):</span>
+0007 <span class="comment">%   nextModelFieldName - get next default field for model</span>
+0008 <span class="comment">%   checkHypercubeName - check if hypercubeName exists as field in model</span>
+0009 <span class="comment">%</span>
+0010 <span class="comment">% Author: Erik Roberts</span>
+0011 
+0012 classdef <a href="gvModel.html" class="code" title="">gvModel</a> &lt; handle
+0013   
+0014   <span class="comment">%% Public Properties %%</span>
+0015   properties
+0016     data = struct() <span class="comment">% of gvArrayRef</span>
+0017   <span class="keyword">end</span>
+0018   
+0019   properties (SetAccess = private)
+0020     app
+0021     view
+0022     controller
+0023   <span class="keyword">end</span>
+0024   
+0025   <span class="comment">%% Dependent Properties %%</span>
+0026   properties (Dependent)
+0027     activeHypercube
+0028     activeHypercubeName
+0029   <span class="keyword">end</span>
+0030   
+0031   methods
+0032     
+0033     <a name="_sub0" href="#_subfunctions" class="code">function value = get.activeHypercube(viewObj)</a>
+0034       value = viewObj.controller.activeHypercube;
+0035     <span class="keyword">end</span>
+0036     
+0037     <a name="_sub1" href="#_subfunctions" class="code">function value = get.activeHypercubeName(viewObj)</a>
+0038       value = viewObj.controller.activeHypercubeName;
+0039     <span class="keyword">end</span>
+0040     
+0041   <span class="keyword">end</span>
+0042   
+0043   <span class="comment">%% Public Methods %%</span>
+0044   methods
+0045     
+0046     <a name="_sub2" href="#_subfunctions" class="code">function modelObj = gvModel(gvObj)</a>
+0047       <span class="keyword">if</span> exist(<span class="string">'gvObj'</span>,<span class="string">'var'</span>) &amp;&amp; ~isempty(gvObj)
+0048         modelObj.app = gvObj;
+0049       <span class="keyword">end</span>
+0050     <span class="keyword">end</span>
+0051     
+0052     
+0053     <a name="_sub3" href="#_subfunctions" class="code">function varargout = printHypercubeList(modelObj)</a>
+0054       flds = fieldnames(modelObj.data);
+0055       <span class="keyword">if</span> isempty(flds)
+0056         flds = {<span class="string">'[ None ]'</span>};
+0057       <span class="keyword">end</span>
+0058       
+0059       <span class="keyword">if</span> nargout
+0060         varargout{1} = flds;
+0061       <span class="keyword">else</span>
+0062         fprintf([<span class="string">'Hypercubes:\n\t'</span> strjoin(flds,<span class="string">'\n\t'</span>) <span class="string">'\n'</span>])
+0063       <span class="keyword">end</span>
+0064     <span class="keyword">end</span>
+0065     
+0066     
+0067     <a name="_sub4" href="#_subfunctions" class="code">function summary(modelObj)</a>
+0068       <span class="comment">% summary - print gvModel object summary</span>
+0069       <span class="comment">%</span>
+0070       <span class="comment">% See also: gv/summary, gvView/summary, gvArray/summary</span>
+0071       
+0072       fprintf(<span class="string">'Model Summary:\n'</span>)
+0073       
+0074       flds = fieldnames(modelObj.data)';
+0075       <span class="keyword">if</span> ~isempty(flds)
+0076         <span class="keyword">for</span> modelFld = flds
+0077           fprintf([<span class="string">'Hypercube: '</span> modelFld{1} <span class="string">'\n'</span>])
+0078           modelObj.data.(modelFld{1}).summary()
+0079           fprintf(<span class="string">'\n'</span>)
+0080         <span class="keyword">end</span>
+0081       <span class="keyword">else</span>
+0082         fprintf(<span class="string">'\t[ Empty Model ]\n'</span>)
+0083       <span class="keyword">end</span>
+0084     <span class="keyword">end</span>
+0085     
+0086 
+0087     <a name="_sub5" href="#_subfunctions" class="code">function modelObj = toRef(modelObj, flds)</a>
+0088       <span class="comment">%toRef - convert all model data to gvArrayRef</span>
+0089       
+0090       <span class="keyword">if</span> ~exist(<span class="string">'flds'</span>,<span class="string">'var'</span>) || isempty(flds)
+0091         flds = fieldnames(modelObj.data);
+0092       <span class="keyword">end</span>
+0093       
+0094       <span class="keyword">for</span> iFld = 1:length(flds)
+0095         fld = flds{iFld};
+0096         <span class="keyword">if</span> ~isa(modelObj.data.(fld), <span class="string">'gvArrayRef'</span>)
+0097           modelObj.data.(fld) = <a href="../../../src/classes/gvArrayRef.html" class="code" title="">gvArrayRef</a>(modelObj.data.(fld));
+0098         <span class="keyword">end</span>
+0099       <span class="keyword">end</span>
+0100     <span class="keyword">end</span>
+0101     
+0102     
+0103     <span class="comment">%% Loading</span>
+0104     modelObj = <a href="load.html" class="code" title="function load(modelObj, src, fld, staticBool)">load</a>(modelObj, src, fld, staticBool)
+0105     
+0106     <span class="comment">%% Importing</span>
+0107     modelObj = <a href="importDataFromWorkspace.html" class="code" title="function importDataFromWorkspace(modelObj, data, fld, staticBool)">importDataFromWorkspace</a>(modelObj, fld, varargin)
+0108     
+0109     modelObj = <a href="importTabularDataFromFile.html" class="code" title="function importTabularDataFromFile(modelObj, fld, varargin)">importTabularDataFromFile</a>(modelObj, fld, varargin)
+0110     
+0111     <a href="importDsData.html" class="code" title="function importDsData(modelObj, src, varargin)">importDsData</a>(modelObj, src, varargin);
+0112     
+0113     <span class="comment">%% Saving</span>
+0114     <a name="_sub6" href="#_subfunctions" class="code">function saveHypercube(modelObj, hypercubeName, filePath, overwriteBool)</a>
+0115       <span class="comment">% saveActiveHypercube - save gvArray object to file as MDD object (default: 'gvHypercubeData.mat')</span>
+0116       
+0117       <span class="keyword">if</span> ~exist(<span class="string">'filePath'</span>, <span class="string">'var'</span>) || isempty(filePath)
+0118         filePath = <span class="string">'gvHypercubeData.mat'</span>;
+0119       <span class="keyword">end</span>
+0120       <span class="keyword">if</span> nargin &lt; 3
+0121         overwriteBool = false;
+0122       <span class="keyword">end</span>
+0123       
+0124       <span class="keyword">if</span> ~exist(filePath,<span class="string">'file'</span>) || overwriteBool
+0125         eval([hypercubeName <span class="string">' = modelObj.data.('''</span> hypercubeName <span class="string">''').gv2mdd;'</span>]);
+0126         save(filePath, hypercubeName);
+0127       <span class="keyword">else</span>
+0128         warning(<span class="string">'File exists and overwriteBool=false. Choose a new file name or set overwriteBool=true.'</span>);
+0129       <span class="keyword">end</span>
+0130     <span class="keyword">end</span>
+0131     
+0132     <span class="comment">%% Misc</span>
+0133     <a name="_sub7" href="#_subfunctions" class="code">function setup(modelObj)</a>
+0134       modelObj.view = modelObj.app.view;
+0135       modelObj.controller = modelObj.app.controller;
+0136     <span class="keyword">end</span>
+0137     
+0138     
+0139     <a name="_sub8" href="#_subfunctions" class="code">function mergeHypercubes(modelObj, hypercube, hypercube2merge)</a>
+0140       modelObj.data.(hypercube).merge(modelObj.data.(hypercube2merge));
+0141       
+0142       modelObj.deleteHypercube(hypercube2merge);
+0143     <span class="keyword">end</span>
+0144     
+0145     
+0146     <a name="_sub9" href="#_subfunctions" class="code">function changeHypercubeName(modelObj, oldHypercubeName, newHypercubeName)</a>
+0147       <span class="keyword">if</span> isfield(modelObj.data, newHypercubeName)
+0148         error(<span class="string">'New hypercube name already exists. Use a different name.'</span>);
+0149         <span class="keyword">return</span> <span class="comment">%#ok&lt;UNRCH&gt;</span>
+0150       <span class="keyword">end</span>
+0151       
+0152       modelObj.data.(newHypercubeName) = modelObj.data.(oldHypercubeName);
+0153       modelObj.data = rmfield(modelObj.data, oldHypercubeName);
+0154     <span class="keyword">end</span>
+0155     
+0156     
+0157     <a name="_sub10" href="#_subfunctions" class="code">function addHypercube(modelObj, hypercubeObj, hypercubeName)</a>
+0158       <span class="keyword">if</span> nargin &lt; 3 || isempty(hypercubeName)
+0159         hypercubeName = modelObj.checkHypercubeName(hypercubeObj);
+0160       <span class="keyword">else</span>
+0161         hypercubeName = modelObj.checkHypercubeName(hypercubeName);
+0162       <span class="keyword">end</span>
+0163       
+0164       modelObj.data.(hypercubeName) = hypercubeObj;
+0165 
+0166       notify(modelObj.controller, <span class="string">'modelChanged'</span>);
+0167     <span class="keyword">end</span>
+0168     
+0169     
+0170     <a name="_sub11" href="#_subfunctions" class="code">function deleteHypercube(modelObj, hypercubeName)</a>
+0171       modelObj.data = rmfield(modelObj.data, hypercubeName);
+0172 
+0173       notify(modelObj.controller, <span class="string">'modelChanged'</span>);
+0174     <span class="keyword">end</span>
+0175         
+0176     
+0177     <a name="_sub12" href="#_subfunctions" class="code">function fld = nextModelFieldName(modelObj)</a>
+0178       <span class="comment">% nextModelFieldName - get next default fld for .defaultName#</span>
+0179       
+0180       flds = fieldnames(modelObj.data);
+0181       tokens = regexp(flds,<span class="string">'hypercube(\d+)$'</span>, <span class="string">'tokens'</span>);
+0182       tokens = [tokens{:}]; <span class="comment">% enter cells</span>
+0183       <span class="keyword">if</span> ~isempty(tokens)
+0184         tokens = [tokens{:}]; <span class="comment">% get ind</span>
+0185         inds = str2double(tokens);
+0186         
+0187         availInds = setxor(inds, 1:max(inds)+1);
+0188         selectedInd = min(availInds);
+0189         
+0190         fld = [<span class="string">'hypercube'</span> num2str(selectedInd)];
+0191       <span class="keyword">else</span>
+0192         fld = <span class="string">'hypercube1'</span>;
+0193       <span class="keyword">end</span>
+0194     <span class="keyword">end</span>
+0195     
+0196     
+0197     <a name="_sub13" href="#_subfunctions" class="code">function fldOut = checkHypercubeName(modelObj, src)</a>
+0198       <span class="comment">% checkHypercubeName - check if hypercubeName exists as field in model.</span>
+0199       <span class="comment">%</span>
+0200       <span class="comment">% Usage: [obj, hypercubeName_Out] = obj.checkHypercubeName(hypercubeName_In)</span>
+0201       <span class="comment">%        [obj, hypercubeName_Out] = obj.checkHypercubeName(arrayObj)</span>
+0202       <span class="comment">%</span>
+0203       <span class="comment">% Details:</span>
+0204       <span class="comment">%   If 2nd arg is hypercubeName_In, hypercubeName = hypercubeName_In.</span>
+0205       <span class="comment">% If 2nd arg is arrayObj, check if hypercubeName = arrayObj.hypercubeName</span>
+0206       <span class="comment">% exists. If not, use obj.nextModelFieldName.</span>
+0207       <span class="comment">%   If hypercubeName is already a field in model without a trailing index,</span>
+0208       <span class="comment">% add a 1 to original and make this new one with suffix 2. If exists with</span>
+0209       <span class="comment">% index, increment to find next index.</span>
+0210       
+0211       <span class="keyword">if</span> isa(src, <span class="string">'MDD'</span>) || isa(src, <span class="string">'MDDRef'</span>) <span class="comment">% or gvArray</span>
+0212         <span class="keyword">if</span> ~isempty(src.hypercubeName)
+0213           fldIn = src.hypercubeName;
+0214         <span class="keyword">elseif</span> isfield(src.meta, <span class="string">'defaultHypercubeName'</span>)
+0215           fldIn = src.meta.defaultHypercubeName;
+0216         <span class="keyword">else</span>
+0217           fldIn = [];
+0218         <span class="keyword">end</span>
+0219       <span class="keyword">elseif</span> ischar(src)
+0220         fldIn = src;
+0221       <span class="keyword">else</span>
+0222         error(<span class="string">'Unknown input'</span>)
+0223       <span class="keyword">end</span>
+0224       
+0225       <span class="keyword">if</span> ~isempty(fldIn)
+0226         flds = fieldnames(modelObj.data);
+0227         
+0228         hypercubeNameAlreadyExist = any(~cellfun(@isempty, regexp(flds, [<span class="string">'^'</span> fldIn])));
+0229         <span class="keyword">if</span> hypercubeNameAlreadyExist
+0230           fldInNoDigits = fldIn(1:find(~isstrprop(fldIn, <span class="string">'digit'</span>), 1, <span class="string">'last'</span>));
+0231           tokens = regexp(flds,[<span class="string">'^'</span> fldInNoDigits <span class="string">'(\d+)$'</span>], <span class="string">'tokens'</span>);
+0232           tokens = [tokens{:}]; <span class="comment">% enter cells</span>
+0233           <span class="keyword">if</span> ~isempty(tokens)
+0234             tokens = [tokens{:}]; <span class="comment">% get ind</span>
+0235             inds = str2double(tokens);
+0236             fldOut = [fldInNoDigits num2str(max(inds)+1)];
+0237           <span class="keyword">else</span>
+0238             <span class="comment">% rename field with index 1</span>
+0239             modelObj.data.([fldIn <span class="string">'1'</span>]) = modelObj.data.(fldIn);
+0240             modelObj.data = rmfield(modelObj.data, fldIn);
+0241             
+0242             fldOut = [fldIn <span class="string">'2'</span>];
+0243           <span class="keyword">end</span>
+0244         <span class="keyword">else</span>
+0245           fldOut = fldIn;
+0246         <span class="keyword">end</span>
+0247       <span class="keyword">else</span> <span class="comment">% isempty(hypercubeName)</span>
+0248         fldOut = modelObj.nextModelFieldName; <span class="comment">% get next fld for model.axes#</span>
+0249       <span class="keyword">end</span>
+0250     <span class="keyword">end</span>
+0251     
+0252   <span class="keyword">end</span>
+0253   
+0254   
+0255   <span class="comment">%% Protected Methods %%</span>
+0256   methods (Access = protected)
+0257 
+0258     <a name="_sub14" href="#_subfunctions" class="code">function vprintf(obj, varargin)</a>
+0259       obj.app.vprintf(varargin{:});
+0260     <span class="keyword">end</span>
+0261     
+0262     <a name="_sub15" href="#_subfunctions" class="code">function toHypercubeName(modelObj, src)</a>
+0263       <span class="keyword">if</span> isa(src, <span class="string">'MDD'</span>) || isa(src, <span class="string">'MDDRef'</span>) <span class="comment">% or gvArray</span>
+0264         <span class="keyword">if</span> ~isempty(src.hypercubeName)
+0265           fldIn = src.hypercubeName;
+0266         <span class="keyword">elseif</span> isfield(src.meta, <span class="string">'defaultHypercubeName'</span>)
+0267           fldIn = src.meta.defaultHypercubeName;
+0268         <span class="keyword">else</span>
+0269           fldIn = [];
+0270         <span class="keyword">end</span>
+0271       <span class="keyword">elseif</span> ischar(src)
+0272         fldIn = src;
+0273       <span class="keyword">else</span>
+0274         error(<span class="string">'Unknown input'</span>)
+0275       <span class="keyword">end</span>
+0276     <span class="keyword">end</span>
+0277     
+0278   <span class="keyword">end</span> <span class="comment">% protected methods</span>
+0279   
+0280 <span class="keyword">end</span> <span class="comment">% classdef</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of gvController</title>
+  <meta name="keywords" content="gvController">
+  <meta name="description" content="% gvController - Controller class for the GIMBL-Vis Model-View-Controller">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- menu.html classes -->
+<h1>gvController
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>% gvController - Controller class for the GIMBL-Vis Model-View-Controller</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% gvController - Controller class for the GIMBL-Vis Model-View-Controller
+
+ Author: Erik Roberts</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="gvArray.html" class="code" title="">gvArray</a>	% gvArray - GIMBL-Vis multidimensional data storage class</li><li><a href="gvController.html" class="code" title="">gvController</a>	% gvController - Controller class for the GIMBL-Vis Model-View-Controller</li><li><a href="gvEvent.html" class="code" title="">gvEvent</a>	</li><li><a href="../../src/plugins/@gvPlotWindowPlugin/makeAxes.html" class="code" title="function makeAxes(pluginObj)">makeAxes</a>	makeAxes - make plot window figure axes grid based on number of viewDims</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../src/classes/@gv/gv.html" class="code" title="">gv</a>	% gv - main class for GIMBL-Vis</li><li><a href="gvController.html" class="code" title="">gvController</a>	% gvController - Controller class for the GIMBL-Vis Model-View-Controller</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function obj = gvController(gvObj)</a></li><li><a href="#_sub2" class="code">function summary(cntrlObj)</a></li><li><a href="#_sub3" class="code">function setup(cntrlObj)</a></li><li><a href="#_sub4" class="code">function newListener(obj, varargin)</a></li><li><a href="#_sub5" class="code">function addPlugin(cntrlObj, pluginSrc)</a></li><li><a href="#_sub6" class="code">function connectPlugin(cntrlObj, pluginSrc)</a></li><li><a href="#_sub7" class="code">function removePlugin(cntrlObj, pluginFieldName)</a></li><li><a href="#_sub8" class="code">function disconnectPlugin(cntrlObj, pluginFieldName)</a></li><li><a href="#_sub9" class="code">function pluginsOut = guiPlugins(cntrlObj)</a></li><li><a href="#_sub10" class="code">function pluginsOut = windowPlugins(cntrlObj)</a></li><li><a href="#_sub11" class="code">function setActiveHypercube(cntrlObj, argin)</a></li><li><a href="#_sub12" class="code">function saveActiveHypercube(cntrlObj, varargin)</a></li><li><a href="#_sub13" class="code">function deleteActiveHypercube(cntrlObj)</a></li><li><a href="#_sub14" class="code">function vprintf(obj, varargin)</a></li><li><a href="#_sub15" class="code">function loadDefaultPlugins(cntrlObj)</a></li><li><a href="#_sub16" class="code">function addDefaultListeners(cntrlObj)</a></li><li><a href="#_sub17" class="code">function Callback_modelChanged(src, evnt)</a></li><li><a href="#_sub18" class="code">function Callback_pluginChanged(src, evnt)</a></li><li><a href="#_sub19" class="code">function Callback_activeHypercubeChanged(src, evnt)</a></li><li><a href="#_sub20" class="code">function Callback_activeHypercubeNameChanged(src, evnt)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%% gvController - Controller class for the GIMBL-Vis Model-View-Controller</span>
+0002 <span class="comment">%</span>
+0003 <span class="comment">% Author: Erik Roberts</span>
+0004 
+0005 classdef <a href="gvController.html" class="code" title="">gvController</a> &lt; handle
+0006   
+0007   <span class="comment">%% Public Properties %%</span>
+0008   properties
+0009     metadata = struct()
+0010     
+0011     activeHypercube = [] <span class="comment">% current gvArrayRef</span>
+0012     activeHypercubeName = <span class="string">''</span>
+0013     prior_activeHypercubeName = <span class="string">''</span>
+0014   <span class="keyword">end</span> <span class="comment">% public properties</span>
+0015   
+0016   
+0017   <span class="comment">%% Read-only Properties %%</span>
+0018   properties (SetAccess = private) <span class="comment">% read-only</span>
+0019     app
+0020     model
+0021     view
+0022     
+0023     listeners = {}
+0024     
+0025     plugins = struct()
+0026   <span class="keyword">end</span>
+0027   
+0028   
+0029   <span class="comment">%% Events %%</span>
+0030   events
+0031     <span class="comment">% model events</span>
+0032     modelChanged
+0033     
+0034     <span class="comment">% controller events</span>
+0035     pluginAdded
+0036     pluginRemoved
+0037     
+0038     <span class="comment">% view events</span>
+0039     activeHypercubeChanged
+0040     activeHypercubeNameChanged
+0041     activeHypercubeAxisLabelChanged
+0042     activeHypercubeSliceChanged
+0043     nViewDimsChanged
+0044     <a href="../../src/plugins/@gvPlotWindowPlugin/makeAxes.html" class="code" title="function makeAxes(pluginObj)">makeAxes</a>
+0045     doPlot
+0046   <span class="keyword">end</span>
+0047   
+0048   
+0049   <span class="comment">%% Public Methods %%</span>
+0050   methods
+0051     
+0052     <a name="_sub0" href="#_subfunctions" class="code">function obj = gvController(gvObj)</a>
+0053       <span class="keyword">if</span> exist(<span class="string">'gvObj'</span>,<span class="string">'var'</span>) &amp;&amp; ~isempty(gvObj)
+0054         obj.app = gvObj;
+0055       <span class="keyword">end</span>
+0056     <span class="keyword">end</span>
+0057     
+0058     
+0059     <a name="_sub1" href="#_subfunctions" class="code">function summary(cntrlObj)</a>
+0060     <span class="comment">% summary - print ontroller object summary</span>
+0061       <span class="comment">%</span>
+0062       <span class="comment">% See also: gv/summary, gvModel/summary, gvView/summary,gvArray/summary</span>
+0063       
+0064       fprintf(<span class="string">'Controller Summary:\n'</span>)
+0065 
+0066       fprintf(<span class="string">'    Loaded Plugins:\n        %s\n'</span>, strjoin(fieldnames(cntrlObj.plugins),<span class="string">'\n        '</span>) )
+0067     <span class="keyword">end</span>
+0068     
+0069     
+0070     <a name="_sub2" href="#_subfunctions" class="code">function setup(cntrlObj)</a>
+0071       cntrlObj.model = cntrlObj.app.model;
+0072       cntrlObj.view = cntrlObj.app.view;
+0073       
+0074       cntrlObj.loadDefaultPlugins()
+0075       
+0076       cntrlObj.addDefaultListeners()
+0077     <span class="keyword">end</span>
+0078     
+0079     
+0080     <a name="_sub3" href="#_subfunctions" class="code">function newListener(obj, varargin)</a>
+0081       <span class="comment">% newListener - call addlistener and add to listerners property</span>
+0082       
+0083       obj.listeners{end+1} = addlistener(obj, varargin{:});
+0084     <span class="keyword">end</span>
+0085     
+0086     
+0087     <a name="_sub4" href="#_subfunctions" class="code">function addPlugin(cntrlObj, pluginSrc)</a>
+0088       <span class="comment">% addPlugin - unidirectional add</span>
+0089       <span class="comment">%</span>
+0090       <span class="comment">% Inputs:</span>
+0091       <span class="comment">%   pluginSrc: pluginFieldName string or pluginObj object</span>
+0092       
+0093       pluginFieldName = getDefaultPropertyValue(pluginSrc, <span class="string">'pluginFieldName'</span>);
+0094       
+0095       <span class="comment">% check if plugin exists already</span>
+0096       <span class="keyword">if</span> isfield(cntrlObj.plugins, pluginFieldName)
+0097         error(<span class="string">'Plugin ''%s'' is already loaded'</span>, pluginFieldName)
+0098       <span class="keyword">end</span>
+0099 
+0100       <span class="comment">% add plugin to controller</span>
+0101       <span class="keyword">if</span> isobject(pluginSrc)
+0102         cntrlObj.plugins.(pluginFieldName) = pluginSrc;
+0103       <span class="keyword">else</span>
+0104         cntrlObj.plugins.(pluginFieldName) = feval(pluginSrc);
+0105       <span class="keyword">end</span>
+0106 
+0107       cntrlObj.vprintf(<span class="string">'gvController: Plugin ''%s'' added.\n'</span>, pluginFieldName);
+0108     <span class="keyword">end</span>
+0109     
+0110     
+0111     <a name="_sub5" href="#_subfunctions" class="code">function connectPlugin(cntrlObj, pluginSrc)</a>
+0112       <span class="comment">% connectPlugin - bidirectional add</span>
+0113       <span class="comment">%</span>
+0114       <span class="comment">% Inputs:</span>
+0115       <span class="comment">%   pluginSrc: plugin class name string or pluginObj object</span>
+0116       
+0117       pluginFieldName = getDefaultPropertyValue(pluginSrc, <span class="string">'pluginFieldName'</span>);
+0118       
+0119       <span class="comment">% add plugin to controller</span>
+0120       cntrlObj.addPlugin(pluginSrc);
+0121       
+0122       pluginClassName = cntrlObj.plugins.(pluginFieldName).pluginClassName;
+0123       
+0124       <span class="comment">% add controller to plugin</span>
+0125       cntrlObj.plugins.(pluginFieldName).addController(cntrlObj);
+0126       cntrlObj.plugins.(pluginFieldName).setup(cntrlObj);
+0127       
+0128       notify(cntrlObj, <span class="string">'pluginAdded'</span>,<span class="keyword">...</span>
+0129         <a href="gvEvent.html" class="code" title="">gvEvent</a>(<span class="string">'pluginFieldName'</span>,pluginFieldName, <span class="string">'pluginClassName'</span>,pluginClassName) );
+0130     <span class="keyword">end</span>
+0131     
+0132     
+0133     <a name="_sub6" href="#_subfunctions" class="code">function removePlugin(cntrlObj, pluginFieldName)</a>
+0134       <span class="comment">% removePlugin - unidirectional remove</span>
+0135       
+0136       cntrlObj.plugins = rmfield(cntrlObj.plugins, pluginFieldName);
+0137       
+0138       cntrlObj.vprintf(<span class="string">'gvController: Plugin ''%s'' removed.\n'</span>, pluginFieldName);
+0139     <span class="keyword">end</span>
+0140     
+0141     
+0142     <a name="_sub7" href="#_subfunctions" class="code">function disconnectPlugin(cntrlObj, pluginFieldName)</a>
+0143       <span class="comment">% disconnectPlugin - bidirectional remove</span>
+0144       
+0145       pluginClassName = cntrlObj.plugins.(pluginFieldName).pluginClassName;
+0146       
+0147       <span class="comment">% remove controller from plugin</span>
+0148       cntrlObj.plugins.(pluginFieldName).removeController();
+0149       
+0150       <span class="comment">% remove plugin from controller</span>
+0151       <a href="#_sub7" class="code" title="subfunction removePlugin(cntrlObj, pluginFieldName)">removePlugin</a>(cntrlObj, pluginFieldName);
+0152       
+0153       notify(cntrlObj, <span class="string">'pluginRemoved'</span>,<span class="keyword">...</span>
+0154         <a href="gvEvent.html" class="code" title="">gvEvent</a>(<span class="string">'pluginFieldName'</span>,pluginFieldName, <span class="string">'pluginClassName'</span>,pluginClassName) );
+0155     <span class="keyword">end</span>
+0156 
+0157     
+0158     <a name="_sub8" href="#_subfunctions" class="code">function pluginsOut = guiPlugins(cntrlObj)</a>
+0159       pluginsOut = struct();
+0160       <span class="keyword">for</span> pluginName = fieldnames(cntrlObj.plugins)'
+0161         pluginName = pluginName{1};
+0162         plugin = cntrlObj.plugins.(pluginName);
+0163         <span class="keyword">if</span> isa(plugin, <span class="string">'gvGuiPlugin'</span>)
+0164           pluginsOut.(pluginName) = plugin;
+0165         <span class="keyword">end</span>
+0166       <span class="keyword">end</span>
+0167     <span class="keyword">end</span>
+0168     
+0169     
+0170     <a name="_sub9" href="#_subfunctions" class="code">function pluginsOut = windowPlugins(cntrlObj)</a>
+0171       pluginsOut = struct();
+0172       <span class="keyword">for</span> pluginName = fieldnames(cntrlObj.plugins)'
+0173         pluginName = pluginName{1};
+0174         plugin = cntrlObj.plugins.(pluginName);
+0175         <span class="keyword">if</span> isa(plugin, <span class="string">'gvWindowPlugin'</span>)
+0176           pluginsOut.(pluginName) = plugin;
+0177         <span class="keyword">end</span>
+0178       <span class="keyword">end</span>
+0179     <span class="keyword">end</span>
+0180     
+0181     
+0182     <a name="_sub10" href="#_subfunctions" class="code">function setActiveHypercube(cntrlObj, argin)</a>
+0183       <span class="keyword">if</span> nargin &lt; 2
+0184         flds = fieldnames(cntrlObj.model.data);
+0185         
+0186         <span class="keyword">if</span> ~isempty(flds)
+0187           firstHypercubeName = flds{1};
+0188 
+0189           cntrlObj.activeHypercube = cntrlObj.model.data.(firstHypercubeName);
+0190           cntrlObj.activeHypercubeName = firstHypercubeName;
+0191         <span class="keyword">else</span>
+0192           cntrlObj.activeHypercube = <a href="gvArray.html" class="code" title="">gvArray</a>();
+0193           cntrlObj.activeHypercubeName = <span class="string">'[None]'</span>;
+0194         <span class="keyword">end</span>
+0195       <span class="keyword">elseif</span> isobject(argin)
+0196         cntrlObj.activeHypercube = argin;
+0197         cntrlObj.activeHypercubeName = argin.hypercubeName;
+0198       <span class="keyword">elseif</span> ischar(argin)
+0199         <span class="keyword">if</span> strcmp(argin, <span class="string">'[None]'</span>)
+0200           wprintf(<span class="string">'Import data before selecting a hypercube.'</span>)
+0201           <span class="keyword">return</span>
+0202         <span class="keyword">end</span>
+0203         
+0204         cntrlObj.activeHypercubeName = argin;
+0205         cntrlObj.activeHypercube = cntrlObj.model.data.(argin);
+0206       <span class="keyword">else</span>
+0207         error(<span class="string">'Unknown hypercube input'</span>)
+0208       <span class="keyword">end</span>
+0209       
+0210       <span class="keyword">if</span> ~strcmp(cntrlObj.activeHypercubeName, cntrlObj.prior_activeHypercubeName)
+0211         notify(cntrlObj, <span class="string">'activeHypercubeChanged'</span>, <a href="gvEvent.html" class="code" title="">gvEvent</a>(<span class="string">'activeHypercubeName'</span>, cntrlObj.activeHypercubeName) );
+0212         cntrlObj.prior_activeHypercubeName = cntrlObj.activeHypercubeName;
+0213       <span class="keyword">end</span>
+0214     <span class="keyword">end</span>
+0215     
+0216     
+0217     <a name="_sub11" href="#_subfunctions" class="code">function saveActiveHypercube(cntrlObj, varargin)</a>
+0218       <span class="comment">% saveActiveHypercube - save gvArray object to file as MDD object (default: 'gvHypercubeData.mat')</span>
+0219       <span class="comment">%</span>
+0220       <span class="comment">% See also: gvModel/saveHypercube</span>
+0221       
+0222       modelObj = cntrlObj.model;
+0223       
+0224       modelObj.saveHypercube(cntrlObj.activeHypercubeName, varargin{:})
+0225     <span class="keyword">end</span>
+0226     
+0227     
+0228     <a name="_sub12" href="#_subfunctions" class="code">function deleteActiveHypercube(cntrlObj)</a>
+0229       <span class="comment">% deleteActiveHypercube</span>
+0230       <span class="comment">%</span>
+0231       <span class="comment">% See also: gvModel/deleteHypercube</span>
+0232       
+0233       modelObj = cntrlObj.model;
+0234       
+0235       flds = fieldnames(modelObj.data);
+0236       flds(strcmp(flds, cntrlObj.activeHypercubeName)) = [];
+0237       <span class="keyword">if</span> ~isempty(flds)
+0238         cntrlObj.setActiveHypercube(flds{1});
+0239       <span class="keyword">end</span>
+0240       
+0241       modelObj.deleteHypercube(cntrlObj.activeHypercubeName);
+0242     <span class="keyword">end</span>
+0243     
+0244   <span class="keyword">end</span>
+0245   
+0246   
+0247   <span class="comment">%% Protected Methods %%</span>
+0248   methods (Access = protected)
+0249     
+0250     <a name="_sub13" href="#_subfunctions" class="code">function vprintf(obj, varargin)</a>
+0251       obj.app.vprintf(varargin{:});
+0252     <span class="keyword">end</span>
+0253     
+0254     
+0255     <a name="_sub14" href="#_subfunctions" class="code">function loadDefaultPlugins(cntrlObj)</a>
+0256       pluginList = cntrlObj.app.config.defaultPlugins;
+0257       
+0258       <span class="keyword">for</span> pluginStr = pluginList(:)'
+0259         cntrlObj.connectPlugin(pluginStr{1});
+0260       <span class="keyword">end</span>
+0261     <span class="keyword">end</span>
+0262     
+0263     
+0264     <a name="_sub15" href="#_subfunctions" class="code">function addDefaultListeners(cntrlObj)</a>
+0265       <span class="comment">% model events</span>
+0266       cntrlObj.newListener(<span class="string">'modelChanged'</span>, @gvController.Callback_modelChanged);
+0267       
+0268       <span class="comment">% controller events</span>
+0269       cntrlObj.newListener(<span class="string">'pluginAdded'</span>, @gvController.Callback_pluginChanged);
+0270       cntrlObj.newListener(<span class="string">'pluginRemoved'</span>, @gvController.Callback_pluginChanged);
+0271       
+0272       <span class="comment">% view events</span>
+0273       cntrlObj.newListener(<span class="string">'activeHypercubeChanged'</span>, @gvController.Callback_activeHypercubeChanged);
+0274       cntrlObj.newListener(<span class="string">'activeHypercubeNameChanged'</span>, @gvController.Callback_activeHypercubeNameChanged);
+0275     <span class="keyword">end</span>
+0276     
+0277   <span class="keyword">end</span>
+0278   
+0279   <span class="comment">%% Static Methods %%</span>
+0280   
+0281   <span class="comment">%% Callbacks</span>
+0282   methods (Static, Access = protected)
+0283     
+0284     <a name="_sub16" href="#_subfunctions" class="code">function Callback_modelChanged(src, evnt)</a>
+0285       cntrlObj = src;
+0286        
+0287       <span class="keyword">if</span> ~isempty(cntrlObj.activeHypercubeName) &amp;&amp; ~any(strcmp(fieldnames(cntrlObj.model.data), cntrlObj.activeHypercubeName))
+0288         cntrlObj.activeHypercubeName = [];
+0289         cntrlObj.activeHypercube = [];
+0290       <span class="keyword">end</span>
+0291       
+0292       
+0293       <span class="keyword">if</span> strcmp(cntrlObj.activeHypercubeName, <span class="string">'[None]'</span>)
+0294         hypercubeNames = fieldnames(cntrlObj.model.data);
+0295         <span class="keyword">if</span> ~isempty(hypercubeNames)
+0296           cntrlObj.setActiveHypercube(hypercubeNames{1});
+0297         <span class="keyword">end</span>
+0298       <span class="keyword">end</span>
+0299       
+0300       <span class="keyword">if</span> cntrlObj.view.checkMainWindowExists()
+0301         cntrlObj.plugins.main.openWindow(); <span class="comment">% reopen window</span>
+0302       <span class="keyword">end</span>
+0303     <span class="keyword">end</span>
+0304     
+0305     
+0306     <a name="_sub17" href="#_subfunctions" class="code">function Callback_pluginChanged(src, evnt)</a>
+0307       pluginClassName = evnt.data.pluginClassName;
+0308       <span class="keyword">if</span> isa(feval(pluginClassName), <span class="string">'gvGuiPlugin'</span>)
+0309         src.plugins.main.openWindow(); <span class="comment">% reset window</span>
+0310       <span class="keyword">end</span>
+0311     <span class="keyword">end</span>
+0312     
+0313     
+0314     <a name="_sub18" href="#_subfunctions" class="code">function Callback_activeHypercubeChanged(src, evnt)</a>
+0315       cntrlObj = src;
+0316       new_activeHypercubeName = evnt.data.activeHypercubeName;
+0317 <span class="comment">%       prior_activeHypercubeName = cntrlObj.prior_activeHypercubeName;</span>
+0318 <span class="comment">%       if ~strcmp(new_activeHypercubeName, prior_activeHypercubeName)</span>
+0319         cntrlObj.vprintf(<span class="string">'gvController: New active hypercube: %s\n'</span>,new_activeHypercubeName);
+0320         
+0321         <span class="comment">% TODO: more precise change</span>
+0322         <span class="keyword">if</span> cntrlObj.view.checkMainWindowExists()
+0323           cntrlObj.plugins.main.openWindow(); <span class="comment">% reopen window</span>
+0324         <span class="keyword">end</span>
+0325         
+0326         notify(cntrlObj, <span class="string">'doPlot'</span>); <span class="comment">% TODO remove this calback</span>
+0327 <span class="comment">%       end</span>
+0328     <span class="keyword">end</span>
+0329     
+0330     
+0331     <a name="_sub19" href="#_subfunctions" class="code">function Callback_activeHypercubeNameChanged(src, evnt)</a>
+0332       cntrlObj = src;
+0333       
+0334       new_activeHypercubeName = evnt.data.activeHypercubeName;
+0335       prior_activeHypercubeName = cntrlObj.prior_activeHypercubeName;
+0336       <span class="keyword">if</span> ~strcmp(new_activeHypercubeName, prior_activeHypercubeName)
+0337         cntrlObj.vprintf(<span class="string">'gvController: New active hypercube Name: %s\n'</span>,new_activeHypercubeName);
+0338         
+0339         cntrlObj.activeHypercubeName = new_activeHypercubeName;
+0340         cntrlObj.prior_activeHypercubeName = new_activeHypercubeName;
+0341         cntrlObj.model.changeHypercubeName(prior_activeHypercubeName, new_activeHypercubeName);
+0342         
+0343         
+0344         <span class="keyword">if</span> cntrlObj.view.checkMainWindowExists()
+0345           cntrlObj.plugins.main.openWindow(); <span class="comment">% reopen window</span>
+0346         <span class="keyword">end</span>
+0347       <span class="keyword">end</span>
+0348     <span class="keyword">end</span>
+0349     
+0350   <span class="keyword">end</span>
+0351   
+0352 <span class="keyword">end</span> <span class="comment">% classdef</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

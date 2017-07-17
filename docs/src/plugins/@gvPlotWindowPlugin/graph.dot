@@ -1,0 +1,26 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  gvPlotWindowPlugin -> Callback_WindowScrollWheelFcn;
+  gvPlotWindowPlugin -> Callback_dataCursor;
+  gvPlotWindowPlugin -> getPlotMetadataFromData;
+  gvPlotWindowPlugin -> gvPlotWindowPlugin;
+  gvPlotWindowPlugin -> makeAxes;
+  gvPlotWindowPlugin -> makePanelControls;
+  gvPlotWindowPlugin -> makePlotMarkerPanelControls;
+  gvPlotWindowPlugin -> makePlotPanelControls;
+  gvPlotWindowPlugin -> openLegendWindow;
+  gvPlotWindowPlugin -> openWindow;
+  gvPlotWindowPlugin -> plot;
+
+  Callback_WindowScrollWheelFcn [URL="Callback_WindowScrollWheelFcn.html"];
+  Callback_dataCursor [URL="Callback_dataCursor.html"];
+  getPlotMetadataFromData [URL="getPlotMetadataFromData.html"];
+  gvPlotWindowPlugin [URL="gvPlotWindowPlugin.html"];
+  makeAxes [URL="makeAxes.html"];
+  makePanelControls [URL="makePanelControls.html"];
+  makePlotMarkerPanelControls [URL="makePlotMarkerPanelControls.html"];
+  makePlotPanelControls [URL="makePlotPanelControls.html"];
+  openLegendWindow [URL="openLegendWindow.html"];
+  openWindow [URL="openWindow.html"];
+  plot [URL="plot.html"];
+}

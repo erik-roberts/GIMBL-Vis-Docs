@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of makePanelControls</title>
+  <meta name="keywords" content="makePanelControls">
+  <meta name="description" content="makePanelControls - make plot panel for tab in main window">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- # plugins --><!-- menu.html @gvPlotWindowPlugin -->
+<h1>makePanelControls
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>makePanelControls - make plot panel for tab in main window</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function panelHandle = makePanelControls(pluginObj, parentHandle) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> makePanelControls - make plot panel for tab in main window</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../src/classes/@gvMainWindowPlugin/gvMainWindowPlugin.html" class="code" title="">gvMainWindowPlugin</a>	% gvMainWindowPlugin - Main Window Class for GIMBL-Vis</li><li><a href="../../../src/classes/gvGuiPlugin.html" class="code" title="">gvGuiPlugin</a>	% gvGuiPlugin - Abstract GUI Plugin Class for GIMBL-Vis</li><li><a href="../../../src/plugins/@gvAnalysisPlugin/gvAnalysisPlugin.html" class="code" title="">gvAnalysisPlugin</a>	% gvAnalysisPlugin - Select GUI Class for GIMBL-Vis</li><li><a href="../../../src/plugins/@gvImageWindowPlugin/gvImageWindowPlugin.html" class="code" title="">gvImageWindowPlugin</a>	% gvImageWindowPlugin - Image Window Plugin Class for GIMBL-Vis</li><li><a href="gvPlotWindowPlugin.html" class="code" title="">gvPlotWindowPlugin</a>	% gvPlotWindowPlugin - Plot Window Plugin Class for GIMBL-Vis</li><li><a href="../../../src/plugins/@gvSelectPlugin/gvSelectPlugin.html" class="code" title="">gvSelectPlugin</a>	% gvSelectPlugin - Select GUI Plugin Class for GIMBL-Vis</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function panelHandle = makePanelControls(pluginObj, parentHandle)</a>
+0002 <span class="comment">% makePanelControls - make plot panel for tab in main window</span>
+0003 
+0004 <span class="comment">% params</span>
+0005 spacing = 5;
+0006 padding = 5;
+0007 fontSize = pluginObj.fontSize;
+0008 fontHeight = pluginObj.fontHeight;
+0009 
+0010 uiControlsHandles = struct();
+0011 
+0012 <span class="comment">% 1)</span>
+0013 <span class="comment">% main vBox</span>
+0014 mainVbox = uix.VBox(<span class="string">'Parent'</span>,parentHandle, <span class="string">'Spacing'</span>,spacing, <span class="string">'Padding'</span>, padding);
+0015 uiControlsHandles.parent = mainVbox;
+0016 
+0017 <span class="comment">% 1.1)</span>
+0018 <span class="comment">% plot panel</span>
+0019 thisTag = pluginObj.panelTag(<span class="string">'plotPanel'</span>);
+0020 plotPanel = uix.Panel(<span class="keyword">...</span>
+0021   <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0022   <span class="string">'Parent'</span>,mainVbox,<span class="keyword">...</span>
+0023   <span class="string">'Title'</span>,<span class="string">'Plot Window'</span>,<span class="keyword">...</span>
+0024   <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0025   <span class="string">'FontSize'</span>,fontSize<span class="keyword">...</span>
+0026 );
+0027 uiControlsHandles.plotPanel.handle = plotPanel;
+0028 
+0029 <span class="comment">% 1.2)</span>
+0030 <span class="comment">% plot marker panel</span>
+0031 thisTag = pluginObj.panelTag(<span class="string">'plotMarkerOutline'</span>);
+0032 plotMarkerPanel = uix.Panel(<span class="keyword">...</span>
+0033   <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0034   <span class="string">'Parent'</span>,mainVbox,<span class="keyword">...</span>
+0035   <span class="string">'Title'</span>,<span class="string">'Plot Marker'</span>,<span class="keyword">...</span>
+0036   <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0037   <span class="string">'FontSize'</span>,fontSize<span class="keyword">...</span>
+0038 );
+0039 uiControlsHandles.plotMarkerPanel.handle = plotMarkerPanel;
+0040 
+0041 
+0042 <span class="comment">%% UI Controls</span>
+0043 pluginObj.makePlotPanelControls(plotPanel);
+0044 
+0045 pluginObj.makePlotMarkerPanelControls(plotMarkerPanel);
+0046 
+0047 <span class="comment">%% Set layout sizes</span>
+0048 panelHeight = fontHeight*5 + spacing + padding;
+0049 set(mainVbox, <span class="string">'Heights'</span>,[panelHeight*.75 panelHeight])
+0050 
+0051 <span class="comment">%% argout</span>
+0052 panelHandle = uiControlsHandles;
+0053 
+0054 <span class="comment">%% add scroll callback</span>
+0055 pluginObj.view.main.addDynamicCallback(<span class="string">'WindowScrollWheelFcn'</span>, @gvPlotWindowPlugin.Callback_WindowScrollWheelFcn);
+0056 
+0057 <span class="comment">%% notify listener</span>
+0058 notify(pluginObj, <span class="string">'panelControlsMade'</span>);
+0059 
+0060 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,8 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  minimalGuiPlugin -> minimalGuiPlugin;
+  minimalPlugin -> minimalPlugin;
+
+  minimalGuiPlugin [URL="minimalGuiPlugin.html"];
+  minimalPlugin [URL="minimalPlugin.html"];
+}

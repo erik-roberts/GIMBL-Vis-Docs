@@ -1,0 +1,19 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  gvMainWindowPlugin -> gvMainWindowPlugin;
+  gvMainWindowPlugin -> makeFig;
+  gvMainWindowPlugin -> makeHypercubePanelControls;
+  gvMainWindowPlugin -> makeMenu;
+  gvMainWindowPlugin -> makePanelControls;
+  gvMainWindowPlugin -> makeWindowControls;
+  gvMainWindowPlugin -> openWindow;
+  openWindow -> makeMenu;
+
+  gvMainWindowPlugin [URL="gvMainWindowPlugin.html"];
+  makeFig [URL="makeFig.html"];
+  makeHypercubePanelControls [URL="makeHypercubePanelControls.html"];
+  makeMenu [URL="makeMenu.html"];
+  makePanelControls [URL="makePanelControls.html"];
+  makeWindowControls [URL="makeWindowControls.html"];
+  openWindow [URL="openWindow.html"];
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of gvWindowPlugin</title>
+  <meta name="keywords" content="gvWindowPlugin">
+  <meta name="description" content="% gvWindow - Abstract UI Window Plugin Class for GIMBL-Vis">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- menu.html classes -->
+<h1>gvWindowPlugin
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>% gvWindow - Abstract UI Window Plugin Class for GIMBL-Vis</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% gvWindow - Abstract UI Window Plugin Class for GIMBL-Vis
+
+ Description: This abstract class provides a template interface for GIMBL-Vis 
+              window plugins</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../src/classes/@gvMainWindowPlugin/makeFig.html" class="code" title="function makeFig(pluginObj)">makeFig</a>	</li><li><a href="../../src/classes/@gvMainWindowPlugin/openWindow.html" class="code" title="function openWindow(pluginObj)">openWindow</a>	check for main window</li><li><a href="gvGuiPlugin.html" class="code" title="">gvGuiPlugin</a>	% gvGuiPlugin - Abstract GUI Plugin Class for GIMBL-Vis</li><li><a href="gvWindowPlugin.html" class="code" title="">gvWindowPlugin</a>	% gvWindow - Abstract UI Window Plugin Class for GIMBL-Vis</li><li><a href="../../src/plugins/@gvImageWindowPlugin/openWindow.html" class="code" title="function openWindow(pluginObj)">openWindow</a>	check for main window</li><li><a href="../../src/plugins/@gvPlotWindowPlugin/openWindow.html" class="code" title="function openWindow(pluginObj)">openWindow</a>	check for main window</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../src/classes/@gvMainWindowPlugin/gvMainWindowPlugin.html" class="code" title="">gvMainWindowPlugin</a>	% gvMainWindowPlugin - Main Window Class for GIMBL-Vis</li><li><a href="gvWindowPlugin.html" class="code" title="">gvWindowPlugin</a>	% gvWindow - Abstract UI Window Plugin Class for GIMBL-Vis</li><li><a href="../../src/plugins/@gvImageWindowPlugin/gvImageWindowPlugin.html" class="code" title="">gvImageWindowPlugin</a>	% gvImageWindowPlugin - Image Window Plugin Class for GIMBL-Vis</li><li><a href="../../src/plugins/@gvPlotWindowPlugin/gvPlotWindowPlugin.html" class="code" title="">gvPlotWindowPlugin</a>	% gvPlotWindowPlugin - Plot Window Plugin Class for GIMBL-Vis</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function pluginObj = gvWindowPlugin(varargin)</a></li><li><a href="#_sub2" class="code">function closeWindow(pluginObj)</a></li><li><a href="#_sub3" class="code">function windowExistBool = checkWindowExists(pluginObj)</a></li><li><a href="#_sub4" class="code">function Callback_resetWindow(src, evnt)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%% gvWindow - Abstract UI Window Plugin Class for GIMBL-Vis</span>
+0002 <span class="comment">%</span>
+0003 <span class="comment">% Description: This abstract class provides a template interface for GIMBL-Vis</span>
+0004 <span class="comment">%              window plugins</span>
+0005 
+0006 classdef (Abstract) <a href="gvWindowPlugin.html" class="code" title="">gvWindowPlugin</a> &lt; <a href="gvGuiPlugin.html" class="code" title="">gvGuiPlugin</a>
+0007 
+0008   <span class="comment">%% Abstract Properties %%</span>
+0009   properties (Abstract, Constant)
+0010     windowName
+0011   <span class="keyword">end</span>
+0012   
+0013   <span class="comment">%% Events %%</span>
+0014   events
+0015     windowOpened
+0016   <span class="keyword">end</span>
+0017   
+0018   <span class="comment">%% Abstract Methods %%</span>
+0019   methods (Abstract)
+0020      <a href="../../src/classes/@gvMainWindowPlugin/openWindow.html" class="code" title="function openWindow(pluginObj)">openWindow</a>(pluginObj)
+0021   <span class="keyword">end</span>
+0022   
+0023   methods (Abstract, Access = protected)
+0024     <a href="../../src/classes/@gvMainWindowPlugin/makeFig.html" class="code" title="function makeFig(pluginObj)">makeFig</a>(pluginObj)
+0025   <span class="keyword">end</span>
+0026   
+0027   
+0028   <span class="comment">%% Concrete Methods %%</span>
+0029   methods
+0030     
+0031     <a name="_sub0" href="#_subfunctions" class="code">function pluginObj = gvWindowPlugin(varargin)</a>
+0032       <span class="comment">% superclass constructor</span>
+0033       pluginObj@<a href="gvGuiPlugin.html" class="code" title="">gvGuiPlugin</a>(varargin{:});
+0034       
+0035       <span class="comment">% default values</span>
+0036       pluginObj.handles.fig = [];
+0037     <span class="keyword">end</span>
+0038     
+0039     
+0040     <a name="_sub1" href="#_subfunctions" class="code">function closeWindow(pluginObj)</a>
+0041       figH = pluginObj.handles.fig;
+0042       
+0043       windowExistBool = pluginObj.checkWindowExists();
+0044       
+0045       <span class="keyword">if</span> windowExistBool
+0046         delete(figH);
+0047         
+0048         pluginObj.handles.fig = [];
+0049       <span class="keyword">end</span>
+0050     <span class="keyword">end</span>
+0051     
+0052     
+0053     <a name="_sub2" href="#_subfunctions" class="code">function windowExistBool = checkWindowExists(pluginObj)</a>
+0054       figH = pluginObj.handles.fig;
+0055       
+0056       windowExistBool = isValidFigHandle(figH);
+0057     <span class="keyword">end</span>
+0058     
+0059   <span class="keyword">end</span>
+0060   
+0061 
+0062   <span class="comment">%% Static Methods %%</span>
+0063   methods (Static)
+0064     
+0065     <a name="_sub3" href="#_subfunctions" class="code">function Callback_resetWindow(src, evnt)</a>
+0066       pluginObj = src.UserData.pluginObj;
+0067       pluginObj.openWindow(); <span class="comment">% reopen window</span>
+0068     <span class="keyword">end</span>
+0069     
+0070   <span class="keyword">end</span>
+0071   
+0072 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

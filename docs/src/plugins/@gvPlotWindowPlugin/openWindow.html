@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of openWindow</title>
+  <meta name="keywords" content="openWindow">
+  <meta name="description" content="check for main window">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- # plugins --><!-- menu.html @gvPlotWindowPlugin -->
+<h1>openWindow
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>check for main window</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function openWindow(pluginObj) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> check for main window</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../src/classes/@gvMainWindowPlugin/gvMainWindowPlugin.html" class="code" title="">gvMainWindowPlugin</a>	% gvMainWindowPlugin - Main Window Class for GIMBL-Vis</li><li><a href="../../../src/classes/gvWindowPlugin.html" class="code" title="">gvWindowPlugin</a>	% gvWindow - Abstract UI Window Plugin Class for GIMBL-Vis</li><li><a href="../../../src/plugins/@gvImageWindowPlugin/gvImageWindowPlugin.html" class="code" title="">gvImageWindowPlugin</a>	% gvImageWindowPlugin - Image Window Plugin Class for GIMBL-Vis</li><li><a href="gvPlotWindowPlugin.html" class="code" title="">gvPlotWindowPlugin</a>	% gvPlotWindowPlugin - Plot Window Plugin Class for GIMBL-Vis</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function openWindow(pluginObj)</a>
+0002 
+0003 <span class="comment">% check for main window</span>
+0004 warnBool = true;
+0005 mainWindowExistBool = pluginObj.view.checkMainWindowExists(warnBool);
+0006 
+0007 <span class="keyword">if</span> mainWindowExistBool
+0008   <span class="comment">% check for plot window</span>
+0009   plotWindowExistBool = pluginObj.checkWindowExists();
+0010   
+0011   <span class="keyword">if</span> plotWindowExistBool
+0012     pluginObj.vprintf(<span class="string">'gvPlotWindowPlugin: Reopening plot window\n'</span>)
+0013 
+0014     <span class="comment">% delete plot window handles</span>
+0015     delete(pluginObj.handles.fig)
+0016     delete(pluginObj.handles.ax)
+0017   <span class="keyword">end</span>
+0018   
+0019   <span class="comment">% Make New Panel</span>
+0020   pluginObj.makeFig();
+0021   
+0022   <span class="comment">% Add listeners</span>
+0023 <span class="comment">%   addlistener(pluginObj, 'plotEvent', @gvPlotWindowPlugin.plotCallback);</span>
+0024   <span class="comment">% TODO check if needed</span>
+0025   
+0026   <span class="comment">% Data cursor</span>
+0027   pluginObj.addDataCursor();
+0028   
+0029   <span class="comment">% Make Axes/Update Panel</span>
+0030   pluginObj.makeAxes();
+0031   
+0032   notify(pluginObj, <span class="string">'windowOpened'</span>);
+0033   
+0034   <span class="comment">% Plot</span>
+0035   pluginObj.plot();
+0036 <span class="keyword">end</span>
+0037 
+0038 <span class="keyword">end</span> <span class="comment">% main fn</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

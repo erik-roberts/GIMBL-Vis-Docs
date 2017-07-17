@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of showImage</title>
+  <meta name="keywords" content="showImage">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- # plugins --><!-- menu.html @gvImageWindowPlugin -->
+<h1>showImage
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function showImage(pluginObj, index) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function showImage(pluginObj, index)</a>
+0002 
+0003 imageDir = pluginObj.getImageDirPath();
+0004 
+0005 <span class="comment">% Find images in imageDir</span>
+0006 dirList = pluginObj.getImageList();
+0007 
+0008 <span class="comment">% Use regexp to parse image type and index</span>
+0009 imageFiles = regexp(dirList, pluginObj.metadata.imageRegexp, <span class="string">'tokens'</span>);
+0010 imageFiles = imageFiles(~cellfun(@isempty, imageFiles));
+0011 imageFiles = cellfunu(@(x) x{1}, imageFiles);
+0012 
+0013 <span class="comment">% get tokens</span>
+0014 imageTypes = cellfunu(@(x) x{1}, imageFiles);
+0015 imageInd = cellfunu(@(x) x{2}, imageFiles);
+0016 imageInd = str2double(imageInd);
+0017 
+0018 imageType = pluginObj.getImageTypeFromGUI();
+0019 
+0020 fileLogicalInd = strcmp(imageTypes, imageType) &amp; (index == imageInd);
+0021 
+0022 <span class="keyword">if</span> any(fileLogicalInd)
+0023   fullFilename = dirList(fileLogicalInd);
+0024   fullFilename = fullFilename{1};
+0025 <span class="keyword">else</span>
+0026   fullFilename = [];
+0027 <span class="keyword">end</span>
+0028 
+0029 figH = pluginObj.handles.fig;
+0030 imAxH = findobj(figH.Children,<span class="string">'type'</span>,<span class="string">'axes'</span>);
+0031 
+0032 <span class="keyword">if</span> ~isempty(fullFilename)
+0033   filePath = fullfile(imageDir, fullFilename);
+0034   <span class="keyword">if</span> exist(filePath, <span class="string">'file'</span>)
+0035     imshow(filePath, <span class="string">'Parent'</span>, imAxH);
+0036     
+0037     <span class="comment">% parse filename</span>
+0038     [~, filename] = fileparts(fullFilename);
+0039     filename = strrep(filename, <span class="string">'_'</span>,<span class="string">' '</span>);
+0040     
+0041     <span class="keyword">try</span>
+0042       title(imAxH, filename);
+0043     <span class="keyword">catch</span>
+0044       title(imAxH, sprintf(<span class="string">'%s %i'</span>, imageType, index));
+0045     <span class="keyword">end</span>
+0046   <span class="keyword">end</span>
+0047 <span class="keyword">else</span>
+0048   cla(imAxH);
+0049   xlim(imAxH, [0,1])
+0050   ylim(imAxH, [0,1])
+0051   text(imAxH, 0.1,0.5,sprintf(<span class="string">'No %s image found for index %i'</span>, imageType, index),<span class="keyword">...</span>
+0052     <span class="string">'FontUnits'</span>,<span class="string">'normalized'</span>, <span class="string">'FontSize'</span>,0.06)
+0053 <span class="keyword">end</span>
+0054 
+0055 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

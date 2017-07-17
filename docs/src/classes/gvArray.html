@@ -1,0 +1,275 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of gvArray</title>
+  <meta name="keywords" content="gvArray">
+  <meta name="description" content="% gvArray - GIMBL-Vis multidimensional data storage class">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- menu.html classes -->
+<h1>gvArray
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>% gvArray - GIMBL-Vis multidimensional data storage class</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% gvArray - GIMBL-Vis multidimensional data storage class
+
+ Description: The gvArray class inherets from the MDD class. It uses gvArrayAxis 
+              instead of MDDAxis.
+
+ gvArray adds the following methods to MDD:
+
+ Methods (public):
+   axisValues - alias for MDD's exportAxisVals
+   axisNames - alias for MDD's exportAxisNames
+   summary - alias for MDD's printAxisInfo
+
+ Methods (static):
+   mdd2gv - convert MDD superclass object to gvArray subclass
+
+ Author: Erik Roberts
+
+ See also: MDD documentation</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="gvArray.html" class="code" title="">gvArray</a>	% gvArray - GIMBL-Vis multidimensional data storage class</li><li><a href="gvArrayAxis.html" class="code" title="">gvArrayAxis</a>	% gvArrayAxis</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../src/classes/@gvModel/importDataFromWorkspace.html" class="code" title="function importDataFromWorkspace(modelObj, data, fld, staticBool)">importDataFromWorkspace</a>	importDataFromWorkspace</li><li><a href="../../src/classes/@gvModel/importDsData.html" class="code" title="function importDsData(modelObj, src, varargin)">importDsData</a>	importDsData - import dynasim data</li><li><a href="gvArray.html" class="code" title="">gvArray</a>	% gvArray - GIMBL-Vis multidimensional data storage class</li><li><a href="gvArrayRef.html" class="code" title="">gvArrayRef</a>	% gvArrayRef - GIMBL-Vis multidimensional data handle class wrapper for gvArray</li><li><a href="gvController.html" class="code" title="">gvController</a>	% gvController - Controller class for the GIMBL-Vis Model-View-Controller</li><li><a href="../../src/plugins/@gvAnalysisPlugin/applyFn.html" class="code" title="function applyFn(pluginObj)">applyFn</a>	</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function obj = gvArray(varargin)</a></li><li><a href="#_sub2" class="code">function out = axisValues(obj)</a></li><li><a href="#_sub3" class="code">function out = axisNames(obj)</a></li><li><a href="#_sub4" class="code">function out = summary(obj, varargin)</a></li><li><a href="#_sub5" class="code">function mddobj = gv2mdd(gvObj)</a></li><li><a href="#_sub6" class="code">function fld = nextAxesDataTypeName(obj)</a></li><li><a href="#_sub7" class="code">function obj = fillnan(obj)</a></li><li><a href="#_sub8" class="code">function obj = ImportDataTable(varargin)</a></li><li><a href="#_sub9" class="code">function obj = ImportData(varargin)</a></li><li><a href="#_sub10" class="code">function obj = ImportFile(varargin)</a></li><li><a href="#_sub11" class="code">function gvobj = mdd2gv(mddobj)</a></li><li><a href="#_sub12" class="code">function targetObj = addMeta(sourceObj, targetObj)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%% gvArray - GIMBL-Vis multidimensional data storage class</span>
+0002 <span class="comment">%</span>
+0003 <span class="comment">% Description: The gvArray class inherets from the MDD class. It uses gvArrayAxis</span>
+0004 <span class="comment">%              instead of MDDAxis.</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">% gvArray adds the following methods to MDD:</span>
+0007 <span class="comment">%</span>
+0008 <span class="comment">% Methods (public):</span>
+0009 <span class="comment">%   axisValues - alias for MDD's exportAxisVals</span>
+0010 <span class="comment">%   axisNames - alias for MDD's exportAxisNames</span>
+0011 <span class="comment">%   summary - alias for MDD's printAxisInfo</span>
+0012 <span class="comment">%</span>
+0013 <span class="comment">% Methods (static):</span>
+0014 <span class="comment">%   mdd2gv - convert MDD superclass object to gvArray subclass</span>
+0015 <span class="comment">%</span>
+0016 <span class="comment">% Author: Erik Roberts</span>
+0017 <span class="comment">%</span>
+0018 <span class="comment">% See also: MDD documentation</span>
+0019 
+0020 classdef <a href="gvArray.html" class="code" title="">gvArray</a> &lt; MDD
+0021   
+0022   properties (Access = private)
+0023     data_pr        <span class="comment">% Storing the actual data (multi-dimensional matrix or cell array)</span>
+0024     axis_pr        <span class="comment">% 1xNdims - array of gvArrayAxis classes for each axis. Ndims = ndims(data)</span>
+0025     axisClass = <a href="gvArrayAxis.html" class="code" title="">gvArrayAxis</a>
+0026   <span class="keyword">end</span>
+0027   
+0028   properties (Hidden)
+0029     hypercubeName = <span class="string">''</span>
+0030   <span class="keyword">end</span>
+0031   
+0032   methods
+0033     
+0034     <a name="_sub0" href="#_subfunctions" class="code">function obj = gvArray(varargin)</a>
+0035       <span class="comment">% gvArray - constructor</span>
+0036       <span class="comment">%</span>
+0037       <span class="comment">% Usage:</span>
+0038       <span class="comment">%   obj = gvArray()</span>
+0039       <span class="comment">%   obj = gvArray(data) % multidimensional data</span>
+0040       <span class="comment">%   obj = gvArray(data, axis_vals, axis_names) % multidimensional or linear data</span>
+0041       <span class="comment">%   obj = gvArray(mddObj) % convert MDD to gvArray</span>
+0042       
+0043       metaObj = ?gvArray;
+0044       axisClass = metaObj.PropertyList(strcmp(<span class="string">'axisClass'</span>, {metaObj.PropertyList.Name})).DefaultValue;
+0045       
+0046       <span class="comment">% constructor conversion to gvArray from MDD step 1</span>
+0047       <span class="keyword">if</span> nargin==1 &amp;&amp; (isa(varargin{1}, <span class="string">'MDD'</span>) || isa(varargin{1}, <span class="string">'MDDRef'</span>))
+0048         mdobj = varargin{1};
+0049         varargin = {};
+0050       <span class="keyword">end</span>
+0051       
+0052       <span class="comment">% call superclass constructor</span>
+0053       obj@MDD(axisClass, varargin{:});
+0054       
+0055       <span class="comment">% constructor conversion to gvArray from MDD step 2</span>
+0056       <span class="keyword">if</span> exist(<span class="string">'mdobj'</span>, <span class="string">'var'</span>)
+0057         obj = gvArray.mdd2gv(mdobj);
+0058       <span class="keyword">end</span>
+0059     <span class="keyword">end</span>
+0060     
+0061     
+0062     <a name="_sub1" href="#_subfunctions" class="code">function out = axisValues(obj)</a>
+0063       <span class="comment">% axisValues - alias for MDD's exportAxisVals</span>
+0064       
+0065       out = exportAxisVals(obj);
+0066     <span class="keyword">end</span>
+0067     
+0068     
+0069     <a name="_sub2" href="#_subfunctions" class="code">function out = axisNames(obj)</a>
+0070       <span class="comment">% axisNames - alias for MDD's exportAxisNames</span>
+0071        
+0072       out = exportAxisNames(obj);
+0073     <span class="keyword">end</span>
+0074     
+0075     
+0076     <a name="_sub3" href="#_subfunctions" class="code">function out = summary(obj, varargin)</a>
+0077       <span class="comment">% summary - alias for MDD's printAxisInfo</span>
+0078       <span class="keyword">if</span> nargout &gt; 0
+0079         out = printAxisInfo(obj, varargin{:});
+0080       <span class="keyword">else</span>
+0081         printAxisInfo(obj, varargin{:});
+0082       <span class="keyword">end</span>
+0083     <span class="keyword">end</span>
+0084     
+0085     
+0086 <span class="comment">%     function obj = str2ind(obj)</span>
+0087 <span class="comment">%       % convert all string data to numerical indicies</span>
+0088 <span class="comment">%       % TODO if necesary</span>
+0089 <span class="comment">%     end</span>
+0090     
+0091     
+0092     <a name="_sub4" href="#_subfunctions" class="code">function mddobj = gv2mdd(gvObj)</a>
+0093       <span class="comment">% Convert gvArray subclass object to MDD superclass</span>
+0094       
+0095       data = gvObj.data;
+0096       ax_vals = gvObj.exportAxisVals;
+0097       ax_names = gvObj.exportAxisNames;
+0098       
+0099       mddobj = MDD(data, ax_vals, ax_names);
+0100       
+0101       mddobj = gvArray.addMeta(gvObj, mddobj);
+0102     <span class="keyword">end</span>
+0103     
+0104     <span class="comment">%% Overloaded built-ins</span>
+0105     
+0106   <span class="keyword">end</span>
+0107   
+0108   
+0109   methods (Access = protected)
+0110     
+0111     <a name="_sub5" href="#_subfunctions" class="code">function fld = nextAxesDataTypeName(obj)</a>
+0112       <span class="comment">% Get next data type label for given axes. This should only be called if</span>
+0113       <span class="comment">% dataType label not specified elsewhere.</span>
+0114       <span class="comment">%</span>
+0115       <span class="comment">% Example:</span>
+0116       <span class="comment">%  gvArrayObj.axis(end).name = 'dataType';</span>
+0117       <span class="comment">%  gvArrayObj.axis(end).values = {'str', 'data1', 'data#'}; -&gt; find #</span>
+0118       
+0119       <a href="#_sub3" class="code" title="subfunction out = axisNames(obj)">axisNames</a> = obj.axisNames;
+0120       
+0121       typeInd = strcmp(<a href="#_sub3" class="code" title="subfunction out = axisNames(obj)">axisNames</a>, <span class="string">'dataType'</span>);
+0122       
+0123       types = obj.axis(typeInd).values;
+0124       
+0125       tokens = regexp(types,<span class="string">'data(\d+)$'</span>, <span class="string">'tokens'</span>);
+0126       tokens = [tokens{:}]; <span class="comment">% enter cells</span>
+0127       <span class="keyword">if</span> ~isempty(tokens)
+0128         tokens = [tokens{:}]; <span class="comment">% get ind</span>
+0129         inds = str2double(tokens);
+0130         fld = [<span class="string">'data'</span> num2str(max(inds)+1)];
+0131       <span class="keyword">else</span>
+0132         fld = <span class="string">'data1'</span>;
+0133       <span class="keyword">end</span>
+0134     <span class="keyword">end</span>
+0135     
+0136     <a name="_sub6" href="#_subfunctions" class="code">function obj = fillnan(obj)</a>
+0137       <span class="comment">% fillnan - fill empty cells with nan</span>
+0138       
+0139       <span class="keyword">if</span> iscell(obj.data)
+0140         obj.data(cellfun(@isempty, obj.data)) = deal({nan});
+0141       <span class="keyword">end</span>
+0142     <span class="keyword">end</span>
+0143     
+0144   <span class="keyword">end</span> <span class="comment">% methods (Access = protected)</span>
+0145   
+0146   
+0147   methods (Static)
+0148     
+0149     <span class="comment">% ** start Import Methods **</span>
+0150     <span class="comment">%   Note: these can be called as static (ie class) methods using</span>
+0151     <span class="comment">%   uppercase version or as object methods using lowercase version</span>
+0152     <a name="_sub7" href="#_subfunctions" class="code">function obj = ImportDataTable(varargin)    </a><span class="comment">% Function for importing data in a 2D table format</span>
+0153       <span class="comment">% instantiate object</span>
+0154       obj = <a href="gvArray.html" class="code" title="">gvArray</a>();
+0155       
+0156       <span class="comment">% call object method</span>
+0157       obj = importDataTable(obj, varargin{:});
+0158     <span class="keyword">end</span>
+0159     
+0160     <a name="_sub8" href="#_subfunctions" class="code">function obj = ImportData(varargin)</a>
+0161       <span class="comment">% instantiate object</span>
+0162       obj = <a href="gvArray.html" class="code" title="">gvArray</a>();
+0163       
+0164       <span class="comment">% call object method</span>
+0165       obj = importData(obj, varargin{:});
+0166     <span class="keyword">end</span>
+0167     
+0168     <a name="_sub9" href="#_subfunctions" class="code">function obj = ImportFile(varargin) </a><span class="comment">% import linear data from data file (using importDataTable method)</span>
+0169       <span class="comment">% instantiate object</span>
+0170       obj = <a href="gvArray.html" class="code" title="">gvArray</a>();
+0171       
+0172       <span class="comment">% call object method</span>
+0173       obj = importFile(obj, varargin{:});
+0174     <span class="keyword">end</span>
+0175     <span class="comment">% ** end Import Methods **</span>
+0176     
+0177     
+0178     <a name="_sub10" href="#_subfunctions" class="code">function gvobj = mdd2gv(mddobj)</a>
+0179       <span class="comment">% mdd2gv - Convert MDD superclass object to gvArray subclass</span>
+0180       
+0181       <span class="comment">% input already a gvArray</span>
+0182       <span class="keyword">if</span> isa(mddobj, <span class="string">'gvArray'</span>)
+0183         gvobj = mddobj;
+0184         <span class="keyword">return</span>
+0185       <span class="keyword">end</span>
+0186       
+0187       data = mddobj.data;
+0188       ax_vals = mddobj.exportAxisVals;
+0189       ax_names = mddobj.exportAxisNames;
+0190       
+0191       gvobj = <a href="gvArray.html" class="code" title="">gvArray</a>(data, ax_vals, ax_names);
+0192       
+0193       gvobj = gvArray.addMeta(mddobj, gvobj);
+0194     <span class="keyword">end</span>
+0195     
+0196     
+0197     <a name="_sub11" href="#_subfunctions" class="code">function targetObj = addMeta(sourceObj, targetObj)</a>
+0198       <span class="comment">% add meta</span>
+0199       targetObj.meta = sourceObj.meta;
+0200       
+0201       <span class="comment">% add axis meta</span>
+0202       nAx = length(sourceObj.axis);
+0203       <span class="keyword">for</span> axInd = 1:nAx
+0204         targetObj.axis(axInd).axismeta = sourceObj.axis(axInd).axismeta;
+0205       <span class="keyword">end</span>
+0206     <span class="keyword">end</span>
+0207     
+0208   <span class="keyword">end</span> <span class="comment">% methods (Static)</span>
+0209   
+0210 <span class="keyword">end</span> <span class="comment">% classdef</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

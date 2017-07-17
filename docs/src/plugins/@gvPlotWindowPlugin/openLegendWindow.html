@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of openLegendWindow</title>
+  <meta name="keywords" content="openLegendWindow">
+  <meta name="description" content="% gvLegendWindow - UI Legend Window Class for GIMBL-Vis">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- # plugins --><!-- menu.html @gvPlotWindowPlugin -->
+<h1>openLegendWindow
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>% gvLegendWindow - UI Legend Window Class for GIMBL-Vis</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function openLegendWindow(pluginObj) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% gvLegendWindow - UI Legend Window Class for GIMBL-Vis
+
+ Description: An object of this class becomes a property of gvView to provide 
+              methods for a GIMB-Vis legend window</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../src/functions/gvGetAxisType.html" class="code" title="function dataAxesType = gvGetAxisType(mddObj)">gvGetAxisType</a>	gvGetAxisType - get axis type from axismeta of mdd object</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="gvPlotWindowPlugin.html" class="code" title="">gvPlotWindowPlugin</a>	% gvPlotWindowPlugin - Plot Window Plugin Class for GIMBL-Vis</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function makeCategoricalLegendWindow(pluginObj)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%% gvLegendWindow - UI Legend Window Class for GIMBL-Vis</span>
+0002 <span class="comment">%</span>
+0003 <span class="comment">% Description: An object of this class becomes a property of gvView to provide</span>
+0004 <span class="comment">%              methods for a GIMB-Vis legend window</span>
+0005 
+0006 <span class="comment">% classdef gvLegendWindow &lt; handle</span>
+0007 <span class="comment">%</span>
+0008 <span class="comment">%   methods</span>
+0009 <span class="comment">%</span>
+0010 <span class="comment">%     function obj = gvLegendWindow()</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">%     end</span>
+0013     
+0014     
+0015     <a name="_sub0" href="#_subfunctions" class="code">function openLegendWindow(pluginObj)</a>
+0016       
+0017       mainWindowExistBool = pluginObj.view.checkMainWindowExists;
+0018       
+0019       <span class="keyword">if</span> mainWindowExistBool &amp;&amp; pluginObj.checkWindowExists()
+0020         
+0021         hypercubeObj = pluginObj.controller.activeHypercube;
+0022         
+0023         <span class="keyword">if</span> length(hypercubeObj.meta.legend) &gt; 1
+0024           axesType = <a href="../../../src/functions/gvGetAxisType.html" class="code" title="function dataAxesType = gvGetAxisType(mddObj)">gvGetAxisType</a>(hypercubeObj);
+0025           dataTypeAxInd = find(strcmp(axesType, <span class="string">'dataType'</span>), 1);
+0026           
+0027           sliderVals = pluginObj.view.dynamic.sliderVals;
+0028           legendInfo = hypercubeObj.meta.legend(sliderVals(dataTypeAxInd));
+0029         <span class="keyword">else</span>
+0030           legendInfo = hypercubeObj.meta.legend(1);
+0031         <span class="keyword">end</span>
+0032         
+0033         colors = legendInfo.colors;
+0034         markers = legendInfo.markers;
+0035         groups = legendInfo.groups;
+0036         nGroups = length(groups);
+0037         
+0038         fontSize = pluginObj.fontSize;
+0039         fontHeight = pluginObj.fontHeight;
+0040         markerSize = fontHeight*2;
+0041         
+0042         <a href="#_sub1" class="code" title="subfunction makeCategoricalLegendWindow(pluginObj)">makeCategoricalLegendWindow</a>(pluginObj);
+0043         
+0044         <span class="comment">%Make Legend</span>
+0045         hold on
+0046         h = zeros(nGroups, 1);
+0047         <span class="keyword">for</span> iG = 1:nGroups
+0048           <span class="comment">%     h(iG) = plot(nan,nan,'Color',colors(iG,:),'Marker',markers{iG});</span>
+0049           h(iG) = scatter(nan,nan,markerSize,colors(iG,:),markers{iG});
+0050         <span class="keyword">end</span>
+0051         
+0052         [leg,labelhandles] = legend(h, groups, <span class="string">'Position'</span>,[0 0 1 1], <span class="string">'Box'</span>,<span class="string">'off'</span>, <span class="string">'FontSize'</span>,fontSize, <span class="string">'Location'</span>,<span class="string">'West'</span>);
+0053         objs = findobj(labelhandles,<span class="string">'type'</span>,<span class="string">'Patch'</span>);
+0054         [objs.MarkerSize] = deal(markerSize);
+0055         objs = findobj(labelhandles,<span class="string">'type'</span>,<span class="string">'Text'</span>);
+0056         [objs.FontSize] = deal(fontSize);
+0057       <span class="keyword">end</span>
+0058       
+0059       <span class="comment">%% Nested Functions</span>
+0060       <a name="_sub1" href="#_subfunctions" class="code">function makeCategoricalLegendWindow(pluginObj)</a>
+0061         mainWindowPos = pluginObj.view.main.handles.fig.Position;
+0062         ht = fontHeight*1.1 * nGroups;
+0063         wd = fontHeight*max(cellfun(@length,groups))/2*1.1 + markerSize; <span class="comment">% TODO improve auto width</span>
+0064         legendWindowHandle = figure(<span class="string">'Name'</span>,<span class="string">'GIMBL-Vis: Legend Window'</span>,<span class="string">'NumberTitle'</span>,<span class="string">'off'</span>,<span class="string">'menubar'</span>,<span class="string">'none'</span>,<span class="keyword">...</span>
+0065           <span class="string">'Position'</span>,[mainWindowPos(1),max(mainWindowPos(2)-ht-50, 0),wd,ht]);
+0066         
+0067         axes(legendWindowHandle, <span class="string">'Position'</span>, [0 0 1 1], <span class="string">'XTickLabels'</span>,[], <span class="string">'YTickLabels'</span>,[],<span class="keyword">...</span>
+0068           <span class="string">'XTick'</span>,[], <span class="string">'YTick'</span>,[]);
+0069         
+0070         <span class="comment">% set legend handle</span>
+0071         pluginObj.handles.legendWindow = legendWindowHandle;
+0072       <span class="keyword">end</span>
+0073       
+0074     <span class="keyword">end</span>
+0075     
+0076 <span class="comment">%   end</span>
+0077 <span class="comment">%</span>
+0078 <span class="comment">% end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

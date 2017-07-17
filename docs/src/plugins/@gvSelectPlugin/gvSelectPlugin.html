@@ -1,0 +1,428 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of gvSelectPlugin</title>
+  <meta name="keywords" content="gvSelectPlugin">
+  <meta name="description" content="% gvSelectPlugin - Select GUI Plugin Class for GIMBL-Vis">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- # plugins --><!-- menu.html @gvSelectPlugin -->
+<h1>gvSelectPlugin
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>% gvSelectPlugin - Select GUI Plugin Class for GIMBL-Vis</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% gvSelectPlugin - Select GUI Plugin Class for GIMBL-Vis
+
+ Description: An object of this class becomes a property of gvView to provide 
+              methods for a GIMBL-Vis main window tab for hypercube slice selection.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../src/classes/@gvMainWindowPlugin/makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	makePanelControls - make list of plugins with load checkboxes</li><li><a href="../../../src/classes/gvEvent.html" class="code" title="">gvEvent</a>	</li><li><a href="../../../src/classes/gvGuiPlugin.html" class="code" title="">gvGuiPlugin</a>	% gvGuiPlugin - Abstract GUI Plugin Class for GIMBL-Vis</li><li><a href="../../../src/plugins/@gvAnalysisPlugin/makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	makePanelControls - make plot panel for tab in main window</li><li><a href="../../../src/plugins/@gvImageWindowPlugin/makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	% makePanelControls</li><li><a href="../../../src/plugins/@gvPlotWindowPlugin/Callback_WindowScrollWheelFcn.html" class="code" title="function Callback_WindowScrollWheelFcn(src, evnt)">Callback_WindowScrollWheelFcn</a>	Permits scrolling of select panel sliders in main window</li><li><a href="../../../src/plugins/@gvPlotWindowPlugin/makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	makePanelControls - make plot panel for tab in main window</li><li><a href="Callback_WindowScrollWheelFcn.html" class="code" title="function Callback_WindowScrollWheelFcn(src, evnt)">Callback_WindowScrollWheelFcn</a>	Permits scrolling of select panel sliders in main window</li><li><a href="gvSelectPlugin.html" class="code" title="">gvSelectPlugin</a>	% gvSelectPlugin - Select GUI Plugin Class for GIMBL-Vis</li><li><a href="iterate.html" class="code" title="function iterate(pluginObj)">iterate</a>	const var</li><li><a href="makeDataPanelControls.html" class="code" title="function uiControlsHandles = makeDataPanelControls(pluginObj, parentHandle)">makeDataPanelControls</a>	% makeHypercubePanelControls</li><li><a href="makeDataPanelTitles.html" class="code" title="function makeDataPanelTitles(pluginObj, parentHandle)">makeDataPanelTitles</a>	% makeDataPanelTitles</li><li><a href="makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	makePanelControls - make plot panel for tab in main window</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="gvSelectPlugin.html" class="code" title="">gvSelectPlugin</a>	% gvSelectPlugin - Select GUI Plugin Class for GIMBL-Vis</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function pluginObj = gvSelectPlugin(varargin)</a></li><li><a href="#_sub2" class="code">function setup(pluginObj, cntrlObj)</a></li><li><a href="#_sub3" class="code">function sliderPos = getSliderAbsolutePosition(pluginObj)</a></li><li><a href="#_sub4" class="code">function out = getPos(x)</a></li><li><a href="#_sub5" class="code">function initializeControlsDynamicVars(pluginObj)</a></li><li><a href="#_sub6" class="code">function initializeSliderVals(pluginObj)</a></li><li><a href="#_sub7" class="code">function updateViewDims(pluginObj)</a></li><li><a href="#_sub8" class="code">function updateLockDims(pluginObj)</a></li><li><a href="#_sub9" class="code">function updateSliderInd(pluginObj, src)</a></li><li><a href="#_sub10" class="code">function valStr = getSliderValStr(pluginObj, src)</a></li><li><a href="#_sub11" class="code">function updateEditFromSlider(pluginObj, sliderObj)</a></li><li><a href="#_sub12" class="code">function updateSliderFromEdit(pluginObj, editObj, sliderVal)</a></li><li><a href="#_sub13" class="code">function updateDisabledDims(pluginObj)</a></li><li><a href="#_sub14" class="code">function makeSliderAncestryMetadata(pluginObj)</a></li><li><a href="#_sub15" class="code">function sliders = sliderHandles(pluginObj)</a></li><li><a href="#_sub16" class="code">function str = helpStr()</a></li><li><a href="#_sub17" class="code">function Callback_panelControlsMade(src, evnt)</a></li><li><a href="#_sub18" class="code">function Callback_activeHypercubeChanged(src, evnt)</a></li><li><a href="#_sub19" class="code">function Callback_select_panel_editModeToggle(src, evnt)</a></li><li><a href="#_sub20" class="code">function Callback_select_panel_activeHypercubeText(src, evnt)</a></li><li><a href="#_sub21" class="code">function Callback_select_panel_varText(src, evnt)</a></li><li><a href="#_sub22" class="code">function Callback_select_panel_viewCheckbox(src, ~)</a></li><li><a href="#_sub23" class="code">function Callback_select_panel_lockCheckbox(src, ~)</a></li><li><a href="#_sub24" class="code">function Callback_select_panel_slider(src, ~)</a></li><li><a href="#_sub25" class="code">function Callback_select_panel_sliderVal(src, ~)</a></li><li><a href="#_sub26" class="code">function Callback_select_panel_iterateToggle(src, evnt)</a></li><li><a href="#_sub27" class="code">function Callback_select_panel_delayValueBox(src, evnt)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%% gvSelectPlugin - Select GUI Plugin Class for GIMBL-Vis</span>
+0002 <span class="comment">%</span>
+0003 <span class="comment">% Description: An object of this class becomes a property of gvView to provide</span>
+0004 <span class="comment">%              methods for a GIMBL-Vis main window tab for hypercube slice selection.</span>
+0005 
+0006 classdef <a href="gvSelectPlugin.html" class="code" title="">gvSelectPlugin</a> &lt; <a href="../../../src/classes/gvGuiPlugin.html" class="code" title="">gvGuiPlugin</a>
+0007 
+0008   <span class="comment">%% Public properties %%</span>
+0009   properties (Constant)
+0010     pluginName = <span class="string">'Select'</span>;
+0011     pluginFieldName = <span class="string">'select'</span>;
+0012   <span class="keyword">end</span>
+0013   
+0014   properties
+0015     metadata = struct()
+0016     
+0017     handles = struct()
+0018   <span class="keyword">end</span>
+0019 
+0020   
+0021   <span class="comment">%% Public methods %%</span>
+0022   methods
+0023     
+0024     <a name="_sub0" href="#_subfunctions" class="code">function pluginObj = gvSelectPlugin(varargin)</a>
+0025       pluginObj@<a href="../../../src/classes/gvGuiPlugin.html" class="code" title="">gvGuiPlugin</a>(varargin{:});
+0026     <span class="keyword">end</span>
+0027     
+0028     
+0029     <a name="_sub1" href="#_subfunctions" class="code">function setup(pluginObj, cntrlObj)</a>
+0030       <a href="#_sub2" class="code" title="subfunction setup(pluginObj, cntrlObj)">setup</a>@<a href="../../../src/classes/gvGuiPlugin.html" class="code" title="">gvGuiPlugin</a>(pluginObj, cntrlObj);
+0031       
+0032       <span class="comment">% Event listeners</span>
+0033       cntrlObj.newListener(<span class="string">'activeHypercubeChanged'</span>, @gvSelectPlugin.Callback_activeHypercubeChanged);
+0034       addlistener(pluginObj, <span class="string">'panelControlsMade'</span>, @gvSelectPlugin.Callback_panelControlsMade);
+0035     <span class="keyword">end</span>
+0036 
+0037     
+0038     panelHandle = <a href="makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>(pluginObj, parentHandle)
+0039     
+0040     
+0041     <a name="_sub2" href="#_subfunctions" class="code">function sliderPos = getSliderAbsolutePosition(pluginObj)</a>
+0042       nSliders = length(pluginObj.view.dynamic.sliderVals);
+0043       sliderPos = nan(nSliders, 4);
+0044       <span class="keyword">for</span> sliderInd = 1:nSliders
+0045         thisPosCell = cellfunu(@<a href="#_sub4" class="code" title="subfunction out = getPos(x)">getPos</a>, pluginObj.view.dynamic.selectSliderAncestry{sliderInd});
+0046         thisPos = vertcat(thisPosCell{:});
+0047         thisPos = sum(thisPos);
+0048         
+0049         sliderPos(sliderInd,:) = [thisPos, pluginObj.view.dynamic.selectSliderAncestry{sliderInd}{1}.Position(3:4)];
+0050       <span class="keyword">end</span>
+0051       
+0052       <a name="_sub3" href="#_subfunctions" class="code">function out = getPos(x)</a>
+0053         thisUnits = x.Units;
+0054         <span class="keyword">if</span> ~strcmp(thisUnits, <span class="string">'pixels'</span>)
+0055           x.Units = <span class="string">'pixels'</span>;
+0056           out = x.Position;
+0057           x.Units = thisUnits; 
+0058         <span class="keyword">else</span>
+0059           out = x.Position;
+0060         <span class="keyword">end</span>
+0061         
+0062         out = out(1:2);
+0063       <span class="keyword">end</span>
+0064     <span class="keyword">end</span>
+0065     
+0066     <a href="iterate.html" class="code" title="function iterate(pluginObj)">iterate</a>(pluginObj)
+0067     
+0068   <span class="keyword">end</span>
+0069   
+0070   
+0071   <span class="comment">%% Protected methods %%</span>
+0072   methods (Access = protected)
+0073     
+0074     dataPanelheight = <a href="makeDataPanelControls.html" class="code" title="function uiControlsHandles = makeDataPanelControls(pluginObj, parentHandle)">makeDataPanelControls</a>(pluginObj, parentHandle)
+0075     
+0076     
+0077     <a href="makeDataPanelTitles.html" class="code" title="function makeDataPanelTitles(pluginObj, parentHandle)">makeDataPanelTitles</a>(pluginObj, parentHandle)
+0078     
+0079     
+0080     <a name="_sub4" href="#_subfunctions" class="code">function initializeControlsDynamicVars(pluginObj)</a>
+0081       pluginObj.view.dynamic.nViewDims = 0;
+0082       pluginObj.view.dynamic.nViewDimsLast = 0;
+0083       pluginObj.updateViewDims();
+0084       pluginObj.updateLockDims();
+0085       pluginObj.updateDisabledDims();
+0086     <span class="keyword">end</span>
+0087     
+0088     
+0089     <a name="_sub5" href="#_subfunctions" class="code">function initializeSliderVals(pluginObj)</a>
+0090       pluginObj.view.dynamic.sliderVals = ones(1, pluginObj.controller.activeHypercube.ndims);
+0091     <span class="keyword">end</span>
+0092     
+0093     
+0094     <a name="_sub6" href="#_subfunctions" class="code">function updateViewDims(pluginObj)</a>
+0095       viewCheckboxes = sortByTag(findobj(pluginObj.view.windowPlugins.main.handles.fig, <span class="string">'-regexp'</span>, <span class="string">'Tag'</span>,<span class="string">'viewCheckbox'</span>), true);
+0096       pluginObj.view.dynamic.viewDims = [viewCheckboxes.Value];
+0097       pluginObj.view.dynamic.nViewDims = sum([viewCheckboxes.Value]);
+0098       
+0099       <span class="keyword">if</span> (pluginObj.view.dynamic.nViewDims ~= pluginObj.view.dynamic.nViewDimsLast) &amp;&amp; pluginObj.view.dynamic.nViewDims &gt; 0
+0100         notify(pluginObj.controller, <span class="string">'nViewDimsChanged'</span>)
+0101       <span class="keyword">end</span>
+0102       
+0103       pluginObj.view.dynamic.nViewDimsLast = sum([viewCheckboxes.Value]);
+0104     <span class="keyword">end</span>
+0105     
+0106     
+0107     <a name="_sub7" href="#_subfunctions" class="code">function updateLockDims(pluginObj)</a>
+0108       <span class="comment">% Don't need to update plot since value is already set, locking just</span>
+0109       <span class="comment">% prevents any change</span>
+0110       
+0111       lockCheckboxes = sortByTag(findobj(pluginObj.view.windowPlugins.main.handles.fig, <span class="string">'-regexp'</span>, <span class="string">'Tag'</span>,<span class="string">'lockCheckbox'</span>), true);
+0112       pluginObj.view.dynamic.lockDims = [lockCheckboxes.Value];
+0113       pluginObj.view.dynamic.nLockDims = sum([lockCheckboxes.Value]);
+0114     <span class="keyword">end</span>
+0115     
+0116     
+0117     <a name="_sub8" href="#_subfunctions" class="code">function updateSliderInd(pluginObj, src)</a>
+0118       <span class="comment">% updateSliderInd - update a given slider's value in view dynamic property</span>
+0119       <span class="comment">%</span>
+0120       <span class="comment">% Input: src can be index of slider or the slider object</span>
+0121       
+0122       <span class="keyword">if</span> isobject(src)
+0123         sliderObj = src;
+0124         sliderInd = getNumSuffix(sliderObj.Tag);
+0125       <span class="keyword">elseif</span> isscalar(src)
+0126         sliderInd = src;
+0127         sliderObj = findobjReTag([<span class="string">'select_panel_slider'</span> num2str(sliderInd)]);
+0128       <span class="keyword">end</span>
+0129       
+0130       pluginObj.view.dynamic.sliderVals(sliderInd) = sliderObj.Value;
+0131     <span class="keyword">end</span>
+0132     
+0133     
+0134     <a name="_sub9" href="#_subfunctions" class="code">function valStr = getSliderValStr(pluginObj, src)</a>
+0135       <span class="comment">% getSliderValStr - get data value for slider position as string</span>
+0136       <span class="comment">%</span>
+0137       <span class="comment">% Input: src can be index of slider or the slider object</span>
+0138       
+0139       <span class="keyword">if</span> isobject(src)
+0140         sliderObj = src;
+0141         sliderInd = getNumSuffix(sliderObj.Tag);
+0142       <span class="keyword">elseif</span> isscalar(src)
+0143         sliderInd = src;
+0144       <span class="keyword">end</span>
+0145       
+0146       sliderValInd = pluginObj.view.dynamic.sliderVals(sliderInd);
+0147       
+0148       valStr = pluginObj.controller.activeHypercube.axis(sliderInd).valueAsStr(sliderValInd);
+0149     <span class="keyword">end</span>
+0150     
+0151     
+0152     <a name="_sub10" href="#_subfunctions" class="code">function updateEditFromSlider(pluginObj, sliderObj)</a>
+0153       editObj = findobjReTag(sliderObj.UserData.siblingTag);
+0154       
+0155       editObj.String = pluginObj.getSliderValStr(sliderObj);
+0156     <span class="keyword">end</span>
+0157     
+0158     
+0159     <a name="_sub11" href="#_subfunctions" class="code">function updateSliderFromEdit(pluginObj, editObj, sliderVal)</a>
+0160       sliderObj = findobjReTag(editObj.UserData.siblingTag);
+0161 
+0162       sliderObj.Value = sliderVal;
+0163     <span class="keyword">end</span>
+0164     
+0165     
+0166     <a name="_sub12" href="#_subfunctions" class="code">function updateDisabledDims(pluginObj)</a>
+0167       lockDims = pluginObj.view.dynamic.lockDims;
+0168       viewDims = pluginObj.view.dynamic.viewDims;
+0169       nViewDims = pluginObj.view.dynamic.nViewDims;
+0170 
+0171       <span class="comment">% Disable sliders when all data is shown (dim &lt; 3)</span>
+0172       <span class="keyword">if</span> any(nViewDims == [1,2])
+0173         disabledDims = logical(lockDims + viewDims);
+0174       <span class="keyword">else</span>
+0175         disabledDims = logical(lockDims);
+0176       <span class="keyword">end</span>
+0177       
+0178       <span class="comment">% update disabledDims</span>
+0179       pluginObj.view.dynamic.disabledDims = disabledDims;
+0180       
+0181       <span class="comment">% set disables</span>
+0182       statusCellStr = cell(size(disabledDims));
+0183       statusCellStr(disabledDims) = {<span class="string">'off'</span>};
+0184       statusCellStr(~disabledDims) = {<span class="string">'on'</span>};
+0185       
+0186       sliders = pluginObj.sliderHandles;
+0187       sliderVals = sortByTag(findobj(pluginObj.view.windowPlugins.main.handles.fig, <span class="string">'-regexp'</span>, <span class="string">'Tag'</span>,<span class="string">'sliderVal\d+'</span>), true);
+0188       
+0189       [sliders.Enable] = deal(statusCellStr{:});
+0190       [sliderVals.Enable] = deal(statusCellStr{:});
+0191     <span class="keyword">end</span>
+0192     
+0193     
+0194     <a name="_sub13" href="#_subfunctions" class="code">function makeSliderAncestryMetadata(pluginObj)</a>
+0195       <a href="#_sub15" class="code" title="subfunction sliders = sliderHandles(pluginObj)">sliderHandles</a> = sortByTag(findobjReTag(<span class="string">'select_panel_slider\d+'</span>), true);
+0196       
+0197       pluginObj.view.dynamic.selectSliderAncestry = {};
+0198       
+0199       <span class="keyword">for</span> sliderInd = 1:length(<a href="#_sub15" class="code" title="subfunction sliders = sliderHandles(pluginObj)">sliderHandles</a>)
+0200         h = <a href="#_sub15" class="code" title="subfunction sliders = sliderHandles(pluginObj)">sliderHandles</a>(sliderInd);
+0201         
+0202         pluginObj.view.dynamic.selectSliderAncestry{sliderInd} = {};
+0203         
+0204         notFigParent = true;
+0205         <span class="keyword">while</span> notFigParent
+0206           <span class="keyword">if</span> isequal(h, pluginObj.view.main.handles.fig)
+0207             notFigParent = false;
+0208             <span class="keyword">continue</span>
+0209           <span class="keyword">end</span>
+0210           
+0211           pluginObj.view.dynamic.selectSliderAncestry{sliderInd}{end+1} = h;
+0212           
+0213           h = h.Parent;
+0214         <span class="keyword">end</span>
+0215       <span class="keyword">end</span>
+0216     <span class="keyword">end</span>
+0217     
+0218     <a name="_sub14" href="#_subfunctions" class="code">function sliders = sliderHandles(pluginObj)</a>
+0219       sliders = sortByTag(findobj(pluginObj.view.windowPlugins.main.handles.fig, <span class="string">'-regexp'</span>, <span class="string">'Tag'</span>,<span class="string">'slider\d+'</span>), true);
+0220     <span class="keyword">end</span>
+0221 
+0222   <span class="keyword">end</span>
+0223   
+0224   <span class="comment">%% Static %%</span>
+0225   methods (Static, Hidden)
+0226 
+0227     <a name="_sub15" href="#_subfunctions" class="code">function str = helpStr()</a>
+0228       str = [gvSelectPlugin.pluginName <span class="string">':\n'</span>,<span class="keyword">...</span>
+0229         <span class="string">'Use the sliders or the adjoining box to choose a slice of the data.\n'</span>
+0230         ];
+0231     <span class="keyword">end</span>
+0232     
+0233     
+0234     <span class="comment">%% Callbacks %%</span>
+0235     <a name="_sub16" href="#_subfunctions" class="code">function Callback_panelControlsMade(src, evnt)</a>
+0236       pluginObj = src; <span class="comment">% window plugin</span>
+0237       
+0238       pluginObj.initializeControlsDynamicVars();
+0239       
+0240       pluginObj.makeSliderAncestryMetadata();
+0241     <span class="keyword">end</span>
+0242     
+0243     
+0244     <a name="_sub17" href="#_subfunctions" class="code">function Callback_activeHypercubeChanged(src, evnt)</a>
+0245       pluginObj = src.guiPlugins.(gvSelectPlugin.pluginFieldName); <span class="comment">% window plugin</span>
+0246       
+0247       pluginObj.initializeSliderVals();
+0248       
+0249       <span class="comment">% TODO remake controls</span>
+0250     <span class="keyword">end</span>
+0251     
+0252     
+0253     <a name="_sub18" href="#_subfunctions" class="code">function Callback_select_panel_editModeToggle(src, evnt)</a>
+0254       pluginObj = src.UserData.pluginObj;
+0255       
+0256       toggleObjs = findobj(<span class="string">'-regexp'</span>,<span class="string">'Tag'</span>,<span class="string">'select_panel_.*Text.*'</span>);
+0257       
+0258       <span class="keyword">if</span> src.Value
+0259         [toggleObjs.Style] = deal(<span class="string">'edit'</span>);
+0260       <span class="keyword">else</span>
+0261         [toggleObjs.Style] = deal(<span class="string">'text'</span>);
+0262       <span class="keyword">end</span>
+0263       
+0264     <span class="keyword">end</span>
+0265     
+0266     
+0267     <a name="_sub19" href="#_subfunctions" class="code">function Callback_select_panel_activeHypercubeText(src, evnt)</a>
+0268       pluginObj = src.UserData.pluginObj;
+0269       
+0270       newActiveHypercubeName = src.String;
+0271       
+0272       notify(pluginObj.controller, <span class="string">'activeHypercubeNameChanged'</span>,<a href="../../../src/classes/gvEvent.html" class="code" title="">gvEvent</a>(<span class="string">'activeHypercubeName'</span>, newActiveHypercubeName))
+0273     <span class="keyword">end</span>
+0274     
+0275     
+0276     <a name="_sub20" href="#_subfunctions" class="code">function Callback_select_panel_varText(src, evnt)</a>
+0277       pluginObj = src.UserData.pluginObj;
+0278       
+0279       axind = getNumSuffix(src.Tag);
+0280       
+0281       assert(~isnan(axind), <span class="string">'Variable axis index not found'</span>);
+0282       
+0283       pluginObj.controller.activeHypercube.axis(axind).name = src.String;
+0284       
+0285       notify(pluginObj.controller, <span class="string">'activeHypercubeAxisLabelChanged'</span>);
+0286     <span class="keyword">end</span>
+0287     
+0288     
+0289     <a name="_sub21" href="#_subfunctions" class="code">function Callback_select_panel_viewCheckbox(src, ~)</a>
+0290       pluginObj = src.UserData.pluginObj;
+0291       
+0292       pluginObj.updateViewDims();
+0293       pluginObj.updateDisabledDims()
+0294     <span class="keyword">end</span>
+0295     
+0296     
+0297     <a name="_sub22" href="#_subfunctions" class="code">function Callback_select_panel_lockCheckbox(src, ~)</a>
+0298       pluginObj = src.UserData.pluginObj;
+0299       
+0300       pluginObj.updateLockDims();
+0301       pluginObj.updateDisabledDims()
+0302     <span class="keyword">end</span>
+0303     
+0304     
+0305     <a name="_sub23" href="#_subfunctions" class="code">function Callback_select_panel_slider(src, ~)</a>
+0306       sliderObj = src;
+0307       
+0308       pluginObj = sliderObj.UserData.pluginObj;
+0309       
+0310       <span class="comment">% round value</span>
+0311       sliderObj.Value = round(sliderObj.Value);
+0312       
+0313       <span class="comment">% update slider ind in view.dynamic</span>
+0314       pluginObj.updateSliderInd(sliderObj);
+0315       
+0316       <span class="comment">% update sibling edit box str</span>
+0317       pluginObj.updateEditFromSlider(sliderObj);
+0318       
+0319       notify(pluginObj.controller, <span class="string">'activeHypercubeSliceChanged'</span>)
+0320     <span class="keyword">end</span>
+0321     
+0322     
+0323     <a name="_sub24" href="#_subfunctions" class="code">function Callback_select_panel_sliderVal(src, ~)</a>
+0324       editObj = src;
+0325       pluginObj = editObj.UserData.pluginObj;
+0326       
+0327       controlInd = getNumSuffix(editObj.Tag);
+0328       axVals = pluginObj.controller.activeHypercube.axis(controlInd).values;
+0329       
+0330       <span class="keyword">if</span> isnumeric(axVals)
+0331         editVal = str2double(editObj.String);
+0332         [~, sliderVal] = min(abs(axVals - editVal));
+0333         finalString = num2str(sliderVal);
+0334       <span class="keyword">else</span>
+0335         <span class="keyword">try</span>
+0336            sliderVal = gvArrayAxis.regex_lookup(axVals, editObj.String);
+0337         <span class="keyword">catch</span>
+0338           wprintf(<span class="string">'Coudln''t find regexp match to entered string.\n'</span>)
+0339           <span class="keyword">return</span>
+0340         <span class="keyword">end</span>
+0341         finalString = axVals{sliderVal};
+0342       <span class="keyword">end</span>
+0343       
+0344       <span class="comment">% update edit box with chosen value from axis</span>
+0345       editObj.String = finalString;
+0346       
+0347       <span class="comment">% update sibling slider value</span>
+0348       pluginObj.updateSliderFromEdit(editObj, sliderVal);
+0349       
+0350       notify(pluginObj.controller, <span class="string">'activeHypercubeSliceChanged'</span>)
+0351     <span class="keyword">end</span>
+0352     
+0353     
+0354     <a name="_sub25" href="#_subfunctions" class="code">function Callback_select_panel_iterateToggle(src, evnt)</a>
+0355       pluginObj = src.UserData.pluginObj; <span class="comment">% window plugin</span>
+0356       
+0357       <span class="keyword">if</span> src.Value
+0358         src.String = sprintf(<span class="string">'Iterate ( %s )'</span>, char(8545)); <span class="comment">%pause char (bars)</span>
+0359 <span class="comment">%         src.String = sprintf('Iterate ( %s )', char(hex2dec('23F8'))); %pause char (bars)</span>
+0360 
+0361         pluginObj.iterate();
+0362       <span class="keyword">else</span>
+0363         src.String = sprintf(<span class="string">'Iterate ( %s )'</span>, char(9654)); <span class="comment">%start char (arrow)</span>
+0364       <span class="keyword">end</span>
+0365     <span class="keyword">end</span>
+0366 
+0367     
+0368     <a name="_sub26" href="#_subfunctions" class="code">function Callback_select_panel_delayValueBox(src, evnt)</a>
+0369       src.Value = str2double(src.String);
+0370     <span class="keyword">end</span>
+0371     
+0372     
+0373     <a href="Callback_WindowScrollWheelFcn.html" class="code" title="function Callback_WindowScrollWheelFcn(src, evnt)">Callback_WindowScrollWheelFcn</a>(src, evnt);
+0374     
+0375   <span class="keyword">end</span>
+0376   
+0377 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

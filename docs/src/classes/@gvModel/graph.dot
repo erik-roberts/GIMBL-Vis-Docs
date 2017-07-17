@@ -1,0 +1,14 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  gvModel -> gvModel;
+  gvModel -> importDataFromWorkspace;
+  gvModel -> importDsData;
+  gvModel -> importTabularDataFromFile;
+  gvModel -> load;
+
+  gvModel [URL="gvModel.html"];
+  importDataFromWorkspace [URL="importDataFromWorkspace.html"];
+  importDsData [URL="importDsData.html"];
+  importTabularDataFromFile [URL="importTabularDataFromFile.html"];
+  load [URL="load.html"];
+}

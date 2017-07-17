@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of gvPlugin</title>
+  <meta name="keywords" content="gvPlugin">
+  <meta name="description" content="% gvPlugin - Abstract Plugin Class for GIMBL-Vis">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- menu.html classes -->
+<h1>gvPlugin
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>% gvPlugin - Abstract Plugin Class for GIMBL-Vis</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% gvPlugin - Abstract Plugin Class for GIMBL-Vis
+
+ Description: This abstract class provides a template interface for GIMBL-Vis 
+              plugins</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="gvPlugin.html" class="code" title="">gvPlugin</a>	% gvPlugin - Abstract Plugin Class for GIMBL-Vis</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="gvGuiPlugin.html" class="code" title="">gvGuiPlugin</a>	% gvGuiPlugin - Abstract GUI Plugin Class for GIMBL-Vis</li><li><a href="gvPlugin.html" class="code" title="">gvPlugin</a>	% gvPlugin - Abstract Plugin Class for GIMBL-Vis</li><li><a href="../../src/pluginTemplates/minimalPlugin.html" class="code" title="">minimalPlugin</a>	</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function pluginObj = gvPlugin(cntrlObj)</a></li><li><a href="#_sub2" class="code">function setup(pluginObj, cntrlObj)</a></li><li><a href="#_sub3" class="code">function vprintf(pluginObj, str)</a></li><li><a href="#_sub4" class="code">function addController(pluginObj, cntrlObj)</a></li><li><a href="#_sub5" class="code">function connectToController(pluginObj, cntrlObj)</a></li><li><a href="#_sub6" class="code">function removeController(pluginObj)</a></li><li><a href="#_sub7" class="code">function disconnectFromController(pluginObj)</a></li><li><a href="#_sub8" class="code">function varargout = getHelp(pluginObj)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%% gvPlugin - Abstract Plugin Class for GIMBL-Vis</span>
+0002 <span class="comment">%</span>
+0003 <span class="comment">% Description: This abstract class provides a template interface for GIMBL-Vis</span>
+0004 <span class="comment">%              plugins</span>
+0005 
+0006 classdef (Abstract) <a href="gvPlugin.html" class="code" title="">gvPlugin</a> &lt; handle
+0007 
+0008   <span class="comment">%% Abstract Properties %%</span>
+0009   properties (Abstract)
+0010     metadata 
+0011   <span class="keyword">end</span>
+0012   
+0013   properties (Abstract, Constant)
+0014     pluginName
+0015     pluginFieldName
+0016   <span class="keyword">end</span>
+0017   
+0018   
+0019   <span class="comment">%% Concrete Properties %%</span>
+0020   properties
+0021     pluginClassName
+0022     
+0023     pluginType = []
+0024   <span class="keyword">end</span>
+0025   
+0026   properties (SetAccess = protected)
+0027     controller
+0028   <span class="keyword">end</span>
+0029   
+0030   
+0031   <span class="comment">%% Abstract Methods %%</span>
+0032   methods (Abstract)
+0033   <span class="keyword">end</span>
+0034   
+0035   <span class="comment">%% Concrete Methods %%</span>
+0036   methods
+0037     
+0038     <a name="_sub0" href="#_subfunctions" class="code">function pluginObj = gvPlugin(cntrlObj)</a>
+0039       pluginObj.pluginClassName = class(pluginObj);
+0040       
+0041       <span class="keyword">if</span> nargin
+0042         <a href="#_sub2" class="code" title="subfunction setup(pluginObj, cntrlObj)">setup</a>(pluginObj, cntrlObj);
+0043       <span class="keyword">end</span>
+0044     <span class="keyword">end</span>
+0045     
+0046     
+0047     <a name="_sub1" href="#_subfunctions" class="code">function setup(pluginObj, cntrlObj)</a>
+0048       pluginObj.addController(cntrlObj);
+0049     <span class="keyword">end</span>
+0050     
+0051     
+0052     <a name="_sub2" href="#_subfunctions" class="code">function vprintf(pluginObj, str)</a>
+0053       pluginObj.controller.app.vprintf(str);
+0054     <span class="keyword">end</span>
+0055     
+0056     
+0057     <a name="_sub3" href="#_subfunctions" class="code">function addController(pluginObj, cntrlObj)</a>
+0058       <span class="comment">% uni add</span>
+0059       <span class="comment">%</span>
+0060       <span class="comment">% use connectToController for bi</span>
+0061       
+0062       pluginObj.controller = cntrlObj;
+0063     <span class="keyword">end</span>
+0064     
+0065     
+0066     <a name="_sub4" href="#_subfunctions" class="code">function connectToController(pluginObj, cntrlObj)</a>
+0067       <span class="comment">% See also: gvController/connectPlugin</span>
+0068       
+0069       pluginObj.addController(cntrlObj);
+0070       cntrlObj.addPlugin( pluginObj );
+0071     <span class="keyword">end</span>
+0072     
+0073     
+0074     <a name="_sub5" href="#_subfunctions" class="code">function removeController(pluginObj)</a>
+0075       <span class="comment">% uni remove</span>
+0076       <span class="comment">%</span>
+0077       <span class="comment">% use disconnect for bi</span>
+0078       
+0079       pluginObj.controller = [];
+0080     <span class="keyword">end</span>
+0081     
+0082     
+0083     <a name="_sub6" href="#_subfunctions" class="code">function disconnectFromController(pluginObj)</a>
+0084       <span class="comment">% See also: gvController/disconnectPlugin</span>
+0085       
+0086       pluginObj.controller.removePlugin( pluginObj.pluginFieldName );
+0087       pluginObj.removeController();
+0088     <span class="keyword">end</span>
+0089     
+0090     
+0091     <a name="_sub7" href="#_subfunctions" class="code">function varargout = getHelp(pluginObj)</a>
+0092       str = pluginObj.helpStr();
+0093       <span class="keyword">if</span> ~nargout
+0094         fprintf([<span class="string">'\n'</span> str <span class="string">'\n'</span>])
+0095       <span class="keyword">else</span>
+0096         varargout{1} = str;
+0097       <span class="keyword">end</span>
+0098     <span class="keyword">end</span>
+0099     
+0100   <span class="keyword">end</span>
+0101   
+0102   <span class="comment">%% Abstract Static Methods %%</span>
+0103   methods (Abstract, Static, Hidden)
+0104     helpStr() <span class="comment">% should return help string if argout, else fprintf the help string</span>
+0105   <span class="keyword">end</span>
+0106   
+0107 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

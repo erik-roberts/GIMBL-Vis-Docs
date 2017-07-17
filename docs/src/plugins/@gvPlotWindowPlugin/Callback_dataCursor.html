@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of Callback_dataCursor</title>
+  <meta name="keywords" content="Callback_dataCursor">
+  <meta name="description" content="Display the position of the data cursor">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- # plugins --><!-- menu.html @gvPlotWindowPlugin -->
+<h1>Callback_dataCursor
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>Display the position of the data cursor</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function output_txt = Callback_dataCursor(src, evnt) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Display the position of the data cursor
+ obj          Currently not used (empty)
+ event_obj    Handle to event object
+ output_txt   Data cursor text string (string or cell array of strings).</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="gvPlotWindowPlugin.html" class="code" title="">gvPlotWindowPlugin</a>	% gvPlotWindowPlugin - Plot Window Plugin Class for GIMBL-Vis</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function output_txt = Callback_dataCursor(src, evnt)</a>
+0002 <span class="comment">% Display the position of the data cursor</span>
+0003 <span class="comment">% obj          Currently not used (empty)</span>
+0004 <span class="comment">% event_obj    Handle to event object</span>
+0005 <span class="comment">% output_txt   Data cursor text string (string or cell array of strings).</span>
+0006 
+0007 <span class="comment">% TODO</span>
+0008 
+0009 <span class="comment">%get studyID</span>
+0010 axUserData = evnt.Target.Parent.UserData;
+0011 axLabels = axUserData.axLabels;
+0012 hMainFig = evnt.Target.Parent.Parent.UserData.MainFigH;
+0013 handles = gvHandlesFromFig(hMainFig);
+0014 
+0015 <span class="keyword">if</span> length(axLabels) &gt;= 1
+0016   xLabel = axLabels{1};
+0017 <span class="keyword">else</span>
+0018   xLabel = <span class="string">'X'</span>;
+0019 <span class="keyword">end</span>
+0020 
+0021 <span class="keyword">if</span> length(axLabels) &gt;= 2
+0022   yLabel = axLabels{2};
+0023 <span class="keyword">else</span>
+0024   yLabel = <span class="string">'Y'</span>;
+0025 <span class="keyword">end</span>
+0026 
+0027 <span class="keyword">if</span> length(axLabels) &gt;= 3
+0028   zLabel = axLabels{3};
+0029 <span class="keyword">else</span>
+0030   zLabel = <span class="string">'Z'</span>;
+0031 <span class="keyword">end</span>
+0032 
+0033 pos = get(evnt,<span class="string">'Position'</span>);
+0034 output_txt = {[xLabel <span class="string">': '</span>,num2str(pos(1),4)],<span class="keyword">...</span>
+0035     [yLabel <span class="string">': '</span>,num2str(pos(2),4)]};
+0036 
+0037 <span class="comment">% If there is a Z-coordinate in the position, display it as well</span>
+0038 <span class="keyword">if</span> length(pos) &gt; 2
+0039     output_txt{end+1} = [zLabel <span class="string">': '</span>,num2str(pos(3),4)];
+0040 <span class="keyword">end</span>
+0041 
+0042 <span class="comment">% Output simID if stored</span>
+0043 <span class="keyword">if</span> isfield(handles.ImageWindow, <span class="string">'simID'</span>)
+0044   simID = handles.ImageWindow.simID;
+0045   output_txt{end+1} = [<span class="string">'simID: '</span>, num2str(simID)];
+0046 <span class="keyword">end</span>
+0047 
+0048 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

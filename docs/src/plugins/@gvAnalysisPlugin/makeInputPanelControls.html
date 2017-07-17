@@ -1,0 +1,238 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of makeInputPanelControls</title>
+  <meta name="keywords" content="makeInputPanelControls">
+  <meta name="description" content="params">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- # plugins --><!-- menu.html @gvAnalysisPlugin -->
+<h1>makeInputPanelControls
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>params</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function makeInputPanelControls(pluginObj, parentHandle) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> params</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function makeHypercubeSourceControls(parentHandle)</a></li><li><a href="#_sub2" class="code">function makeAnalysisTypeControls(parentHandle)</a></li><li><a href="#_sub3" class="code">function makeFnNameControls(parentHandle)</a></li><li><a href="#_sub4" class="code">function makeFnArgsControls(parentHandle)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function makeInputPanelControls(pluginObj, parentHandle)</a>
+0002 <span class="comment">% params</span>
+0003 spacing = 5;
+0004 padding = 5;
+0005 fontSize = pluginObj.fontSize;
+0006 fontHeight = pluginObj.fontHeight;
+0007 
+0008 thisTag = pluginObj.panelTag(<span class="string">'scrollingPanel'</span>);
+0009 scrollingPanel = uix.ScrollingPanel(<span class="string">'Tag'</span>,thisTag, <span class="string">'Parent'</span>,parentHandle);
+0010 
+0011 panelVbox = uix.VBox(<span class="string">'Parent'</span>,scrollingPanel, <span class="string">'Spacing'</span>,spacing, <span class="string">'Padding'</span>, padding);
+0012 
+0013 <a href="#_sub1" class="code" title="subfunction makeHypercubeSourceControls(parentHandle)">makeHypercubeSourceControls</a>(panelVbox);
+0014 
+0015 <a href="#_sub2" class="code" title="subfunction makeAnalysisTypeControls(parentHandle)">makeAnalysisTypeControls</a>(panelVbox);
+0016 
+0017 <a href="#_sub3" class="code" title="subfunction makeFnNameControls(parentHandle)">makeFnNameControls</a>(panelVbox);
+0018 
+0019 <a href="#_sub4" class="code" title="subfunction makeFnArgsControls(parentHandle)">makeFnArgsControls</a>(panelVbox);
+0020 
+0021 <span class="comment">% set vbox sizes</span>
+0022 controlHeight = 1.5*fontHeight + spacing;
+0023 vBoxHeights = controlHeight*[1 3 1 .8];
+0024 set(panelVbox, <span class="string">'Heights'</span>, vBoxHeights );
+0025 set(scrollingPanel, <span class="string">'Heights'</span>, sum(vBoxHeights)+spacing*2+padding*2 );
+0026 
+0027 <span class="comment">%% Nested Fn</span>
+0028   <a name="_sub1" href="#_subfunctions" class="code">function makeHypercubeSourceControls(parentHandle)</a>
+0029     thisHbox = uix.HBox(<span class="string">'Parent'</span>,parentHandle, <span class="string">'Spacing'</span>,spacing, <span class="string">'Padding'</span>,padding);
+0030     
+0031     <span class="comment">% hypercubeSourceText</span>
+0032     thisTag = pluginObj.panelTag(<span class="string">'hypercubeSourceText'</span>);
+0033     uiControlsHandles.activeHypercubeText= uicontrol(<span class="keyword">...</span>
+0034       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0035       <span class="string">'Style'</span>,<span class="string">'text'</span>,<span class="keyword">...</span>
+0036       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0037       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0038       <span class="string">'String'</span>,<span class="string">'Hypercube Source:'</span>,<span class="keyword">...</span>
+0039       <span class="string">'Parent'</span>,thisHbox);
+0040     
+0041     <span class="comment">% hypercubeMenu</span>
+0042     menuStr = fieldnames(orderfields(pluginObj.controller.model.data));
+0043     activeHypercubeName = pluginObj.controller.view.activeHypercubeName;
+0044     menuValue = find( strcmp( menuStr, activeHypercubeName ) );
+0045     
+0046     <span class="keyword">if</span> isempty(menuStr)
+0047       menuStr = {<span class="string">'[None]'</span>};
+0048       menuValue = 1;
+0049     <span class="keyword">elseif</span> isempty(menuValue)
+0050       menuValue = 1;
+0051     <span class="keyword">end</span>
+0052     
+0053     thisTag = pluginObj.panelTag(<span class="string">'hypercubeMenu'</span>);
+0054     uiControlsHandles.hypercubeMenu = uicontrol(<span class="keyword">...</span>
+0055       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0056       <span class="string">'Style'</span>,<span class="string">'popupmenu'</span>,<span class="keyword">...</span>
+0057       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0058       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0059       <span class="string">'String'</span>,menuStr,<span class="keyword">...</span>
+0060       <span class="string">'Value'</span>,menuValue,<span class="keyword">...</span>
+0061       <span class="string">'UserData'</span>,pluginObj.userData,<span class="keyword">...</span>
+0062       <span class="string">'Callback'</span>,@gvMainWindowPlugin.Callback_activeHyperCubeMenu,<span class="keyword">...</span>
+0063       <span class="string">'Parent'</span>,thisHbox);
+0064     
+0065     set(thisHbox, <span class="string">'Widths'</span>,[-1, -2])
+0066   <span class="keyword">end</span>
+0067 
+0068 
+0069   <a name="_sub2" href="#_subfunctions" class="code">function makeAnalysisTypeControls(parentHandle)</a>
+0070     thisHbox = uix.HBox( <span class="string">'Parent'</span>, parentHandle, <span class="string">'Spacing'</span>, spacing);
+0071     
+0072     <span class="comment">% sourceTypeLabel</span>
+0073     thisTag = pluginObj.panelTag(<span class="string">'sourceTypeLabel'</span>);
+0074     uicontrol(<span class="keyword">...</span>
+0075       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0076       <span class="string">'Style'</span>,<span class="string">'text'</span>,<span class="keyword">...</span><span class="comment">    </span>
+0077       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0078       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0079       <span class="string">'String'</span>,<span class="string">'Source Type:'</span>,<span class="keyword">...</span>
+0080       <span class="string">'Parent'</span>,thisHbox);
+0081     
+0082     thisTag = pluginObj.panelTag(<span class="string">'sourceRadioBox'</span>);
+0083     thisVbox = uixVRadioBox( <span class="string">'Parent'</span>, thisHbox, <span class="string">'Spacing'</span>, spacing,<span class="keyword">...</span>
+0084       <span class="string">'Tag'</span>,thisTag, <span class="string">'Callback'</span>,pluginObj.callbackHandle(thisTag));
+0085     
+0086     <span class="comment">% hypercubeDataSource</span>
+0087     thisTag = pluginObj.panelTag(<span class="string">'hypercubeDataSource'</span>);
+0088     uicontrol(<span class="keyword">...</span>
+0089       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0090       <span class="string">'Style'</span>,<span class="string">'radiobutton'</span>,<span class="keyword">...</span><span class="comment">  </span>
+0091       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0092       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0093       <span class="string">'String'</span>,<span class="string">'Hypercube Data Array'</span>,<span class="keyword">...</span>
+0094       <span class="string">'UserData'</span>,pluginObj.userData,<span class="keyword">...</span>
+0095       <span class="string">'Parent'</span>,thisVbox);
+0096     
+0097     <span class="comment">% pointSourceRadio</span>
+0098     thisTag = pluginObj.panelTag(<span class="string">'pointSourceRadio'</span>);
+0099     uicontrol(<span class="keyword">...</span>
+0100       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0101       <span class="string">'Style'</span>,<span class="string">'radiobutton'</span>,<span class="keyword">...</span><span class="comment">  </span>
+0102       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0103       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0104       <span class="string">'String'</span>,<span class="string">'Hypercube Data Points (Arrayfun)'</span>,<span class="keyword">...</span>
+0105       <span class="string">'UserData'</span>,pluginObj.userData,<span class="keyword">...</span>
+0106       <span class="string">'Parent'</span>,thisVbox);
+0107     
+0108     <span class="comment">% hypercubeObjSource</span>
+0109     thisTag = pluginObj.panelTag(<span class="string">'hypercubeObjSource'</span>);
+0110     uicontrol(<span class="keyword">...</span>
+0111       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0112       <span class="string">'Style'</span>,<span class="string">'radiobutton'</span>,<span class="keyword">...</span><span class="comment">  </span>
+0113       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0114       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0115       <span class="string">'String'</span>,<span class="string">'Hypercube Object'</span>,<span class="keyword">...</span>
+0116       <span class="string">'UserData'</span>,pluginObj.userData,<span class="keyword">...</span>
+0117       <span class="string">'Parent'</span>,thisVbox);
+0118     
+0119     set(thisHbox, <span class="string">'Widths'</span>,[-1 -2]);
+0120   <span class="keyword">end</span>
+0121 
+0122 
+0123   <a name="_sub3" href="#_subfunctions" class="code">function makeFnNameControls(parentHandle)</a>
+0124     thisHbox = uix.HBox(<span class="string">'Parent'</span>,parentHandle, <span class="string">'Spacing'</span>,spacing, <span class="string">'Padding'</span>,padding);
+0125     
+0126     <span class="comment">% fnLabel</span>
+0127     thisTag = pluginObj.panelTag(<span class="string">'fnLabel'</span>);
+0128     uicontrol(<span class="keyword">...</span>
+0129       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0130       <span class="string">'Style'</span>,<span class="string">'text'</span>,<span class="keyword">...</span>
+0131       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0132       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0133       <span class="string">'String'</span>,<span class="string">'Function:'</span>,<span class="keyword">...</span>
+0134       <span class="string">'Parent'</span>,thisHbox);
+0135     
+0136     
+0137     <span class="comment">% fnMenu</span>
+0138     thisTag = pluginObj.panelTag(<span class="string">'fnMenu'</span>);
+0139     uicontrol(<span class="keyword">...</span>
+0140       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0141       <span class="string">'Style'</span>,<span class="string">'popupmenu'</span>,<span class="keyword">...</span>
+0142       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0143       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0144       <span class="string">'String'</span>,pluginObj.getFnList(),<span class="keyword">...</span>
+0145       <span class="string">'Value'</span>,1,<span class="keyword">...</span>
+0146       <span class="string">'UserData'</span>,pluginObj.userData,<span class="keyword">...</span>
+0147       <span class="string">'Callback'</span>,pluginObj.callbackHandle(thisTag),<span class="keyword">...</span>
+0148       <span class="string">'Parent'</span>,thisHbox);
+0149     
+0150     <span class="comment">% fnBox</span>
+0151     thisTag = pluginObj.panelTag(<span class="string">'fnBox'</span>);
+0152     uicontrol(<span class="keyword">...</span>
+0153       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0154       <span class="string">'Style'</span>,<span class="string">'edit'</span>,<span class="keyword">...</span><span class="comment">  </span>
+0155       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0156       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0157       <span class="string">'String'</span>,<span class="string">''</span>,<span class="keyword">...</span>
+0158       <span class="string">'Parent'</span>,thisHbox);
+0159     
+0160       set(thisHbox, <span class="string">'Widths'</span>,[-2 -3 -3]);
+0161   <span class="keyword">end</span>
+0162 
+0163 
+0164   <a name="_sub4" href="#_subfunctions" class="code">function makeFnArgsControls(parentHandle)</a>
+0165     thisHbox = uix.HBox( <span class="string">'Parent'</span>, parentHandle, <span class="string">'Spacing'</span>, spacing);
+0166     
+0167     <span class="comment">% fnArgsLabel</span>
+0168     thisTag = pluginObj.panelTag(<span class="string">'fnArgsLabel'</span>);
+0169     uicontrol(<span class="keyword">...</span>
+0170       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0171       <span class="string">'Style'</span>,<span class="string">'text'</span>,<span class="keyword">...</span><span class="comment">    </span>
+0172       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0173       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0174       <span class="string">'String'</span>,<span class="string">'Func Extra Args:'</span>,<span class="keyword">...</span>
+0175       <span class="string">'Parent'</span>,thisHbox);
+0176     
+0177     <span class="comment">% fnArgsBox</span>
+0178     thisTag = pluginObj.panelTag(<span class="string">'fnArgsBox'</span>);
+0179     uicontrol(<span class="keyword">...</span>
+0180       <span class="string">'Tag'</span>,thisTag,<span class="keyword">...</span>
+0181       <span class="string">'Style'</span>,<span class="string">'edit'</span>,<span class="keyword">...</span><span class="comment">  </span>
+0182       <span class="string">'FontUnits'</span>,<span class="string">'points'</span>,<span class="keyword">...</span>
+0183       <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0184       <span class="string">'Parent'</span>,thisHbox);
+0185     
+0186     <span class="comment">% Set box size</span>
+0187     set(thisHbox, <span class="string">'Widths'</span>,[-1 -2]);
+0188   <span class="keyword">end</span>
+0189 
+0190 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

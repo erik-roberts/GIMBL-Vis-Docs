@@ -1,0 +1,13 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  gvImageWindowPlugin -> Callback_mouseMove;
+  gvImageWindowPlugin -> gvImageWindowPlugin;
+  gvImageWindowPlugin -> makePanelControls;
+  gvImageWindowPlugin -> openWindow;
+
+  Callback_mouseMove [URL="Callback_mouseMove.html"];
+  gvImageWindowPlugin [URL="gvImageWindowPlugin.html"];
+  makePanelControls [URL="makePanelControls.html"];
+  openWindow [URL="openWindow.html"];
+  showImage [URL="showImage.html"];
+}

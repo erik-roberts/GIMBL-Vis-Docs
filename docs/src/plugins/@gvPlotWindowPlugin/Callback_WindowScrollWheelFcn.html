@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of Callback_WindowScrollWheelFcn</title>
+  <meta name="keywords" content="Callback_WindowScrollWheelFcn">
+  <meta name="description" content="Permits scrolling of select panel sliders in main window">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- # plugins --><!-- menu.html @gvPlotWindowPlugin -->
+<h1>Callback_WindowScrollWheelFcn
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>Permits scrolling of select panel sliders in main window</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function Callback_WindowScrollWheelFcn(src, evnt) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Permits scrolling of select panel sliders in main window</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="gvPlotWindowPlugin.html" class="code" title="">gvPlotWindowPlugin</a>	% gvPlotWindowPlugin - Plot Window Plugin Class for GIMBL-Vis</li><li><a href="../../../src/plugins/@gvSelectPlugin/gvSelectPlugin.html" class="code" title="">gvSelectPlugin</a>	% gvSelectPlugin - Select GUI Plugin Class for GIMBL-Vis</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function Callback_WindowScrollWheelFcn(src, evnt)</a>
+0002 <span class="comment">% Permits scrolling of select panel sliders in main window</span>
+0003 mainPluginObj = src.UserData.pluginObj;
+0004 guiPluginObj = mainPluginObj.controller.guiPlugins.plot;
+0005 
+0006 sliderObj = findobjReTag(<span class="string">'plot_panel_markerSizeSlider'</span>);
+0007 
+0008 <span class="keyword">if</span> ~strcmp(mainPluginObj.currentTab.Title, guiPluginObj.pluginName) || strcmp(sliderObj.Enable, <span class="string">'off'</span>)
+0009   <span class="keyword">return</span> <span class="comment">% since wrong tab selected or slider off</span>
+0010 <span class="keyword">end</span>
+0011 
+0012 figH = src;
+0013 scrollData = evnt;
+0014 
+0015 mousePosPx = get(figH, <span class="string">'CurrentPoint'</span>); <span class="comment">%pixels</span>
+0016 
+0017 sliderPos = guiPluginObj.getSliderAbsolutePosition();
+0018 
+0019 <span class="comment">% Find Positions of LL and UR corners for each slider</span>
+0020 sliderLLx  = sliderPos(:,1);
+0021 sliderLLy  = sliderPos(:,2);
+0022 sliderURx  = (sliderPos(:,1)+sliderPos(:,3));
+0023 sliderURy  = (sliderPos(:,2)+sliderPos(:,4));
+0024 
+0025 <span class="comment">% Determine which slider within 2 point boundary</span>
+0026 onSliderBool = logical((mousePosPx(1)&gt;=sliderLLx) .* (mousePosPx(1)&lt;=sliderURx) .* (mousePosPx(2)&gt;=sliderLLy) .* (mousePosPx(2)&lt;=sliderURy));
+0027 
+0028 <span class="keyword">if</span> onSliderBool <span class="comment">%if in any slider</span>
+0029   sliderChange = scrollData.VerticalScrollAmount*scrollData.VerticalScrollCount;
+0030 
+0031   <span class="keyword">if</span> strcmp(sliderObj.Enable, <span class="string">'on'</span>)
+0032     startValue = sliderObj.Value;
+0033     newValue = max(min(sliderObj.Value+sliderChange, sliderObj.Max), sliderObj.Min);
+0034     <span class="keyword">if</span> startValue ~= newValue
+0035       sliderObj.Value = newValue;
+0036       
+0037       guiPluginObj.Callback_plot_panel_markerSizeSlider(sliderObj);
+0038     <span class="keyword">end</span>
+0039   <span class="keyword">end</span>
+0040 <span class="keyword">end</span>
+0041 
+0042 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

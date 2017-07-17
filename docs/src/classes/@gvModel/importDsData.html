@@ -1,0 +1,395 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of importDsData</title>
+  <meta name="keywords" content="importDsData">
+  <meta name="description" content="importDsData - import dynasim data">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- ../menu.html classes --><!-- menu.html @gvModel -->
+<h1>importDsData
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>importDsData - import dynasim data</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function importDsData(modelObj, src, varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> importDsData - import dynasim data
+
+ src is a path to a dir or a mat file to save to.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../src/classes/gvArray.html" class="code" title="">gvArray</a>	% gvArray - GIMBL-Vis multidimensional data storage class</li><li><a href="../../../src/classes/gvArrayRef.html" class="code" title="">gvArrayRef</a>	% gvArrayRef - GIMBL-Vis multidimensional data handle class wrapper for gvArray</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="gvModel.html" class="code" title="">gvModel</a>	% gvModel - Model class for the GIMBL-Vis Model-View-Controller</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function  importVariedParamVals()</a></li><li><a href="#_sub2" class="code">function mods = arrows2underscores(mods)</a></li><li><a href="#_sub3" class="code">function obj = fix_arrows(obj)</a></li><li><a href="#_sub4" class="code">function modifications = expand_simultaneous_modifications(mods)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function importDsData(modelObj, src, varargin)</a>
+0002 <span class="comment">% importDsData - import dynasim data</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">% src is a path to a dir or a mat file to save to.</span>
+0005 
+0006 <span class="comment">%% Setup args</span>
+0007 <span class="keyword">if</span> nargin &lt; 2
+0008   src = pwd;
+0009 <span class="keyword">end</span>
+0010 
+0011 <span class="comment">%% Check Options</span>
+0012 options = checkOptions(varargin,{<span class="keyword">...</span>
+0013   <span class="string">'classifyFn'</span>, [], [],<span class="keyword">...</span>
+0014   <span class="string">'overwriteBool'</span>, 0, {0,1},<span class="keyword">...</span>
+0015   },false);
+0016 
+0017 <span class="comment">%% Parse src</span>
+0018 [parentDir,filename, ext] = fileparts(src);
+0019 <span class="keyword">if</span> exist(src, <span class="string">'dir'</span>)
+0020   filePath = fullfile(src, <span class="string">'gvArrayData.mat'</span>);
+0021 <span class="keyword">elseif</span> exist(src, <span class="string">'file'</span>) &amp;&amp; strcmp(filename, <span class="string">'studyinfo'</span>) <span class="comment">% src = studyinfo.mat</span>
+0022   src = parentDir;
+0023   filePath = fullfile(parentDir, <span class="string">'gvArrayData.mat'</span>);
+0024 <span class="keyword">elseif</span> ~isempty(ext) &amp;&amp; ~strcmp(ext, <span class="string">'.mat'</span>)
+0025   error(<span class="string">'Path input is not a mat file or dir to save ''gvData.mat'' file.'</span>)
+0026   <span class="comment">% else % given valid mat filename</span>
+0027 <span class="keyword">end</span>
+0028 
+0029 <span class="comment">%% Load or Make gvData</span>
+0030 <span class="keyword">if</span> ~exist(filePath,<span class="string">'file'</span>) || options.overwriteBool
+0031   <span class="comment">% Import studyinfo data</span>
+0032   modelObj.vprintf(<span class="string">'gvModel: Importing studyinfo...\n'</span>)
+0033   studyinfo = dsCheckStudyinfo(src);
+0034   
+0035   studyinfoParams = studyinfo.base_model.parameters;
+0036   studyinfoParamNames = fieldnames(studyinfoParams);
+0037   
+0038   mods = {studyinfo.simulations.modifications};
+0039   mods = cellfunu(@<a href="#_sub4" class="code" title="subfunction modifications = expand_simultaneous_modifications(mods)">expand_simultaneous_modifications</a>, mods); <span class="comment">% expand simultaneously affected groups</span>
+0040   mods = cellfunu(@<a href="#_sub2" class="code" title="subfunction mods = arrows2underscores(mods)">arrows2underscores</a>, mods); <span class="comment">% fix arrow direction and convert to underscores</span>
+0041   nMods = length(mods);
+0042   modVals = cellfunu(@(x) x(:,3), mods);
+0043   modNames = cellfunu(@(x) x(:,1:2), mods);
+0044   
+0045   <span class="comment">% Make names match params</span>
+0046   <span class="comment">% and expand mods that share namespace across params</span>
+0047   <span class="keyword">for</span> iMod = 1:nMods
+0048     nRows = size(modNames{iMod}, 1);
+0049     
+0050     <span class="comment">% NOTE: these may have diff nRows from modNames{iMod}</span>
+0051     thisModNames = {};
+0052     thisModVals = {};
+0053     
+0054     <span class="keyword">for</span> iRow = 1:nRows
+0055       thisRowName = [modNames{iMod}{iRow,1}, <span class="string">'_'</span>, modNames{iMod}{iRow,2}]; <span class="comment">% get original row names</span>
+0056       thisRowVal = modVals{iMod}{iRow};<span class="comment">% get original row val</span>
+0057       
+0058       <span class="keyword">if</span> any(strcmp(thisRowName, studyinfoParamNames)) <span class="comment">% if matches studyinfoParamNames</span>
+0059         thisModNames{end+1} = thisRowName;
+0060         thisModVals{end+1} = thisRowVal;
+0061       <span class="keyword">else</span> <span class="comment">% need to get full namespace</span>
+0062         re = [<span class="string">'('</span> modNames{iMod}{iRow,1}, <span class="string">'_.+_'</span>, modNames{iMod}{iRow,2} <span class="string">')'</span>]; <span class="comment">% make re from original row names</span>
+0063         tokens = regexp(studyinfo.base_model.namespaces(:,2), re, <span class="string">'tokens'</span>);
+0064         tokens = [tokens{:}]; <span class="comment">% remove empty</span>
+0065         tokens = [tokens{:}];
+0066         
+0067         <span class="keyword">if</span> numel(tokens) == 1
+0068           thisRowName = tokens{1};
+0069           thisModNames{end+1} = thisRowName;
+0070           thisModVals{end+1} = thisRowVal;
+0071         <span class="keyword">else</span> <span class="comment">% expand nRows</span>
+0072           thisNrows = numel(tokens);
+0073           thisModNames(end+1:end+thisNrows) = tokens;
+0074           thisModVals(end+1:end+thisNrows) = repmat({thisRowVal}, 1,thisNrows);
+0075         <span class="keyword">end</span>
+0076       <span class="keyword">end</span>
+0077       
+0078     <span class="keyword">end</span>
+0079     
+0080     <span class="comment">% update cells</span>
+0081     modNames{iMod} = thisModNames(:); <span class="comment">% ensure col array</span>
+0082     modVals{iMod} = thisModVals(:); <span class="comment">% ensure col array</span>
+0083   <span class="keyword">end</span>
+0084   
+0085   <a href="#_sub1" class="code" title="subfunction  importVariedParamVals()">importVariedParamVals</a>();
+0086   
+0087   simIDs = {studyinfo.simulations.sim_id}';
+0088   
+0089   <span class="comment">% TODO in case this is useful later:</span>
+0090   <span class="comment">%   modNames = cat(2,modNames(:,1), repmat({'_'},size(modNames,1), 1), modNames(:,2));</span>
+0091   
+0092   <span class="comment">% NOTE: studyinfo may not have posthoc analysis fn</span>
+0093   <span class="comment">% studyinfo result functions</span>
+0094   <span class="comment">%   studyinfoResultFns = [studyinfo.simulations.result_functions];</span>
+0095   <span class="comment">%   studyinfoResultFns = cellfunu(@func2str, studyinfoResultFns);</span>
+0096   <span class="comment">%   studyinfoResultFns = unique(studyinfoResultFns);</span>
+0097   
+0098   <span class="comment">% results files in data_dir</span>
+0099   dataList = lscell(fullfile(src, <span class="string">'data'</span>));
+0100   savedResultFns = regexpi(dataList, <span class="string">'analysis.+_(.*)\.mat'</span>, <span class="string">'tokens'</span>);
+0101   savedResultFns = [savedResultFns{:}]; <span class="comment">% remove empty</span>
+0102   savedResultFns = unique([savedResultFns{:}]); <span class="comment">% cat and unique</span>
+0103   
+0104   <span class="comment">% Get result Functions</span>
+0105   resultFns = savedResultFns; <span class="comment">%intersect(studyinfoResultFns, savedResultFns);</span>
+0106   
+0107   <span class="comment">% Determine classification functions</span>
+0108   <span class="keyword">if</span> isempty(options.classifyFn) &amp;&amp; ~isempty(savedResultFns)
+0109     classifyFns = regexpi(savedResultFns, <span class="string">'(.*class.*)'</span>, <span class="string">'tokens'</span>);
+0110     classifyFns = [classifyFns{:}]; <span class="comment">% remove empty</span>
+0111     classifyFns = [classifyFns{:}]; <span class="comment">% cat</span>
+0112   <span class="keyword">elseif</span> ~isempty(options.classifyFn)
+0113     classifyFns = options.classifyFn;
+0114   <span class="keyword">end</span>
+0115   
+0116   
+0117   <span class="keyword">if</span> ~isempty(resultFns)
+0118     <span class="comment">% convert to fn handles</span>
+0119     resultFns = cellfunu(@str2func, resultFns);
+0120     
+0121     
+0122     <span class="comment">% Import analysis results</span>
+0123     modelObj.vprintf(<span class="string">'gvModel: Importing analysis results...\n'</span>)
+0124     analysisResults = struct();
+0125     <span class="keyword">for</span> iFn = 1:numel(resultFns)
+0126       thisResultFn = resultFns{iFn};
+0127       analysisResults.(func2str(thisResultFn)) = dsImportResults(src, thisResultFn);
+0128       
+0129       <span class="keyword">if</span> length(analysisResults.(func2str(thisResultFn))) ~= size(variedParamValues,1)
+0130         wprintf(<span class="string">'\tDifferent lengths for number of modifications and %s results.'</span>, func2str(thisResultFn))
+0131       <span class="keyword">end</span>
+0132     <span class="keyword">end</span>
+0133     modelObj.vprintf(<span class="string">'\tDone importing analysis results\n'</span>)
+0134     
+0135     modelObj.vprintf(<span class="string">'gvModel: Preparing data to save...\n'</span>)
+0136     
+0137     
+0138     <span class="comment">% Remove missing data</span>
+0139     missingClassResultsInd = cellfun(@isempty,analysisResults.(func2str(thisResultFn)));
+0140     <span class="keyword">for</span> fld = fieldnames(analysisResults)
+0141       missingClassResultsInd = missingClassResultsInd | cellfun(@isempty,analysisResults.(fld{1}));
+0142     <span class="keyword">end</span>
+0143     
+0144     <span class="keyword">for</span> fld = fieldnames(analysisResults)'
+0145       analysisResults.(fld{1})(missingClassResultsInd) = [];
+0146     <span class="keyword">end</span>
+0147     variedParamValues(missingClassResultsInd,:) = [];
+0148     simIDs(missingClassResultsInd) = [];
+0149     
+0150     <span class="comment">% Get class info</span>
+0151     classes = struct();
+0152     <span class="keyword">for</span> iFn = 1:numel(classifyFns)
+0153       <span class="keyword">if</span> numel(classifyFns) == 1 <span class="comment">% rename class fn to 'class'</span>
+0154         thisFnStr = <span class="string">'class'</span>;
+0155         analysisResults.(thisFnStr) = analysisResults.(classifyFns{1});
+0156         analysisResults = rmfield(analysisResults, classifyFns{1});
+0157         thisFnHandle = str2func(classifyFns{1});
+0158         classifyFns{1} = thisFnStr;
+0159       <span class="keyword">else</span>
+0160         thisFnStr = classifyFns{iFn};
+0161         thisFnHandle = str2func(thisFnStr);
+0162       <span class="keyword">end</span>
+0163       
+0164       uClassNames = unique(analysisResults.(thisFnStr));
+0165       
+0166       <span class="keyword">try</span> <span class="comment">% to get info from class fn call</span>
+0167         info = feval(thisFnHandle, <span class="string">'info'</span>);
+0168         assert(size(info, 1) &gt;= length(uClassNames))
+0169         classes.(thisFnStr).labels = info(:,1);
+0170         <span class="keyword">if</span> size(info, 2) &gt; 1 <span class="comment">% if color col</span>
+0171           tempColors = info(:,2); <span class="comment">% as cells</span>
+0172           tempColors = vertcat(tempColors{:}); <span class="comment">% convert cell 2 mat</span>
+0173           classes.(thisFnStr).colors = tempColors; <span class="comment">% store mat</span>
+0174           clear tempColors
+0175         <span class="keyword">else</span>
+0176           classes.(thisFnStr).colors = distinguishable_colors(length(classes.(thisFnStr).labels));
+0177         <span class="keyword">end</span>
+0178         
+0179         <span class="keyword">if</span> size(info, 2) &gt; 2 <span class="comment">% if marker col</span>
+0180           classes.(thisFnStr).markers = info(:,3);
+0181         <span class="keyword">end</span>
+0182       <span class="keyword">catch</span>
+0183         classes.(thisFnStr).labels = uClassNames;
+0184         classes.(thisFnStr).colors = distinguishable_colors(length(classes.(thisFnStr).labels));
+0185       <span class="keyword">end</span>
+0186     <span class="keyword">end</span>
+0187   <span class="keyword">end</span>
+0188   
+0189   <span class="comment">%% prepare data</span>
+0190   <span class="comment">%   simIDstr = cellfunu(@num2str, simIDs);</span>
+0191   axisNames = variedParamNames;
+0192   axisVals = cell(1,nVariedParams);
+0193   <span class="keyword">for</span> iParam = 1:nVariedParams
+0194     thisParamValues = variedParamValues(:, iParam);
+0195     <span class="comment">%     if isnumeric([thisParamValues{:}])</span>
+0196     <span class="comment">%       axisVals{iParam} = cellfunu(@num2str, thisParamValues);</span>
+0197     <span class="comment">%     else</span>
+0198     axisVals{iParam} = thisParamValues;
+0199     <span class="comment">%     end</span>
+0200   <span class="keyword">end</span>
+0201   
+0202   <span class="comment">%% gvArray</span>
+0203   dynasimData = <a href="../../../src/classes/gvArray.html" class="code" title="">gvArray</a>;
+0204   dynasimData.meta.defaultHypercubeName = <span class="string">'dsData'</span>;
+0205     
+0206   <span class="comment">% store simIDs in axis 1</span>
+0207   analysisResults.simID = simIDs;
+0208 
+0209   <span class="comment">% Make model object</span>
+0210   allResults = {};
+0211   allAxisVals = cell(1, length(axisVals)+1);
+0212   dynasimData.axis(1).axismeta.dataType = {};
+0213   dynasimData.axis(1).axismeta.plotInfo = {};
+0214   <span class="keyword">for</span> analysisFnName = fieldnames(analysisResults)'
+0215     analysisFnName = analysisFnName{1};
+0216 
+0217     allResults = [allResults; analysisResults.(analysisFnName)];
+0218 
+0219     <span class="comment">% Add Analysis Fn Name to allAxisVals</span>
+0220     fnNameCell = cell(length(analysisResults.(analysisFnName)),1);
+0221     fnNameCell(:) = deal({analysisFnName});
+0222     allAxisVals{1} = [allAxisVals{1}; fnNameCell];
+0223     
+0224     <span class="comment">% Add rest of axes to allAxisVals</span>
+0225     <span class="keyword">for</span> jCol = 1:length(axisVals)
+0226       allAxisVals{jCol+1} = [allAxisVals{jCol+1}; axisVals{jCol}]; <span class="comment">% TODO: speed up with vector ops</span>
+0227     <span class="keyword">end</span>
+0228     
+0229     <span class="comment">% store data types in axismeta</span>
+0230     <span class="keyword">if</span> strcmp(analysisFnName, <span class="string">'simID'</span>)
+0231       dynasimData.axis(1).axismeta.dataType{end+1} = <span class="string">'index'</span>;
+0232     <span class="keyword">elseif</span> iscellnum(analysisResults.(analysisFnName))
+0233       dynasimData.axis(1).axismeta.dataType{end+1} = <span class="string">'numeric'</span>;
+0234     <span class="keyword">elseif</span> iscellstr(analysisResults.(analysisFnName))
+0235       dynasimData.axis(1).axismeta.dataType{end+1} = <span class="string">'categorical'</span>;
+0236       
+0237       <span class="comment">% store classes</span>
+0238       axValInd = length(dynasimData.axis(1).axismeta.dataType);
+0239       dynasimData.axis(1).axismeta.plotInfo{axValInd} = classes.(analysisFnName);
+0240     <span class="keyword">else</span>
+0241       dynasimData.axis(1).axismeta.dataType{end+1} = <span class="string">'unknown'</span>;
+0242     <span class="keyword">end</span>
+0243     
+0244   <span class="keyword">end</span>
+0245   
+0246   <span class="comment">% Import data table</span>
+0247   dynasimData = dynasimData.importDataTable(allResults, allAxisVals, [{<span class="string">'analysisFn'</span>} axisNames]);
+0248   
+0249   <span class="comment">% Store axisType in axis</span>
+0250   dynasimData.axis(1).axismeta.axisType = <span class="string">'dataType'</span>;
+0251   
+0252   <span class="comment">% Store data</span>
+0253   hypercubeObj = <a href="../../../src/classes/gvArrayRef.html" class="code" title="">gvArrayRef</a>(dynasimData);
+0254   modelObj.addHypercube(hypercubeObj);
+0255   
+0256   modelObj.vprintf(<span class="string">'gvModel: Imported multidimensional array object from Dynasim data from: %s\n'</span>, filePath)
+0257   
+0258   <span class="comment">% Save</span>
+0259   save(filePath, <span class="string">'dynasimData'</span>) <span class="comment">% save gvArray obj</span>
+0260   modelObj.vprintf(<span class="string">'\tSaved dynasim data as ''gvArray'' object in file ''.\\gvArrayData.m''.\n'</span>)
+0261 <span class="keyword">else</span> <span class="comment">% data file exists</span>
+0262   warning(<span class="string">'File exists and overwriteBool=false. Choose new file name or set overwriteBool=true for new import.'</span>)
+0263   modelObj.vprintf(<span class="string">'gvModel: Loading dynasim data from: %s\n'</span>, filePath)
+0264   
+0265   modelObj.load(filePath);
+0266 <span class="keyword">end</span>
+0267 
+0268 
+0269 <span class="comment">%% Nested Fns</span>
+0270   <a name="_sub1" href="#_subfunctions" class="code">function  importVariedParamVals()</a>
+0271     modelObj.vprintf(<span class="string">'gvModel: Importing varied parameter values...\n'</span>)
+0272     
+0273     <span class="comment">% Get varied params</span>
+0274     variedParamNames = vertcat(modNames{:});
+0275     variedParamNames = unique(variedParamNames)';
+0276     nVariedParams = numel(variedParamNames);
+0277     
+0278     <span class="comment">% Get param values for each sim</span>
+0279     variedParamValues = cell(nMods, nVariedParams);
+0280     <span class="keyword">for</span> iParam = 1:nVariedParams
+0281       thisParam = variedParamNames{iParam};
+0282       thisStudyinfoParamValue = studyinfoParams.(thisParam);
+0283       <span class="keyword">for</span> iMod = 1:nMods
+0284         thisModParams = modNames{iMod};
+0285         thisModInd = strcmp(thisModParams, thisParam);
+0286         <span class="keyword">if</span> any(thisModInd)
+0287           variedParamValues{iMod, iParam} = modVals{iMod}{thisModInd};
+0288         <span class="keyword">else</span>  <span class="comment">% param missing for this sim, so use the value from studyinfo (for sims with sparse vary, ie non lattice)</span>
+0289           variedParamValues{iMod, iParam} = thisStudyinfoParamValue;
+0290         <span class="keyword">end</span>
+0291       <span class="keyword">end</span>
+0292     <span class="keyword">end</span>
+0293     
+0294     <span class="comment">%   for iParam = 1:nVariedParams</span>
+0295     <span class="comment">%     VariedData.(variedParamNames{iParam}) = variedParamValues(:,iParam);</span>
+0296     <span class="comment">%   end</span>
+0297     
+0298     modelObj.vprintf(<span class="string">'\tDone importing varied parameter values.\n'</span>)
+0299   <span class="keyword">end</span>
+0300 
+0301 
+0302   <a name="_sub2" href="#_subfunctions" class="code">function mods = arrows2underscores(mods)</a>
+0303     <span class="comment">% Purpose: fix arrow direction and convert to underscores</span>
+0304     mods(:,1:2) = cellfun( @<a href="#_sub3" class="code" title="subfunction obj = fix_arrows(obj)">fix_arrows</a>, mods(:,1:2),<span class="string">'UniformOutput'</span>,0); <span class="comment">% fix order of directionality to be L -&gt; R</span>
+0305     mods(:,1:2) = cellfun( @(x) strrep(x,<span class="string">'-&gt;'</span>,<span class="string">'_'</span>),mods(:,1:2),<span class="string">'UniformOutput'</span>,0); <span class="comment">% replace modification arrows with _</span>
+0306     
+0307     <a name="_sub3" href="#_subfunctions" class="code">function obj = fix_arrows(obj)</a>
+0308       <span class="keyword">if</span> any(strfind(obj,<span class="string">'&lt;-'</span>))
+0309         ind=strfind(obj,<span class="string">'&lt;-'</span>);
+0310         obj=[obj(ind(1)+2:end) <span class="string">'-&gt;'</span> obj(1:ind(1)-1)];
+0311       <span class="keyword">end</span>
+0312     <span class="keyword">end</span>
+0313   <span class="keyword">end</span>
+0314 
+0315 
+0316   <a name="_sub4" href="#_subfunctions" class="code">function modifications = expand_simultaneous_modifications(mods)</a>
+0317     <span class="comment">% Purpose: expand simultaneous modifications into larger list</span>
+0318     <span class="comment">% NOTE: copied from dsSimulate expand_modifications subfunction</span>
+0319     modifications={};
+0320     <span class="keyword">for</span> i=1:size(mods,1)
+0321       <span class="comment">% get object list without grouping symbols: ()[]{}</span>
+0322       objects=regexp(mods{i,1},<span class="string">'[^\(\)\[\]\{\},]+'</span>,<span class="string">'match'</span>);
+0323       variables=regexp(mods{i,2},<span class="string">'[^\(\)\[\]\{\},]+'</span>,<span class="string">'match'</span>);
+0324       
+0325       <span class="keyword">for</span> j=1:length(objects)
+0326         <span class="keyword">for</span> k=1:length(variables)
+0327           thisModNames = mods{i,3};
+0328           
+0329           <span class="keyword">if</span> all(size(thisModNames) == [1,1]) <span class="comment">%same val for each obj and var</span>
+0330             modifications(end+1,1:3)={objects{j},variables{k},thisModNames};
+0331           <span class="keyword">elseif</span> (size(thisModNames,1) &gt; 1) &amp;&amp; (size(thisModNames,2) == 1) <span class="comment">%same val for each obj, diff for each var</span>
+0332             modifications(end+1,1:3)={objects{j},variables{k},thisModNames(k)};
+0333           <span class="keyword">elseif</span> (size(thisModNames,1) == 1) &amp;&amp; (size(thisModNames,2) &gt; 1) <span class="comment">%same val for each var, diff for each obj</span>
+0334             modifications(end+1,1:3)={objects{j},variables{k},thisModNames(j)};
+0335           <span class="keyword">elseif</span> (size(thisModNames,1) &gt; 1) &amp;&amp; (size(thisModNames,2) &gt; 1) <span class="comment">%diff val for each var and obj</span>
+0336             modifications(end+1,1:3)={objects{j},variables{k},thisModNames(k,j)};
+0337           <span class="keyword">else</span>
+0338             error(<span class="string">'Unknown modification type (likely due to excess dims)'</span>)
+0339           <span class="keyword">end</span> <span class="comment">%if</span>
+0340         <span class="keyword">end</span> <span class="comment">%k</span>
+0341       <span class="keyword">end</span> <span class="comment">%j</span>
+0342     <span class="keyword">end</span> <span class="comment">%i</span>
+0343   <span class="keyword">end</span>  <span class="comment">%fun</span>
+0344 
+0345 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

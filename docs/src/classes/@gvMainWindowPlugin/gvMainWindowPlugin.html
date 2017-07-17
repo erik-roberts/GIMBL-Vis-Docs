@@ -1,0 +1,481 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of gvMainWindowPlugin</title>
+  <meta name="keywords" content="gvMainWindowPlugin">
+  <meta name="description" content="% gvMainWindowPlugin - Main Window Class for GIMBL-Vis">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- ../menu.html classes --><!-- menu.html @gvMainWindowPlugin -->
+<h1>gvMainWindowPlugin
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>% gvMainWindowPlugin - Main Window Class for GIMBL-Vis</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% gvMainWindowPlugin - Main Window Class for GIMBL-Vis
+
+ Description: An object of this class becomes a property of gvView to provide 
+              methods for a GIMBL-Vis main window</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="gvMainWindowPlugin.html" class="code" title="">gvMainWindowPlugin</a>	% gvMainWindowPlugin - Main Window Class for GIMBL-Vis</li><li><a href="makeFig.html" class="code" title="function makeFig(pluginObj)">makeFig</a>	</li><li><a href="makeHypercubePanelControls.html" class="code" title="function uiControlsHandles = makeHypercubePanelControls(pluginObj, parentHandle)">makeHypercubePanelControls</a>	% makeHypercubePanelControls</li><li><a href="makeMenu.html" class="code" title="function makeMenu(pluginObj, parentHandle)">makeMenu</a>	% makeMainWindowMenu</li><li><a href="makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	makePanelControls - make list of plugins with load checkboxes</li><li><a href="makeWindowControls.html" class="code" title="function makeWindowControls( pluginObj, parentHandle )">makeWindowControls</a>	</li><li><a href="openWindow.html" class="code" title="function openWindow(pluginObj)">openWindow</a>	check for main window</li><li><a href="../../../src/classes/gvWindowPlugin.html" class="code" title="">gvWindowPlugin</a>	% gvWindow - Abstract UI Window Plugin Class for GIMBL-Vis</li><li><a href="../../../src/plugins/@gvAnalysisPlugin/makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	makePanelControls - make plot panel for tab in main window</li><li><a href="../../../src/plugins/@gvImageWindowPlugin/makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	% makePanelControls</li><li><a href="../../../src/plugins/@gvImageWindowPlugin/openWindow.html" class="code" title="function openWindow(pluginObj)">openWindow</a>	check for main window</li><li><a href="../../../src/plugins/@gvPlotWindowPlugin/makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	makePanelControls - make plot panel for tab in main window</li><li><a href="../../../src/plugins/@gvPlotWindowPlugin/openWindow.html" class="code" title="function openWindow(pluginObj)">openWindow</a>	check for main window</li><li><a href="../../../src/plugins/@gvSelectPlugin/makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>	makePanelControls - make plot panel for tab in main window</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="gvMainWindowPlugin.html" class="code" title="">gvMainWindowPlugin</a>	% gvMainWindowPlugin - Main Window Class for GIMBL-Vis</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function pluginObj = gvMainWindowPlugin(varargin)</a></li><li><a href="#_sub2" class="code">function setup(pluginObj, varargin)</a></li><li><a href="#_sub3" class="code">function addDynamicCallbackFields(pluginObj)</a></li><li><a href="#_sub4" class="code">function plugin = currentPlugin(pluginObj)</a></li><li><a href="#_sub5" class="code">function tab = currentTab(pluginObj)</a></li><li><a href="#_sub6" class="code">function selectTab(pluginObj, tab)</a></li><li><a href="#_sub7" class="code">function addDynamicCallback(pluginObj, callbackEventName, callbackHandle)</a></li><li><a href="#_sub8" class="code">function str = helpStr()</a></li><li><a href="#_sub9" class="code">function Callback_CloseRequestFcn(src, ~)</a></li><li><a href="#_sub10" class="code">function Callback_activeHyperCubeMenu(src, ~)</a></li><li><a href="#_sub11" class="code">function Callback_loadPluginCheckbox(src, ~)</a></li><li><a href="#_sub12" class="code">function Callback_panelControlsMade(src, ~)</a></li><li><a href="#_sub13" class="code">function Callback_main_menu_file_changeWD(src, ~)</a></li><li><a href="#_sub14" class="code">function Callback_main_menu_file_load(src, ~)</a></li><li><a href="#_sub15" class="code">function Callback_main_menu_file_importMdData(src, ~)</a></li><li><a href="#_sub16" class="code">function Callback_main_menu_file_importTable(src, ~)</a></li><li><a href="#_sub17" class="code">function Callback_main_menu_file_saveGV(src, ~)</a></li><li><a href="#_sub18" class="code">function Callback_main_menu_file_saveHC(src, ~)</a></li><li><a href="#_sub19" class="code">function Callback_main_menu_file_evalInBase(src, ~)</a></li><li><a href="#_sub20" class="code">function Callback_main_menu_model_loadFromWS(src, ~)</a></li><li><a href="#_sub21" class="code">function Callback_main_menu_model_mergeHypercubes(src, ~)</a></li><li><a href="#_sub22" class="code">function Callback_main_menu_model_mergeFromWS(src, ~)</a></li><li><a href="#_sub23" class="code">function Callback_main_menu_model_deleteHypercube(src, ~)</a></li><li><a href="#_sub24" class="code">function Callback_main_menu_view_setFontSize(src, ~)</a></li><li><a href="#_sub25" class="code">function Callback_main_menu_view_reset(src, evnt)</a></li><li><a href="#_sub26" class="code">function Callback_WindowScrollWheelFcn(src, evnt)</a></li><li><a href="#_sub27" class="code">function Callback_main_menu_help_pluginHelp(src, ~)</a></li><li><a href="#_sub28" class="code">function Callback_main_menu_help_onlineHelp(~, ~)</a></li><li><a href="#_sub29" class="code">function Callback_main_menu_help_pluginDocs(src, ~)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%% gvMainWindowPlugin - Main Window Class for GIMBL-Vis</span>
+0002 <span class="comment">%</span>
+0003 <span class="comment">% Description: An object of this class becomes a property of gvView to provide</span>
+0004 <span class="comment">%              methods for a GIMBL-Vis main window</span>
+0005 
+0006 classdef <a href="gvMainWindowPlugin.html" class="code" title="">gvMainWindowPlugin</a> &lt; <a href="../../../src/classes/gvWindowPlugin.html" class="code" title="">gvWindowPlugin</a>
+0007   
+0008   <span class="comment">%% Public properties %%</span>
+0009   properties
+0010     metadata = struct()
+0011     handles = struct()
+0012   <span class="keyword">end</span>
+0013   
+0014   properties (Constant)
+0015     pluginName = <span class="string">'Main'</span>;
+0016     pluginFieldName = <span class="string">'main'</span>;
+0017     
+0018     windowName = <span class="string">'GIMBL-Vis Toolbox'</span>;
+0019   <span class="keyword">end</span>
+0020 
+0021   properties (SetAccess = <span class="string">'protected'</span>)
+0022     dynamicCallbacks = struct(); <span class="comment">% allow for dynamic addition of callbacks</span>
+0023   <span class="keyword">end</span>
+0024   
+0025   <span class="comment">%% Public methods %%</span>
+0026   methods
+0027     
+0028     <a name="_sub0" href="#_subfunctions" class="code">function pluginObj = gvMainWindowPlugin(varargin)</a>
+0029       pluginObj@<a href="../../../src/classes/gvWindowPlugin.html" class="code" title="">gvWindowPlugin</a>(varargin{:});
+0030     <span class="keyword">end</span>
+0031     
+0032     
+0033     <a name="_sub1" href="#_subfunctions" class="code">function setup(pluginObj, varargin)</a>
+0034       <a href="#_sub2" class="code" title="subfunction setup(pluginObj, varargin)">setup</a>@<a href="../../../src/classes/gvWindowPlugin.html" class="code" title="">gvWindowPlugin</a>(pluginObj, varargin{:});
+0035       
+0036       pluginObj.addDynamicCallbackFields();
+0037       
+0038       addlistener(pluginObj, <span class="string">'panelControlsMade'</span>, @gvMainWindowPlugin.Callback_panelControlsMade);
+0039     <span class="keyword">end</span>
+0040     
+0041     
+0042     <a name="_sub2" href="#_subfunctions" class="code">function addDynamicCallbackFields(pluginObj)</a>
+0043       flds = {<span class="string">'WindowScrollWheelFcn'</span>};
+0044       
+0045       <span class="keyword">for</span> fld = flds(:)'
+0046         pluginObj.dynamicCallbacks.(fld{1}) = {};
+0047       <span class="keyword">end</span>
+0048     <span class="keyword">end</span>
+0049     
+0050     
+0051     <a href="openWindow.html" class="code" title="function openWindow(pluginObj)">openWindow</a>(pluginObj)
+0052     
+0053     
+0054     panelHandle = <a href="makePanelControls.html" class="code" title="function panelHandle = makePanelControls(pluginObj, parentHandle)">makePanelControls</a>(pluginObj, parentHandle)
+0055     
+0056     
+0057     <a name="_sub3" href="#_subfunctions" class="code">function plugin = currentPlugin(pluginObj)</a>
+0058       plugin = pluginObj.currentTab.UserData.plugin;
+0059     <span class="keyword">end</span>
+0060     
+0061     
+0062     <a name="_sub4" href="#_subfunctions" class="code">function tab = currentTab(pluginObj)</a>
+0063       tab = pluginObj.handles.controls.tabPanel.SelectedTab;
+0064     <span class="keyword">end</span>
+0065     
+0066     
+0067     <a name="_sub5" href="#_subfunctions" class="code">function selectTab(pluginObj, tab)</a>
+0068       <span class="comment">% selectTab - using tab name or number</span>
+0069       
+0070       <span class="keyword">if</span> isscalar(tab)
+0071         tabInd = tab;
+0072       <span class="keyword">elseif</span> ischar(tab)
+0073         tabs = [pluginObj.handles.controls.tabs{:}];
+0074         tabs = [tabs.uitab];
+0075         tabs = {tabs.Title};
+0076         
+0077         tabInd = find(strcmp(tabs, tab));
+0078       <span class="keyword">else</span>
+0079         error(<span class="string">'Unknown tab input.'</span>)
+0080       <span class="keyword">end</span>
+0081       
+0082       pluginObj.handles.controls.tabPanel.SelectedTab = pluginObj.handles.controls.tabs{tabInd}.uitab;
+0083     <span class="keyword">end</span>
+0084     
+0085     
+0086     <a name="_sub6" href="#_subfunctions" class="code">function addDynamicCallback(pluginObj, callbackEventName, callbackHandle)</a>
+0087       <span class="keyword">if</span> isfield(pluginObj.dynamicCallbacks, callbackEventName)
+0088         pluginObj.dynamicCallbacks.(callbackEventName){end+1} = callbackHandle;
+0089       <span class="keyword">else</span>
+0090         error(sprinft(<span class="string">'dynamicCallbacks field ''%s'' not found.'</span>, callbackEventName));
+0091       <span class="keyword">end</span>
+0092     <span class="keyword">end</span>
+0093 
+0094   <span class="keyword">end</span>
+0095   
+0096   
+0097   <span class="comment">%% Protected methods %%</span>
+0098   methods (Access = protected)
+0099      
+0100     <a href="makeFig.html" class="code" title="function makeFig(pluginObj)">makeFig</a>(pluginObj)
+0101     
+0102     <a href="makeWindowControls.html" class="code" title="function makeWindowControls( pluginObj, parentHandle )">makeWindowControls</a>(pluginObj, parentHandle)
+0103     
+0104     <a href="makeMenu.html" class="code" title="function makeMenu(pluginObj, parentHandle)">makeMenu</a>(pluginObj, parentHandle)
+0105     
+0106     uiControlsHandles = <a href="makeHypercubePanelControls.html" class="code" title="function uiControlsHandles = makeHypercubePanelControls(pluginObj, parentHandle)">makeHypercubePanelControls</a>(pluginObj, parentHandle)
+0107 
+0108   <span class="keyword">end</span>
+0109 
+0110   
+0111   methods (Static, Hidden)
+0112     
+0113     <a name="_sub7" href="#_subfunctions" class="code">function str = helpStr()</a>
+0114       str = [gvMainWindowPlugin.pluginName <span class="string">':\n'</span>,<span class="keyword">...</span>
+0115         <span class="string">'Use the Main tab to load different plugins by clicking the checkbox.\n'</span>
+0116         ];
+0117     <span class="keyword">end</span>
+0118     
+0119     
+0120     <span class="comment">%% Event Callbacks</span>
+0121     <a name="_sub8" href="#_subfunctions" class="code">function Callback_CloseRequestFcn(src, ~)</a>
+0122       <span class="comment">% Close request function</span>
+0123  
+0124       pluginObj = src.UserData.pluginObj;
+0125       closeMainWindowSaveDialogBool = pluginObj.controller.app.config.closeMainWindowSaveDialogBool;
+0126       
+0127       <span class="keyword">if</span> ~closeMainWindowSaveDialogBool
+0128         delete(pluginObj.handles.fig)
+0129         <span class="keyword">return</span> <span class="comment">% if config turns off this dialog win</span>
+0130       <span class="keyword">end</span>
+0131       
+0132       selection = questdlg(<span class="string">'Save GIMBL-Vis object before closing?'</span>,<span class="keyword">...</span>
+0133         <span class="string">'GIMBL-Vis'</span>,<span class="keyword">...</span>
+0134         <span class="string">'Cancel'</span>,<span class="string">'Yes'</span>,<span class="string">'No'</span>, <span class="string">'No'</span>);
+0135       <span class="keyword">switch</span> selection
+0136         <span class="keyword">case</span> <span class="string">'No'</span>
+0137           delete(pluginObj.handles.fig)
+0138         <span class="keyword">case</span> <span class="string">'Yes'</span>
+0139           <span class="comment">% TODO</span>
+0140           error(<span class="string">'Not implemented yet'</span>);
+0141         <span class="keyword">case</span> <span class="string">'Cancel'</span>
+0142           <span class="keyword">return</span>
+0143       <span class="keyword">end</span>
+0144     <span class="keyword">end</span>
+0145     
+0146     
+0147     <a name="_sub9" href="#_subfunctions" class="code">function Callback_activeHyperCubeMenu(src, ~)</a>
+0148       pluginObj = src.UserData.pluginObj; <span class="comment">% window plugin</span>
+0149       
+0150       newActiveHypercube = src.String{src.Value};
+0151       
+0152       pluginObj.controller.setActiveHypercube(newActiveHypercube);
+0153     <span class="keyword">end</span>
+0154     
+0155     
+0156     <a name="_sub10" href="#_subfunctions" class="code">function Callback_loadPluginCheckbox(src, ~)</a>
+0157       pluginObj = src.UserData.pluginObj; <span class="comment">% window plugin</span>
+0158       
+0159       checkBool = src.Value;
+0160       <span class="keyword">if</span> checkBool
+0161         pluginClassName = src.UserData.pluginClassName;
+0162         pluginObj.controller.connectPlugin(pluginClassName);
+0163       <span class="keyword">else</span>
+0164         pluginFieldName = src.UserData.pluginFieldName;
+0165         pluginObj.controller.disconnectPlugin(pluginFieldName);
+0166       <span class="keyword">end</span>
+0167     <span class="keyword">end</span>
+0168     
+0169     <a name="_sub11" href="#_subfunctions" class="code">function Callback_panelControlsMade(src, ~)</a>
+0170       pluginObj = src;
+0171       
+0172       <span class="keyword">if</span> pluginObj.controller.app.config.autoOpenLoadedPluginWindows
+0173         
+0174         <span class="comment">% get window plugins without main</span>
+0175         windowPlugins = pluginObj.controller.windowPlugins;
+0176         windowPlugins = rmfield(windowPlugins, pluginObj.pluginFieldName);
+0177         windowPlugins = struct2cell(windowPlugins)';
+0178         
+0179         <span class="keyword">for</span> windowPluginObj = windowPlugins(:)'
+0180           windowPluginObj{1}.openWindow();
+0181         <span class="keyword">end</span>
+0182         
+0183       <span class="keyword">end</span>
+0184     <span class="keyword">end</span>
+0185     
+0186     <span class="comment">%% Menu Callbacks</span>
+0187     
+0188     <span class="comment">%% File</span>
+0189     <a name="_sub12" href="#_subfunctions" class="code">function Callback_main_menu_file_changeWD(src, ~)</a>
+0190       pluginObj = src.UserData.pluginObj;
+0191 
+0192       newWD = uigetdir(pluginObj.controller.app.workingDir, <span class="string">'New Working Directory'</span>);
+0193       
+0194       <span class="keyword">if</span> isequal(newWD,0)
+0195         <span class="keyword">return</span>
+0196       <span class="keyword">end</span>
+0197       
+0198       pluginObj.controller.app.workingDir = newWD;
+0199     <span class="keyword">end</span>
+0200     
+0201     
+0202     <a name="_sub13" href="#_subfunctions" class="code">function Callback_main_menu_file_load(src, ~)</a>
+0203       pluginObj = src.UserData.pluginObj;
+0204       
+0205       [fileName, pathName] = uigetfile(<span class="string">'*.mat'</span>, <span class="string">'Load gv, gvArray, or MDD Object from File'</span>);
+0206       
+0207       <span class="keyword">if</span> isequal(fileName,0)
+0208         <span class="keyword">return</span>
+0209       <span class="keyword">end</span>
+0210       
+0211       filePath = fullfile(pathName, fileName);
+0212       
+0213       pluginObj.controller.model.load(filePath);
+0214     <span class="keyword">end</span>
+0215     
+0216     
+0217     <a name="_sub14" href="#_subfunctions" class="code">function Callback_main_menu_file_importMdData(src, ~)</a>
+0218       pluginObj = src.UserData.pluginObj;
+0219       
+0220       [fileName, pathName] = uigetfile(<span class="string">'*.mat'</span>, <span class="string">'Import Numeric or Cell Array from File'</span>);
+0221       
+0222       <span class="keyword">if</span> isequal(fileName,0)
+0223         <span class="keyword">return</span>
+0224       <span class="keyword">end</span>
+0225       
+0226       filePath = fullfile(pathName, fileName);
+0227       
+0228       pluginObj.controller.model.load(filePath);
+0229     <span class="keyword">end</span>
+0230     
+0231     
+0232     <a name="_sub15" href="#_subfunctions" class="code">function Callback_main_menu_file_importTable(src, ~)</a>
+0233       pluginObj = src.UserData.pluginObj;
+0234       
+0235       [fileName, pathName] = uigetfile(<span class="string">'*.mat'</span>, <span class="string">'Import Tabular Data from File'</span>);
+0236       
+0237       <span class="keyword">if</span> isequal(fileName,0)
+0238         <span class="keyword">return</span>
+0239       <span class="keyword">end</span>
+0240       
+0241       filePath = fullfile(pathName, fileName);
+0242       
+0243       pluginObj.controller.model.importTabularDataFromFile(filePath);
+0244     <span class="keyword">end</span>
+0245     
+0246     
+0247     <a name="_sub16" href="#_subfunctions" class="code">function Callback_main_menu_file_saveGV(src, ~)</a>
+0248       pluginObj = src.UserData.pluginObj;
+0249       
+0250       [fileName, pathName] = uiputfile(<span class="string">'*.mat'</span>, <span class="string">'Save GIMBL-Vis Object'</span>);
+0251       
+0252       <span class="keyword">if</span> isequal(fileName,0)
+0253         <span class="keyword">return</span>
+0254       <span class="keyword">end</span>
+0255       
+0256       filePath = fullfile(pathName, fileName);
+0257       
+0258       pluginObj.controller.app.save(filePath);
+0259     <span class="keyword">end</span>
+0260     
+0261     
+0262     <a name="_sub17" href="#_subfunctions" class="code">function Callback_main_menu_file_saveHC(src, ~)</a>
+0263       pluginObj = src.UserData.pluginObj;
+0264       
+0265       [fileName, pathName] = uiputfile(<span class="string">'*.mat'</span>, <span class="string">'Save Hypercube as MDD Object'</span>);
+0266       
+0267       <span class="keyword">if</span> isequal(fileName,0)
+0268         <span class="keyword">return</span>
+0269       <span class="keyword">end</span>
+0270       
+0271       filePath = fullfile(pathName, fileName);
+0272       
+0273       pluginObj.controller.saveActiveHypercube(filePath);
+0274     <span class="keyword">end</span>
+0275     
+0276     
+0277     <a name="_sub18" href="#_subfunctions" class="code">function Callback_main_menu_file_evalInBase(src, ~)</a>
+0278       <span class="keyword">global</span> Callback_main_menu_file_evalInBase_temp__
+0279       evalin(<span class="string">'base'</span>, <span class="string">'global Callback_main_menu_file_evalInBase_temp__'</span>);
+0280       
+0281       pluginObj = src.UserData.pluginObj;
+0282       
+0283       Callback_main_menu_file_evalInBase_temp__ = pluginObj.controller.app;
+0284       
+0285       evalin(<span class="string">'base'</span>, <span class="string">'ans = Callback_main_menu_file_evalInBase_temp__'</span>);
+0286       
+0287       clear <span class="keyword">global</span> Callback_main_menu_file_evalInBase_temp__
+0288     <span class="keyword">end</span>
+0289     
+0290     
+0291     <span class="comment">%% Model</span>
+0292     <a name="_sub19" href="#_subfunctions" class="code">function Callback_main_menu_model_loadFromWS(src, ~)</a>
+0293       pluginObj = src.UserData.pluginObj;
+0294       
+0295       varList = evalin(<span class="string">'base'</span>,<span class="string">'whos'</span>);
+0296       varList = {varList.name};
+0297       
+0298       [selection,ok] = listdlg(<span class="string">'ListString'</span>, varList,<span class="keyword">...</span>
+0299         <span class="string">'Name'</span>,<span class="string">'Load/Import Data from Workspace'</span>,<span class="keyword">...</span>
+0300         <span class="string">'PromptString'</span>,<span class="string">'Select at least 1 variable from the Workspace:'</span>,<span class="keyword">...</span>
+0301         <span class="string">'ListSize'</span>, [350 300]);
+0302       
+0303       <span class="keyword">if</span> ~ok
+0304         <span class="keyword">return</span>
+0305       <span class="keyword">end</span>
+0306 
+0307       varList = varList(selection);
+0308       
+0309       <span class="keyword">for</span> varName = varList(:)'
+0310         hypercubeName = varName{1};
+0311         pluginObj.controller.model.importDataFromWorkspace(varName{1}, hypercubeName);
+0312       <span class="keyword">end</span>
+0313     <span class="keyword">end</span>
+0314     
+0315     
+0316     <a name="_sub20" href="#_subfunctions" class="code">function Callback_main_menu_model_mergeHypercubes(src, ~)</a>
+0317       <span class="comment">% TODO fix issue with ref</span>
+0318       pluginObj = src.UserData.pluginObj;
+0319       modelObj = pluginObj.controller.model;
+0320       
+0321       hypercubeList = fieldnames(modelObj.data);
+0322       
+0323       <span class="comment">% Remove active hypercube from list</span>
+0324       hypercubeList(strcmp(pluginObj.controller.activeHypercubeName, hypercubeList)) = [];
+0325       
+0326       <span class="keyword">if</span> isempty(hypercubeList)
+0327         warning(<span class="string">'No hypercubes to merge'</span>);
+0328         <span class="keyword">return</span>
+0329       <span class="keyword">end</span>
+0330       
+0331       [selection,ok] = listdlg(<span class="string">'ListString'</span>, hypercubeList,<span class="keyword">...</span>
+0332         <span class="string">'Name'</span>,<span class="string">'Merge Hypercube into Active Hypercube'</span>,<span class="keyword">...</span>
+0333         <span class="string">'PromptString'</span>,<span class="string">'Select a hypercube to merge into the active hypercube:'</span>,<span class="keyword">...</span>
+0334         <span class="string">'SelectionMode'</span>,<span class="string">'single'</span>,<span class="keyword">...</span>
+0335         <span class="string">'ListSize'</span>, [450 300]);
+0336       
+0337       <span class="keyword">if</span> ~ok
+0338         <span class="keyword">return</span>
+0339       <span class="keyword">end</span>
+0340 
+0341       hypercube2merge = hypercubeList{selection};
+0342       
+0343       modelObj.mergeHypercubes(pluginObj.controller.activeHypercubeName, hypercube2merge);
+0344     <span class="keyword">end</span>
+0345     
+0346     
+0347     <a name="_sub21" href="#_subfunctions" class="code">function Callback_main_menu_model_mergeFromWS(src, ~)</a>
+0348       <span class="comment">% TODO fix issue with ref</span>
+0349       pluginObj = src.UserData.pluginObj;
+0350       modelObj = pluginObj.controller.model;
+0351       
+0352       hypercubeList = fieldnames(modelObj.data);
+0353       
+0354       [selection,ok] = listdlg(<span class="string">'ListString'</span>, hypercubeList,<span class="keyword">...</span>
+0355         <span class="string">'Name'</span>,<span class="string">'Merge Object from Workspace into Active Hypercube'</span>,<span class="keyword">...</span>
+0356         <span class="string">'PromptString'</span>,<span class="string">'Select a workspace object to merge into the active hypercube:'</span>,<span class="keyword">...</span>
+0357         <span class="string">'ListSize'</span>, [450 300]);
+0358       
+0359       <span class="keyword">if</span> ~ok
+0360         <span class="keyword">return</span>
+0361       <span class="keyword">end</span>
+0362 
+0363       hypercube2merge = hypercubeList{selection};
+0364       
+0365       modelObj.mergeHypercubes(pluginObj.controller.activeHypercubeName, hypercube2merge);
+0366     <span class="keyword">end</span>
+0367     
+0368     
+0369     
+0370     <a name="_sub22" href="#_subfunctions" class="code">function Callback_main_menu_model_deleteHypercube(src, ~)</a>
+0371       pluginObj = src.UserData.pluginObj;
+0372       
+0373       pluginObj.controller.deleteActiveHypercube()
+0374     <span class="keyword">end</span>
+0375     
+0376     
+0377     <span class="comment">%% View</span>
+0378     <a name="_sub23" href="#_subfunctions" class="code">function Callback_main_menu_view_setFontSize(src, ~)</a>
+0379       pluginObj = src.UserData.pluginObj;
+0380       
+0381       newFontSize = inputdlg( {<span class="string">'Enter New Font Size:'</span>},<span class="string">'Font Size'</span>,1,{num2str(pluginObj.fontSize)} );
+0382       
+0383       newFontSize = str2double(newFontSize);
+0384       
+0385       pluginObj.view.fontSize = newFontSize;
+0386     <span class="keyword">end</span>
+0387     
+0388     
+0389     <a name="_sub24" href="#_subfunctions" class="code">function Callback_main_menu_view_reset(src, evnt)</a>
+0390       pluginObj = src.UserData.pluginObj;
+0391       
+0392       pluginObj.Callback_resetWindow(src, evnt);
+0393     <span class="keyword">end</span>
+0394     
+0395     
+0396     <a name="_sub25" href="#_subfunctions" class="code">function Callback_WindowScrollWheelFcn(src, evnt)</a>
+0397       pluginObj = src.UserData.pluginObj;
+0398       
+0399       callbackHandleCells = pluginObj.dynamicCallbacks.WindowScrollWheelFcn;
+0400       
+0401       <span class="keyword">if</span> ~isempty(callbackHandleCells) <span class="comment">% check if any callbacks registered</span>
+0402         <span class="keyword">for</span> fnHandle = callbackHandleCells
+0403           feval(fnHandle{1}, src, evnt); <span class="comment">% evaluate each callback</span>
+0404         <span class="keyword">end</span>
+0405       <span class="keyword">end</span>
+0406     <span class="keyword">end</span>
+0407     
+0408     
+0409     <span class="comment">%% Help</span>
+0410     <a name="_sub26" href="#_subfunctions" class="code">function Callback_main_menu_help_pluginHelp(src, ~)</a>
+0411       pluginObj = src.UserData.pluginObj;
+0412       
+0413       pluginObj.currentPlugin.getHelp();
+0414     <span class="keyword">end</span>
+0415     
+0416     
+0417     <a name="_sub27" href="#_subfunctions" class="code">function Callback_main_menu_help_onlineHelp(~, ~)</a>
+0418       web(<span class="string">'http://www.earoberts.com/GIMBL-Vis-Docs/'</span>, <span class="string">'-browser'</span>)
+0419     <span class="keyword">end</span>
+0420     
+0421     
+0422     <a name="_sub28" href="#_subfunctions" class="code">function Callback_main_menu_help_pluginDocs(src, ~)</a>
+0423       pluginObj = src.UserData.pluginObj;
+0424       
+0425       doc(pluginObj.currentPlugin.pluginClassName);
+0426     <span class="keyword">end</span>
+0427     
+0428   <span class="keyword">end</span>
+0429   
+0430 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

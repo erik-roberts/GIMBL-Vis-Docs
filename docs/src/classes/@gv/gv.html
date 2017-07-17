@@ -1,0 +1,658 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of gv</title>
+  <meta name="keywords" content="gv">
+  <meta name="description" content="% gv - main class for GIMBL-Vis">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # src --><!-- ../menu.html classes --><!-- menu.html @gv -->
+<h1>gv
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>% gv - main class for GIMBL-Vis</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% gv - main class for GIMBL-Vis
+
+ Properties (public):
+   TODO
+
+ Methods (public):
+   gv: constructor
+   load: load gv or gvArray object data
+   importTabularDataFromFile
+   run: run gv GUI
+   save: save gv object to file
+   summary: print model gvArray summaries
+   cwdChild: get name of most descendant directory for cwd path
+
+ Methods (static):
+   Load: load gv or gvArray object data
+   ImportDsData: import dynasim data
+   ImportTabularDataFromFile
+
+ Note: gv is a handle class, which means that objects are passed by reference
+       instead of by value. For more info visit:
+       https://www.mathworks.com/help/matlab/matlab_oop/comparing-handle-and-value-classes.html
+
+ Author: Erik Roberts</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="MakeDefaultConfig.html" class="code" title="function MakeDefaultConfig()">MakeDefaultConfig</a>	Dev Notes: make first characters '#!' for eval on load</li><li><a href="gv.html" class="code" title="">gv</a>	% gv - main class for GIMBL-Vis</li><li><a href="../../../src/classes/@gvModel/gvModel.html" class="code" title="">gvModel</a>	% gvModel - Model class for the GIMBL-Vis Model-View-Controller</li><li><a href="../../../src/classes/@gvView/gvView.html" class="code" title="">gvView</a>	% gvView - View class for the GIMBL-Vis Model-View-Controller</li><li><a href="../../../src/classes/gvArrayRef.html" class="code" title="">gvArrayRef</a>	% gvArrayRef - GIMBL-Vis multidimensional data handle class wrapper for gvArray</li><li><a href="../../../src/classes/gvController.html" class="code" title="">gvController</a>	% gvController - Controller class for the GIMBL-Vis Model-View-Controller</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="gv.html" class="code" title="">gv</a>	% gv - main class for GIMBL-Vis</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function gvObj = gv(varargin)</a></li><li><a href="#_sub2" class="code">function load(gvObj, varargin)</a></li><li><a href="#_sub3" class="code">function importTabularDataFromFile(varargin)</a></li><li><a href="#_sub4" class="code">function importDsData(gvObj, varargin)</a></li><li><a href="#_sub5" class="code">function varargout = run(gvObj, varargin)</a></li><li><a href="#_sub6" class="code">function save(gvObj, filePath, overwriteBool)</a></li><li><a href="#_sub7" class="code">function varargout = printHypercubeList(gvObj)</a></li><li><a href="#_sub8" class="code">function summary(gvObj)</a></li><li><a href="#_sub9" class="code">function updateConfig(gvObj)</a></li><li><a href="#_sub10" class="code">function varargout = subsref(obj, S)</a></li><li><a href="#_sub11" class="code">function vprintf(gvObj, varargin)</a></li><li><a href="#_sub12" class="code">function workingDirChild = cwdChild(gvObj)</a></li><li><a href="#_sub13" class="code">function setupMVC(gvObj)</a></li><li><a href="#_sub14" class="code">function replaceApp(gvObj, newObj)</a></li><li><a href="#_sub15" class="code">function gvObj = Load(src, hypercubeName)</a></li><li><a href="#_sub16" class="code">function gvObj = ImportTabularDataFromFile(varargin)</a></li><li><a href="#_sub17" class="code">function gvObj = ImportDsData(varargin)</a></li><li><a href="#_sub18" class="code">function varargout = Run(loadPath, varargin)</a></li><li><a href="#_sub19" class="code">function pathstr = RootPath()</a></li><li><a href="#_sub20" class="code">function GenerateDocumentation()</a></li><li><a href="#_sub21" class="code">function EditConfig()</a></li><li><a href="#_sub22" class="code">function pluginNames = ListPluginsFromDir()</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%% gv - main class for GIMBL-Vis</span>
+0002 <span class="comment">%</span>
+0003 <span class="comment">% Properties (public):</span>
+0004 <span class="comment">%   TODO</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">% Methods (public):</span>
+0007 <span class="comment">%   gv: constructor</span>
+0008 <span class="comment">%   load: load gv or gvArray object data</span>
+0009 <span class="comment">%   importTabularDataFromFile</span>
+0010 <span class="comment">%   run: run gv GUI</span>
+0011 <span class="comment">%   save: save gv object to file</span>
+0012 <span class="comment">%   summary: print model gvArray summaries</span>
+0013 <span class="comment">%   cwdChild: get name of most descendant directory for cwd path</span>
+0014 <span class="comment">%</span>
+0015 <span class="comment">% Methods (static):</span>
+0016 <span class="comment">%   Load: load gv or gvArray object data</span>
+0017 <span class="comment">%   ImportDsData: import dynasim data</span>
+0018 <span class="comment">%   ImportTabularDataFromFile</span>
+0019 <span class="comment">%</span>
+0020 <span class="comment">% Note: gv is a handle class, which means that objects are passed by reference</span>
+0021 <span class="comment">%       instead of by value. For more info visit:</span>
+0022 <span class="comment">%       https://www.mathworks.com/help/matlab/matlab_oop/comparing-handle-and-value-classes.html</span>
+0023 <span class="comment">%</span>
+0024 <span class="comment">% Author: Erik Roberts</span>
+0025 
+0026 classdef <a href="gv.html" class="code" title="">gv</a> &lt; handle
+0027   
+0028   <span class="comment">%% Public Properties %%</span>
+0029   properties <span class="comment">%(SetObservable, AbortSet) % allows listener callback, aborts if set to current value</span>
+0030     <span class="comment">%meta = struct()</span>
+0031     workingDir = pwd
+0032   <span class="keyword">end</span>
+0033   
+0034   properties (SetAccess = private)
+0035     config
+0036   <span class="keyword">end</span>
+0037   
+0038 <span class="comment">%     %% Set Properties %%</span>
+0039 <span class="comment">%     methods</span>
+0040 <span class="comment">%</span>
+0041 <span class="comment">%       function set.model(obj, value)</span>
+0042 <span class="comment">%         obj.model.data = value;</span>
+0043 <span class="comment">%       end</span>
+0044 <span class="comment">%</span>
+0045 <span class="comment">%       function set.view(obj, value)</span>
+0046 <span class="comment">%         obj.view = value;</span>
+0047 <span class="comment">%       end</span>
+0048 <span class="comment">%</span>
+0049 <span class="comment">%       function set.controller(obj, value)</span>
+0050 <span class="comment">%         obj.controller = value;</span>
+0051 <span class="comment">%       end</span>
+0052 <span class="comment">%</span>
+0053 <span class="comment">%       function set.meta(obj, value)</span>
+0054 <span class="comment">%         obj.meta = value;</span>
+0055 <span class="comment">%       end</span>
+0056 <span class="comment">%</span>
+0057 <span class="comment">%     end</span>
+0058   
+0059   <span class="comment">%% Properties %%</span>
+0060   properties
+0061     model <span class="comment">% = gvModel(gvObj)</span>
+0062     controller <span class="comment">% = gvController(gvObj)</span>
+0063     view <span class="comment">% = gvView(gvObj)</span>
+0064   <span class="keyword">end</span>
+0065   
+0066   
+0067   <span class="comment">%% Public Methods %%</span>
+0068   methods
+0069     
+0070     <span class="comment">%% Constructor</span>
+0071     <a name="_sub0" href="#_subfunctions" class="code">function gvObj = gv(varargin)</a>
+0072       <span class="comment">% gv - constructor</span>
+0073       <span class="comment">%</span>
+0074       <span class="comment">% Usage:</span>
+0075       <span class="comment">%   1) Make empty gv object</span>
+0076       <span class="comment">%       gvObj = gv()</span>
+0077       <span class="comment">%</span>
+0078       <span class="comment">%   2) Call load method on file/dir</span>
+0079       <span class="comment">%       gvObj = gv(file/dir)</span>
+0080       <span class="comment">%       gvObj = gv(file/dir, hypercubeName)</span>
+0081       <span class="comment">%</span>
+0082       <span class="comment">%   3) Call gvArray constructor on gvArray/MDD data</span>
+0083       <span class="comment">%       gvObj = gv(gvArrayData)</span>
+0084       <span class="comment">%       gvObj = gv(hypercubeName, gvArrayData)</span>
+0085       <span class="comment">%</span>
+0086       <span class="comment">%   4) Call gvArray constructor on cell/numeric array data. Can be linear</span>
+0087       <span class="comment">%      or multidimensional array data.</span>
+0088       <span class="comment">%       gvObj = gv(cell_or_numeric_array)</span>
+0089       <span class="comment">%       gvObj = gv(hypercubeName, cell_or_numeric_array)</span>
+0090       <span class="comment">%       gvObj = gv(cell_or_numeric_array, axis_vals, axis_names)</span>
+0091       <span class="comment">%       gvObj = gv(hypercubeName, cell_or_numeric_array, axis_vals, axis_names)</span>
+0092       
+0093 <span class="comment">%       % Add GUI propListeners</span>
+0094 <span class="comment">%       obj.gui.data.mainWindow.obj = []; % set empty Main window obj</span>
+0095 <span class="comment">%       addlistener(obj, 'mainWindowChange', @gv.guiWindowChangeCallback);</span>
+0096 <span class="comment">%</span>
+0097 <span class="comment">%       % Add Property propListeners</span>
+0098 <span class="comment">%       obj.propListeners{1} = addlistener(obj,'model','PostSet',@gv.propPostSetCallback);</span>
+0099 <span class="comment">%       obj.propListeners{2} = addlistener(obj,'meta','PostSet',@gv.propPostSetCallback);</span>
+0100 <span class="comment">%       obj.propListeners{3} = addlistener(obj,'gui','PostSet',@gv.propPostSetCallback);</span>
+0101 <span class="comment">%       obj.propListeners = [obj.propListeners{:}]; % convert to proplistener array</span>
+0102 <span class="comment">%</span>
+0103 <span class="comment">%       [obj.propListeners.Enabled] = deal(false); % disable until window opens</span>
+0104       
+0105       gvObj.updateConfig()
+0106 
+0107       gvObj.setupMVC();
+0108       
+0109       <span class="comment">% TODO Move to separate function or gvModel/Controller</span>
+0110       <span class="keyword">if</span> nargin
+0111         <span class="keyword">if</span> ischar(varargin{1})
+0112           <span class="keyword">if</span> exist(varargin{1}, <span class="string">'file'</span>) || exist(varargin{1}, <span class="string">'dir'</span>) <span class="comment">% varargin{1} is a path</span>
+0113             <span class="comment">% 2) Call load method on file/dir</span>
+0114             gvObj = gv.Load(varargin{:});
+0115             <span class="keyword">return</span>
+0116           <span class="keyword">else</span> <span class="comment">% treat varargin{1} as fld (aka hypercubeName)</span>
+0117             fld = varargin{1};
+0118             varargin(1) = [];
+0119           <span class="keyword">end</span>
+0120         <span class="keyword">end</span>
+0121         
+0122         <span class="comment">% Check hypercubeName if given as varargin{1}</span>
+0123         <span class="keyword">if</span> exist(<span class="string">'fld'</span>, <span class="string">'var'</span>)
+0124           fld = gvObj.model.checkHypercubeName(fld);
+0125         <span class="keyword">end</span>
+0126         
+0127         <span class="keyword">if</span> iscell(varargin{1}) || isnumeric(varargin{1}) <span class="comment">% varargin{1} is built-in data array</span>
+0128           <span class="comment">% 4) Call gvArray constructor on cell/numeric array data.</span>
+0129           <span class="keyword">if</span> ~exist(<span class="string">'fld'</span>, <span class="string">'var'</span>)
+0130             fld = gvObj.model.nextModelFieldName; <span class="comment">% get next fld for model.axes#</span>
+0131           <span class="keyword">end</span>
+0132                     
+0133           <span class="comment">% Add hypercube</span>
+0134           hypercubeObj = <a href="../../../src/classes/gvArrayRef.html" class="code" title="">gvArrayRef</a>(varargin{:});
+0135           hypercubeName = fld;
+0136           gvObj.model.addHypercube(hypercubeObj, hypercubeName);
+0137           
+0138           gvObj.controller.setActiveHypercube(fld);
+0139         <span class="keyword">elseif</span> isa(varargin{1}, <span class="string">'MDD'</span>) || isa(varargin{1}, <span class="string">'MDDRef'</span>) <span class="comment">% || isa(varargin{1}, 'gvArray')</span>
+0140           <span class="comment">% 3) Call gvArray constructor on gvArray/MDD data</span>
+0141           <span class="keyword">if</span> ~exist(<span class="string">'fld'</span>, <span class="string">'var'</span>)
+0142             fld = gvObj.model.checkHypercubeName(varargin{1});
+0143           <span class="keyword">end</span>
+0144           
+0145           <span class="comment">% Add hypercube</span>
+0146           hypercubeObj = <a href="../../../src/classes/gvArrayRef.html" class="code" title="">gvArrayRef</a>(varargin{:});
+0147           hypercubeName = fld;
+0148           gvObj.model.addHypercube(hypercubeObj, hypercubeName);
+0149         <span class="keyword">end</span>
+0150       <span class="keyword">else</span>
+0151         <span class="comment">% 1) Make empty gv object</span>
+0152       <span class="keyword">end</span>
+0153     <span class="keyword">end</span>
+0154     
+0155     
+0156     <span class="comment">%% Loading</span>
+0157     <a name="_sub1" href="#_subfunctions" class="code">function load(gvObj, varargin)</a>
+0158       <span class="comment">% load - load gv or gvArray object data</span>
+0159       <span class="comment">%</span>
+0160       <span class="comment">% Usage: gvObj.load()</span>
+0161       <span class="comment">%        gvObj.load(src)</span>
+0162       <span class="comment">%        gvObj.load(src, hypercubeName)</span>
+0163       <span class="comment">%</span>
+0164       <span class="comment">% Inputs:</span>
+0165       <span class="comment">%   src: is a dir or a file to load.</span>
+0166       <span class="comment">%   hypercubeName: is a hypercubeName to store loaded data in. If empty</span>
+0167       <span class="comment">%                  will use default indexing.</span>
+0168       <span class="comment">%</span>
+0169       <span class="comment">% See also: gv.Load (static method)</span>
+0170       
+0171       gvObj.model.load(varargin{:}) <span class="comment">% interface: load(obj, src, fld, staticBool)</span>
+0172       
+0173     <span class="keyword">end</span>
+0174     
+0175     
+0176     <span class="comment">%% Importing</span>
+0177     <a name="_sub2" href="#_subfunctions" class="code">function importTabularDataFromFile(varargin)</a>
+0178       <span class="comment">% importTabularDataFromFile (public) - Imports tabular data from a file to</span>
+0179       <span class="comment">%                                      a new set of axes (ie hypercube)</span>
+0180       <span class="comment">%</span>
+0181       <span class="comment">% Supports file types including: xls, xlsx, csv, tsv, txt, mat.</span>
+0182       <span class="comment">%</span>
+0183       <span class="comment">% Usage:</span>
+0184       <span class="comment">%   gvObj.importTabularDataFromFile([], filePath)</span>
+0185       <span class="comment">%   gvObj.importTabularDataFromFile(hypercubeName, filePath, dataCol, headerFlag, delimiter)</span>
+0186       <span class="comment">%</span>
+0187       <span class="comment">% Inputs:</span>
+0188       <span class="comment">%   filePath: path to file</span>
+0189       <span class="comment">%       Supported filetypes:</span>
+0190       <span class="comment">%           xls, xlsx, csv, tsv, txt, mat (containing 1 numeric mat variable)</span>
+0191       <span class="comment">%               Note: xls and xlsx cannot have columns with mixtures of numerics</span>
+0192       <span class="comment">%                     and strings, except for first row. however, txt and csv</span>
+0193       <span class="comment">%                     files can.</span>
+0194       <span class="comment">%</span>
+0195       <span class="comment">% Inputs (optional):</span>
+0196       <span class="comment">%   dataCol: col number or header name of column with linear data. the rest of</span>
+0197       <span class="comment">%            the columns will be treated as axes. Default is col 1.</span>
+0198       <span class="comment">%   headerFlag: logical value of whether 1st row is header of axis names. the</span>
+0199       <span class="comment">%               name for dataCol will be ignored. it is only necesary to</span>
+0200       <span class="comment">%               explicitly set this to true if the type of data (numeric vs. string)</span>
+0201       <span class="comment">%               of the first row is the same as the second row and the first row</span>
+0202       <span class="comment">%               should be treated as a header.</span>
+0203       <span class="comment">%   delimiter: specify if using a delimiter other than space(' '), comma(','),</span>
+0204       <span class="comment">%              or tab('\t'). see strsplit documentation for delimiter specification.</span>
+0205       <span class="comment">%</span>
+0206       <span class="comment">% See also:</span>
+0207       <span class="comment">%   gv.ImportTabularDataFromFile (static method)</span>
+0208       <span class="comment">%   MDD.ImportFile documentation for more information.</span>
+0209       
+0210       gvObj.model.importTabularDataFromFile(varargin{:}) <span class="comment">% interface: load(modelObj, fld, varargin)</span>
+0211       
+0212     <span class="keyword">end</span>
+0213     
+0214     <a name="_sub3" href="#_subfunctions" class="code">function importDsData(gvObj, varargin)</a>
+0215       <span class="comment">% importDsData - import dynasim data</span>
+0216       <span class="comment">%</span>
+0217       <span class="comment">% Usage:</span>
+0218       <span class="comment">%   gvObj.importDsData(src, varargin)</span>
+0219       <span class="comment">%</span>
+0220       <span class="comment">% See also: gvModel/importDsData</span>
+0221       
+0222       gvObj.model.importDsData(varargin{:});
+0223     <span class="keyword">end</span>
+0224     
+0225     
+0226     <span class="comment">%% Running</span>
+0227     <a name="_sub4" href="#_subfunctions" class="code">function varargout = run(gvObj, varargin)</a>
+0228       <span class="comment">% run (public) - run gv GUI</span>
+0229       <span class="comment">%</span>
+0230       <span class="comment">% See also: gv.Run (static method)</span>
+0231 
+0232       <span class="comment">% if specify load path</span>
+0233       <span class="keyword">if</span> nargin &gt; 1 &amp;&amp; ischar(varargin{1})
+0234         gvObj.workingDir = varargin{1};
+0235       <span class="keyword">end</span>
+0236       
+0237       gvObj.view.run();
+0238       
+0239       <span class="keyword">if</span> nargout
+0240         varargout{1} = gvObj;
+0241       <span class="keyword">end</span>
+0242     <span class="keyword">end</span>
+0243     
+0244     
+0245     <span class="comment">%% Saving</span>
+0246     <a name="_sub5" href="#_subfunctions" class="code">function save(gvObj, filePath, overwriteBool) </a><span class="comment">%#ok&lt;INUSL&gt;</span>
+0247       <span class="comment">% save - save gv object to file (default: 'gvData.mat')</span>
+0248       
+0249       <span class="keyword">if</span> ~exist(<span class="string">'filePath'</span>, <span class="string">'var'</span>) || isempty(filePath)
+0250         filePath = <span class="string">'gvData.mat'</span>;
+0251       <span class="keyword">end</span>
+0252       <span class="keyword">if</span> nargin &lt; 3
+0253         overwriteBool = false;
+0254       <span class="keyword">end</span>
+0255       
+0256       <span class="keyword">if</span> ~exist(filePath,<span class="string">'file'</span>) || overwriteBool
+0257         gvObj.view.closeWindows();
+0258         <a href="#_sub6" class="code" title="subfunction save(gvObj, filePath, overwriteBool) ">save</a>(filePath, <span class="string">'gvObj'</span>);
+0259       <span class="keyword">else</span>
+0260         warning(<span class="string">'File exists and overwriteBool=false. Choose a new file name or set overwriteBool=true.'</span>)
+0261       <span class="keyword">end</span>
+0262     <span class="keyword">end</span>
+0263     
+0264     
+0265     <span class="comment">%% Misc</span>
+0266     <a name="_sub6" href="#_subfunctions" class="code">function varargout = printHypercubeList(gvObj)</a>
+0267       <span class="keyword">if</span> nargout
+0268         varargout = gvObj.model.printHypercubeList();
+0269       <span class="keyword">else</span>
+0270         gvObj.model.printHypercubeList();
+0271       <span class="keyword">end</span>
+0272     <span class="keyword">end</span>
+0273     
+0274     
+0275     <a name="_sub7" href="#_subfunctions" class="code">function summary(gvObj)</a>
+0276       <span class="comment">% summary - print gv object summary</span>
+0277       <span class="comment">%</span>
+0278       <span class="comment">% See also: gvModel/summary, gvArray/summary</span>
+0279       
+0280       fprintf(<span class="string">'GIMBL-Vis Object Summary:\n'</span>)
+0281       fprintf(<span class="string">'-------------------------\n'</span>)
+0282       
+0283       <span class="comment">% Print model summary</span>
+0284       gvObj.model.summary;
+0285       
+0286       fprintf(<span class="string">'\n'</span>)
+0287       
+0288       <span class="comment">% Print controller summary</span>
+0289       gvObj.controller.summary;
+0290       
+0291       fprintf(<span class="string">'\n'</span>)
+0292       
+0293       <span class="comment">% Print view summary</span>
+0294       gvObj.view.summary;
+0295       
+0296       fprintf(<span class="string">'\n'</span>)
+0297     <span class="keyword">end</span>
+0298     
+0299     
+0300     <a name="_sub8" href="#_subfunctions" class="code">function updateConfig(gvObj)</a>
+0301       gvConfigFile = fullfile(gv.RootPath(),<span class="string">'gvConfig.txt'</span>);
+0302       
+0303       <span class="keyword">if</span> ~exist(gvConfigFile, <span class="string">'file'</span>)
+0304         gv.MakeDefaultConfig();
+0305       <span class="keyword">end</span>
+0306       
+0307       fid = fopen(gvConfigFile, <span class="string">'r'</span>);
+0308       gvVarCells = textscan(fid, <span class="string">'%s = %q'</span>);
+0309       fclose(fid);
+0310       
+0311       gvConfig = struct();
+0312       
+0313       <span class="keyword">for</span> iRow = 1:size(gvVarCells{1}, 1)
+0314         thisStr = gvVarCells{2}{iRow};
+0315         
+0316         thisStr = shebangParse(thisStr);
+0317         
+0318         <span class="keyword">if</span> ~isnan(str2double(thisStr))
+0319           thisStr = str2double(thisStr);
+0320         <span class="keyword">end</span>
+0321         
+0322         gvConfig.(gvVarCells{1}{iRow}) = thisStr;
+0323       <span class="keyword">end</span>
+0324 
+0325       gvObj.config = gvConfig;
+0326     <span class="keyword">end</span>
+0327     
+0328     
+0329     <span class="comment">%% Overloaded built-ins</span>
+0330     <a name="_sub9" href="#_subfunctions" class="code">function varargout = subsref(obj, S)</a>
+0331       <span class="comment">% Notes:</span>
+0332       <span class="comment">%    Default settings for cell outputs:</span>
+0333       <span class="comment">%    varargout = builtin('subsref', obj, S);</span>
+0334       <span class="comment">%</span>
+0335       <span class="comment">%    Default settings for non cell outputs:</span>
+0336       <span class="comment">%    varargout = {builtin('subsref', obj, S)};</span>
+0337       <span class="comment">%</span>
+0338       <span class="comment">%    Default settings for multiple outputs:</span>
+0339       <span class="comment">%    [varargout{1:nargout}] = builtin('subsref', obj, S);</span>
+0340       <span class="comment">%</span>
+0341       <span class="comment">%   Only 2 arguments to subsref.</span>
+0342       <span class="comment">%</span>
+0343       <span class="comment">%   S is a struct array with length equal to number of consecutive</span>
+0344       <span class="comment">%   operations to perform. Order follows the order written/performed,</span>
+0345       <span class="comment">%   so that the first entry is the closest to the left on the call.</span>
+0346       <span class="comment">%</span>
+0347       <span class="comment">%   varargout needs to be cell array. Non cell output should  be</span>
+0348       <span class="comment">%   enclosed in cell. Multiple outputs should go into cells.</span>
+0349       <span class="comment">%   Importantly, if length(S) &gt; 1, meaning multiple consecutive</span>
+0350       <span class="comment">%   subsref operations, varargout should equal length of S. Thus,</span>
+0351       <span class="comment">%   one needs to make space for recursive outputs when calling</span>
+0352       <span class="comment">%   builtin again, which takes the form of a cell{:} multiple outputs.</span>
+0353 
+0354       <span class="keyword">switch</span> S(1).type
+0355         <span class="keyword">case</span> <span class="string">'{}'</span>
+0356           varargout = builtin(<span class="string">'subsref'</span>, obj, S);
+0357         <span class="keyword">otherwise</span>
+0358           [varargout{1:nargout}] = builtin(<span class="string">'subsref'</span>, obj, S);
+0359       <span class="keyword">end</span>
+0360     <span class="keyword">end</span>
+0361     
+0362   <span class="keyword">end</span> <span class="comment">% public methods</span>
+0363   
+0364   
+0365   <span class="comment">%% Hidden Methods %%</span>
+0366   methods (Hidden)
+0367     
+0368     <a name="_sub10" href="#_subfunctions" class="code">function vprintf(gvObj, varargin)</a>
+0369       <span class="keyword">if</span> gvObj.config.verboseModeBool
+0370         fprintf(varargin{:});
+0371       <span class="keyword">end</span>
+0372     <span class="keyword">end</span>
+0373     
+0374     
+0375     <a name="_sub11" href="#_subfunctions" class="code">function workingDirChild = cwdChild(gvObj)</a>
+0376       <span class="comment">% cwdChild - get name of most descendant directory for cwd path</span>
+0377       
+0378       [workingDir] = fileparts2(gvObj.workingDir);
+0379       <span class="keyword">if</span> ~ispc
+0380         workingDir = strsplit(workingDir, filesep);
+0381       <span class="keyword">else</span>
+0382         workingDir = strsplit(workingDir, <span class="string">'\\'</span>);
+0383       <span class="keyword">end</span>
+0384       workingDir = workingDir(~cellfun(@isempty, workingDir));
+0385       workingDirChild = workingDir{end};
+0386     <span class="keyword">end</span>
+0387     
+0388   <span class="keyword">end</span>
+0389   
+0390   
+0391   <span class="comment">%% Protected Methods %%</span>
+0392   methods (Access = protected)
+0393   
+0394     <a name="_sub12" href="#_subfunctions" class="code">function setupMVC(gvObj)</a>
+0395       gvObj.model = <a href="../../../src/classes/@gvModel/gvModel.html" class="code" title="">gvModel</a>(gvObj);
+0396       gvObj.view = <a href="../../../src/classes/@gvView/gvView.html" class="code" title="">gvView</a>(gvObj);
+0397       gvObj.controller = <a href="../../../src/classes/gvController.html" class="code" title="">gvController</a>(gvObj);
+0398       
+0399       gvObj.model.setup();
+0400       gvObj.controller.setup();
+0401       gvObj.view.setup();
+0402     <span class="keyword">end</span>
+0403     
+0404     <a name="_sub13" href="#_subfunctions" class="code">function replaceApp(gvObj, newObj)</a>
+0405       <span class="comment">% replaceApp - replace gv object with supplied one</span>
+0406       
+0407       gvObj.delete();
+0408       
+0409       gvObj = <a href="gv.html" class="code" title="">gv</a>();
+0410       
+0411       gvMeta = ?gv;
+0412       props = {gvMeta.PropertyList.Name};
+0413       props = props(~[gvMeta.PropertyList.Dependent]);
+0414       
+0415       <span class="keyword">for</span> prop = props
+0416         gvObj.(prop{1}) = newObj.(prop{1});
+0417       <span class="keyword">end</span>
+0418     <span class="keyword">end</span>
+0419     
+0420   <span class="keyword">end</span> <span class="comment">% methods (Access = protected)</span>
+0421   
+0422   
+0423   <span class="comment">%% Static Methods %%</span>
+0424   methods (Static)
+0425     <span class="comment">% Dev Note: Static methods will be capitalized</span>
+0426     
+0427     <span class="comment">%% Loading</span>
+0428     <a name="_sub14" href="#_subfunctions" class="code">function gvObj = Load(src, hypercubeName)</a>
+0429       <span class="comment">% Load - load gv, gvArray, or multidimensional object data</span>
+0430       <span class="comment">%</span>
+0431       <span class="comment">% Usage: obj = gv.Load()</span>
+0432       <span class="comment">%        obj = gv.Load(src)</span>
+0433       <span class="comment">%        obj = gv.Load(src, hypercubeName)</span>
+0434       <span class="comment">%</span>
+0435       <span class="comment">% Inputs:</span>
+0436       <span class="comment">%   src: is a dir or a file to load.</span>
+0437       <span class="comment">%   hypercubeName: is a hypercubeName to store loaded data in. If empty</span>
+0438       <span class="comment">%                  will use default indexing.</span>
+0439       <span class="comment">%</span>
+0440       <span class="comment">% See also: gv/load (public method)</span>
+0441       
+0442       <span class="keyword">if</span> nargin &lt; 1
+0443         src = [];
+0444       <span class="keyword">end</span>
+0445       <span class="keyword">if</span> nargin &lt; 2
+0446         hypercubeName = [];
+0447       <span class="keyword">end</span>
+0448       
+0449       gvObj = <a href="gv.html" class="code" title="">gv</a>();
+0450       
+0451       <span class="comment">% update working dir with char src</span>
+0452       <span class="keyword">if</span> ischar(src)
+0453         gvObj.workingDir = src;
+0454       <span class="keyword">end</span>
+0455       
+0456       gvObj.load(src, hypercubeName, true);
+0457     <span class="keyword">end</span>
+0458     
+0459     
+0460     <span class="comment">%% Importing</span>
+0461     <a name="_sub15" href="#_subfunctions" class="code">function gvObj = ImportTabularDataFromFile(varargin)</a>
+0462       <span class="comment">% ImportTabularDataFromFile (static) - Imports tabular data from a file to</span>
+0463       <span class="comment">%                                      a new set of axes (ie hypercube)</span>
+0464       <span class="comment">%</span>
+0465       <span class="comment">% Supports file types including: xls, xlsx, csv, tsv, txt, mat.</span>
+0466       <span class="comment">%</span>
+0467       <span class="comment">% Usage:</span>
+0468       <span class="comment">%   obj = obj.ImportTabularDataFromFile(filePath)</span>
+0469       <span class="comment">%   obj = obj.ImportTabularDataFromFile(filePath, dataCol, headerFlag, delimiter)</span>
+0470       <span class="comment">%</span>
+0471       <span class="comment">% Inputs:</span>
+0472       <span class="comment">%   filePath: path to file</span>
+0473       <span class="comment">%       Supported filetypes:</span>
+0474       <span class="comment">%           xls, xlsx, csv, tsv, txt, mat (containing 1 numeric mat variable)</span>
+0475       <span class="comment">%               Note: xls and xlsx cannot have columns with mixtures of numerics</span>
+0476       <span class="comment">%                     and strings, except for first row. however, txt and csv</span>
+0477       <span class="comment">%                     files can.</span>
+0478       <span class="comment">%</span>
+0479       <span class="comment">% Inputs (optional):</span>
+0480       <span class="comment">%   dataCol: col number or header name of column with linear data. the rest of</span>
+0481       <span class="comment">%            the columns will be treated as axes. Default is col 1.</span>
+0482       <span class="comment">%   headerFlag: logical value of whether 1st row is header of axis names. the</span>
+0483       <span class="comment">%               name for dataCol will be ignored. it is only necesary to</span>
+0484       <span class="comment">%               explicitly set this to true if the type of data (numeric vs. string)</span>
+0485       <span class="comment">%               of the first row is the same as the second row and the first row</span>
+0486       <span class="comment">%               should be treated as a header.</span>
+0487       <span class="comment">%   delimiter: specify if using a delimiter other than space(' '), comma(','),</span>
+0488       <span class="comment">%              or tab('\t'). see strsplit documentation for delimiter specification.</span>
+0489       <span class="comment">%</span>
+0490       <span class="comment">% See also:</span>
+0491       <span class="comment">%   gv/importTabularDataFromFile (public method)</span>
+0492       <span class="comment">%   MDD.ImportFile documentation for more information.</span>
+0493       
+0494       gvObj = <a href="gv.html" class="code" title="">gv</a>();
+0495       
+0496       gvObj.importTabularDataFromFile(varargin{:});
+0497     <span class="keyword">end</span>
+0498     
+0499     
+0500     <a name="_sub16" href="#_subfunctions" class="code">function gvObj = ImportDsData(varargin)</a>
+0501       <span class="comment">% ImportDsData (static) - import dynasim data</span>
+0502       <span class="comment">%</span>
+0503       <span class="comment">% Usage:</span>
+0504       <span class="comment">%   gv.ImportDsData(src, varargin)</span>
+0505       <span class="comment">%</span>
+0506       <span class="comment">% See also: gvModel/importDsData</span>
+0507       
+0508       gvObj = <a href="gv.html" class="code" title="">gv</a>();
+0509       
+0510       gvObj.importDsData(varargin{:});
+0511     <span class="keyword">end</span>
+0512     
+0513     
+0514     <span class="comment">%% Running</span>
+0515     <a name="_sub17" href="#_subfunctions" class="code">function varargout = Run(loadPath, varargin)</a>
+0516       <span class="comment">% Run (static) - run gv</span>
+0517       <span class="comment">%</span>
+0518       <span class="comment">% See also: gv/run (public method)</span>
+0519       
+0520       <span class="comment">% if load path not defined</span>
+0521       <span class="keyword">if</span> ~exist(<span class="string">'loadPath'</span>, <span class="string">'var'</span>) || isempty(loadPath)
+0522         loadPath = pwd;
+0523       <span class="keyword">end</span>
+0524       
+0525       gvObj = gv.Load(loadPath);
+0526       
+0527       gvObj.run(varargin{:});
+0528       
+0529       <span class="keyword">if</span> nargout
+0530         varargout{1} = gvObj;
+0531       <span class="keyword">end</span>
+0532     <span class="keyword">end</span>
+0533     
+0534     <span class="comment">%% Misc</span>
+0535     <a name="_sub18" href="#_subfunctions" class="code">function pathstr = RootPath()</a>
+0536       <span class="comment">% RootPath - Path to gv root directory</span>
+0537       
+0538       pathstr = fullfile(fileparts(which(<span class="string">'gv'</span>)), <span class="string">'..'</span>, <span class="string">'..'</span>, <span class="string">'..'</span>);
+0539     <span class="keyword">end</span>
+0540 
+0541     <a name="_sub19" href="#_subfunctions" class="code">function GenerateDocumentation()</a>
+0542       <span class="comment">%GenerateDocumentation - Build GIMBL-Vis documentation</span>
+0543       
+0544       cwd = pwd; <span class="comment">% store current working dir</span>
+0545       
+0546       cd(gv.RootPath());
+0547       
+0548       m2html(<span class="string">'mfiles'</span>,{<span class="string">'src'</span>},<span class="keyword">...</span>
+0549         <span class="string">'htmldir'</span>,<span class="string">'offline_docs'</span>,<span class="keyword">...</span>
+0550         <span class="string">'recursive'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0551         <span class="string">'global'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0552         <span class="string">'template'</span>,<span class="string">'frame'</span>,<span class="keyword">...</span>
+0553         <span class="string">'index'</span>,<span class="string">'menu'</span>,<span class="keyword">...</span>
+0554         <span class="string">'graph'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0555         <span class="string">'ignoredDir'</span>, <span class="string">'dependencies'</span>);
+0556       
+0557       cd(cwd);
+0558     <span class="keyword">end</span>
+0559     
+0560     <a href="MakeDefaultConfig.html" class="code" title="function MakeDefaultConfig()">MakeDefaultConfig</a>()
+0561     
+0562     <a name="_sub20" href="#_subfunctions" class="code">function EditConfig()</a>
+0563       configPath = fullfile(gv.RootPath, <span class="string">'gvConfig.txt'</span>);
+0564       <span class="keyword">if</span> exist(configPath, <span class="string">'file'</span>)
+0565         edit(configPath);
+0566       <span class="keyword">else</span>
+0567         gv.MakeDefaultConfig();
+0568         edit(configPath);
+0569       <span class="keyword">end</span>
+0570     <span class="keyword">end</span>
+0571     
+0572   <span class="keyword">end</span> <span class="comment">% static methods</span>
+0573   
+0574   <span class="comment">%% Hidden Static Methods %%</span>
+0575   methods (Static, Hidden)
+0576     
+0577     <a name="_sub21" href="#_subfunctions" class="code">function pluginNames = ListPluginsFromDir()</a>
+0578       pluginFiles = lscell(fullfile(gv.RootPath, <span class="string">'src'</span>, <span class="string">'plugins'</span>));
+0579       pluginNames = regexp(pluginFiles, <span class="string">'^@?(\w+)(?:\.\w+)?$'</span>,<span class="string">'tokens'</span>);
+0580       pluginNames = [pluginNames{:}];
+0581       pluginNames = [pluginNames{:}];
+0582       pluginNames = sort(pluginNames);
+0583     <span class="keyword">end</span>
+0584     
+0585   <span class="keyword">end</span>
+0586   
+0587 <span class="keyword">end</span> <span class="comment">% classdef</span></pre></div>
+<hr><address>Generated on Mon 17-Jul-2017 14:05:11 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>
